@@ -11,7 +11,6 @@ module.exports = {
     var checkbox = document.getElementById('hitbox_toggle');
 
     checkbox.addEventListener( 'change', function() {
-      alert(this.checked);
       window.drawHitboxes = this.checked;
     });
   }
