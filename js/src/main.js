@@ -2,11 +2,12 @@
 
 const CANVAS = 'canvas', KEY_DOWN_EVENT = 'keydown', KEY_UP_EVENT = 'keyup';
 
-var canvas,
+var debug = true,
+    canvas,
     ctx,
     width = 600,
     height = 600,
-    player = {x : 10, y : height/2 - 13, w : 20, h : 26},
+    player = {x : 10, y : height/2 - 13, w : 20, h : 26, hitBoxColor: '#7cfc00'},
 
     player_sprite, pebble_sprite, enemy_sprite,
 
@@ -54,7 +55,7 @@ var canvas,
 
     function removeAndReplaceEnemy(i){
       enemies.splice(i, 1);
-      enemies.push({x:enemy_x, y:(Math.random() * 500) + 50, w:enemy_w, h:enemy_h, speed:enemy_speed});
+      enemies.push({x:enemy_x, y:(Math.random() * 500) + 50, w:enemy_w, h:enemy_h, speed:enemy_speed, hitBoxColor: '#ff0000'});
       placePebblePickup((Math.random() * 500) + 50, (Math.random() * 500) + 50);
     }
 
@@ -150,7 +151,7 @@ var canvas,
     // Initialisations
 
     for (var i = 0; i < enemyTotal; i++) {
-      enemies.push({x:enemy_x, y:enemy_y, w:enemy_w, h:enemy_h, speed:enemy_speed});
+      enemies.push({x:enemy_x, y:enemy_y, w:enemy_w, h:enemy_h, speed:enemy_speed, hitBoxColor: '#ff0000'});
       enemy_y += enemy_h + 60;
     }
 
@@ -172,35 +173,46 @@ var canvas,
       // setInterval(gameLoop, 25); //40 fps
       document.addEventListener(KEY_DOWN_EVENT, keyDown, false);
       document.addEventListener(KEY_UP_EVENT, keyUp, false);
+      if(debug) {
+        addDebugControls();
+      }
       gameLoop();
     }
 
     function placePebblePickup(x_arg, y_arg) {
-      pebblePickups.push({x:x_arg, y:y_arg, w:pebble_pickup_w, h:pebble_pickup_h});
+      pebblePickups.push({x:x_arg, y:y_arg, w:pebble_pickup_w, h:pebble_pickup_h, hitBoxColor: '#000000'});
     }
 
     // Draw functions
 
     function drawPlayer() {
-      ctx.drawImage(player_sprite, player.x, player.y);
+      drawHelper(player_sprite, player);
     }
 
     function drawEnemies() {
       for (var i = 0; i < enemies.length; i++) {
-        ctx.drawImage(enemy_sprite, enemies[i].x, enemies[i].y);
+        drawHelper(enemy_sprite, enemies[i]);
       }
     }
 
     function drawOnScreenPebble() {
       if (on_screen_pebbles.length)
         for (var i = 0; i < on_screen_pebbles.length; i++) {
-          ctx.drawImage(pebble_sprite, on_screen_pebbles[i].x, on_screen_pebbles[i].y);
+          drawHelper(pebble_sprite, on_screen_pebbles[i]);
         }
     }
 
     function drawPebblePickup() {
       for(var i = 0; i < pebblePickups.length; i ++){
-        ctx.drawImage(pebblePickup, pebblePickups[i].x, pebblePickups[i].y);
+        drawHelper(pebblePickup, pebblePickups[i]);
+      }
+    }
+
+    function drawHelper(sprite, object) {
+      ctx.drawImage(sprite, object.x, object.y);
+      if(drawHitboxes){
+        ctx.strokeStyle=object.hitBoxColor;
+        ctx.strokeRect(object.x,object.y,object.w, object.h);
       }
     }
 
@@ -245,7 +257,7 @@ var canvas,
       if (e.keyCode == 38) upKey = true;
       else if (e.keyCode == 40) downKey = true;
       if (e.keyCode == 88 && pebbleAmmo > 0){
-        on_screen_pebbles.push({x:player.x + 2, y:player.y + 13, w:pebble_w, h:pebble_h});
+        on_screen_pebbles.push({x:player.x + 2, y:player.y + 13, w:pebble_w, h:pebble_h, hitBoxColor: '#00bfff'});
         pebbleAmmo--;
       }
       if(e.keyCode == 32){
