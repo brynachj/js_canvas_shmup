@@ -14,7 +14,7 @@ var debug = true,
     gameStarted = false,
     alive = true,
 
-    enemyTotal = 5,
+    enemyTotal = 1,
     enemies = [],
     enemy_x = width + 45,
     enemy_y = 50,
@@ -231,10 +231,17 @@ var debug = true,
 
     function moveEnemies() {
       for (var i = 0; i < enemies.length; i++) {
-        if (enemies[i].x > - enemy_w) {
+        if (enemies[i].x < player.x) {
+          enemies[i].x += enemies[i].speed;
+        }
+        if (enemies[i].x > player.x) {
           enemies[i].x -= enemies[i].speed;
-        } else if (enemies[i].x <= - enemy_w) {
-          enemies[i].x = width + enemy_w;
+        }
+        if (enemies[i].y < player.y) {
+          enemies[i].y += enemies[i].speed;
+        }
+        if (enemies[i].y > player.y) {
+          enemies[i].y -= enemies[i].speed;
         }
       }
     }
