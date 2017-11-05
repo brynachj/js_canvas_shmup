@@ -1,9 +1,14 @@
+const WIDTH = 34, HEIGHT = 36, SPEED = 3;
+
+enemy_sprite = new Image();
+enemy_sprite.src = 'images/enemy_sprite.png';
+
 module.exports = {
 
-  createEnemy : function(x1, y1, w1, h1, speed1) {
-    return {x:x1, y:y1, w:w1, h:h1, speed:speed1, hitBoxColor: '#ff0000',
-          player_detection_box : {x:x1-60, y:y1-60, w:w1+120, h:h1+120, hitBoxColor: '#ff8c00'},
-          player_aggro_box : {x:x1-80, y:y1-80, w:w1+160, h:h1+160, hitBoxColor: '#ffff00'}
+  createEnemy : function(x1, y1) {
+    return {x:x1, y:y1, w:WIDTH, h:HEIGHT, speed:SPEED, hitBoxColor: '#ff0000',
+          player_detection_box : {x:x1-60, y:y1-60, w:WIDTH+120, h:HEIGHT+120, hitBoxColor: '#ff8c00'},
+          player_aggro_box : {x:x1-80, y:y1-80, w:WIDTH+160, h:HEIGHT+160, hitBoxColor: '#ffff00'}
         };
   },
 
@@ -28,6 +33,8 @@ module.exports = {
       enemy.player_detection_box.y -= enemy.speed;
       enemy.player_aggro_box.y -= enemy.speed;
     }
-  }
+  },
+
+  enemy_sprite : enemy_sprite
 
 }
