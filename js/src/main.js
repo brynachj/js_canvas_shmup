@@ -1,5 +1,7 @@
 // TODO: change pebble_sprite to sling ammo
 
+var debugControls = require('./debugControls.js');
+
 const CANVAS = 'canvas', KEY_DOWN_EVENT = 'keydown', KEY_UP_EVENT = 'keyup';
 
 var debug = true,
@@ -181,7 +183,7 @@ var debug = true,
       document.addEventListener(KEY_DOWN_EVENT, keyDown, false);
       document.addEventListener(KEY_UP_EVENT, keyUp, false);
       if(debug) {
-        addDebugControls();
+        debugControls.addDebugControls();
       }
       gameLoop();
     }
@@ -199,7 +201,7 @@ var debug = true,
     function drawEnemies() {
       for (var i = 0; i < enemies.length; i++) {
         drawHelper(enemy_sprite, enemies[i]);
-        if(drawHitboxes){
+        if(window.drawHitboxes){
           drawHitbox(enemies[i].player_detection_box);
           drawHitbox(enemies[i].player_aggro_box);
           debug;
@@ -222,7 +224,7 @@ var debug = true,
 
     function drawHelper(sprite, object) {
       ctx.drawImage(sprite, object.x, object.y);
-      if(drawHitboxes){
+      if(window.drawHitboxes){
         drawHitbox(object);
       }
     }

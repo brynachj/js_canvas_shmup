@@ -1,5 +1,27 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+
+const DEBUG_DIV = 'debug-controls';
+
+window.drawHitboxes = false;
+
+module.exports = {
+  addDebugControls : function() {
+    debugDiv = document.getElementById(DEBUG_DIV);
+    debugDiv.innerHTML = '<h1>Debug</h1>';
+    debugDiv.innerHTML += '<input type="checkbox" id="hitbox_toggle" >Show HitBoxes</input>';
+    var checkbox = document.getElementById('hitbox_toggle');
+
+    checkbox.addEventListener( 'change', function() {
+      alert(this.checked);
+      window.drawHitboxes = this.checked;
+    });
+  }
+}
+
+},{}],2:[function(require,module,exports){
 // TODO: change pebble_sprite to sling ammo
+
+var debugControls = require('./debugControls.js');
 
 const CANVAS = 'canvas', KEY_DOWN_EVENT = 'keydown', KEY_UP_EVENT = 'keyup';
 
@@ -182,7 +204,7 @@ var debug = true,
       document.addEventListener(KEY_DOWN_EVENT, keyDown, false);
       document.addEventListener(KEY_UP_EVENT, keyUp, false);
       if(debug) {
-        addDebugControls();
+        debugControls.addDebugControls();
       }
       gameLoop();
     }
@@ -200,7 +222,7 @@ var debug = true,
     function drawEnemies() {
       for (var i = 0; i < enemies.length; i++) {
         drawHelper(enemy_sprite, enemies[i]);
-        if(drawHitboxes){
+        if(window.drawHitboxes){
           drawHitbox(enemies[i].player_detection_box);
           drawHitbox(enemies[i].player_aggro_box);
           debug;
@@ -223,7 +245,7 @@ var debug = true,
 
     function drawHelper(sprite, object) {
       ctx.drawImage(sprite, object.x, object.y);
-      if(drawHitboxes){
+      if(window.drawHitboxes){
         drawHitbox(object);
       }
     }
@@ -330,4 +352,4 @@ var debug = true,
 
     window.onload = init;
 
-},{}]},{},[1]);
+},{"./debugControls.js":1}]},{},[2]);
