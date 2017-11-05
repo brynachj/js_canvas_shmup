@@ -1,5 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-
+// TODO: Find a way around having drawHitboxes at window scope
 const DEBUG_DIV = 'debug-controls';
 
 window.drawHitboxes = false;
@@ -12,16 +12,51 @@ module.exports = {
     var checkbox = document.getElementById('hitbox_toggle');
 
     checkbox.addEventListener( 'change', function() {
-      alert(this.checked);
       window.drawHitboxes = this.checked;
     });
   }
 }
 
 },{}],2:[function(require,module,exports){
+module.exports = {
+
+  createEnemy : function(x1, y1, w1, h1, speed1) {
+    return {x:x1, y:y1, w:w1, h:h1, speed:speed1, hitBoxColor: '#ff0000',
+          player_detection_box : {x:x1-60, y:y1-60, w:w1+120, h:h1+120, hitBoxColor: '#ff8c00'},
+          player_aggro_box : {x:x1-80, y:y1-80, w:w1+160, h:h1+160, hitBoxColor: '#ffff00'}
+        };
+  },
+
+  moveEnemy : function(enemy, target) {
+    if (enemy.x < target.x) {
+      enemy.x += enemy.speed;
+      enemy.player_detection_box.x += enemy.speed;
+      enemy.player_aggro_box.x += enemy.speed;
+    }
+    if (enemy.x > target.x) {
+      enemy.x -= enemy.speed;
+      enemy.player_detection_box.x -= enemy.speed;
+      enemy.player_aggro_box.x -= enemy.speed;
+    }
+    if (enemy.y < target.y) {
+      enemy.y += enemy.speed;
+      enemy.player_detection_box.y += enemy.speed;
+      enemy.player_aggro_box.y += enemy.speed;
+    }
+    if (enemy.y > target.y) {
+      enemy.y -= enemy.speed;
+      enemy.player_detection_box.y -= enemy.speed;
+      enemy.player_aggro_box.y -= enemy.speed;
+    }
+  }
+
+}
+
+},{}],3:[function(require,module,exports){
 // TODO: change pebble_sprite to sling ammo
 
-var debugControls = require('./debugControls.js');
+var debug_module = require('./debugControls.js');
+var enemy_module = require('./enemy.js');
 
 const CANVAS = 'canvas', KEY_DOWN_EVENT = 'keydown', KEY_UP_EVENT = 'keyup';
 
@@ -39,7 +74,7 @@ var debug = true,
 
     enemyTotal = 1,
     enemies = [],
-    enemy_x = width + 45,
+    enemy_x = width,
     enemy_y = 50,
     enemy_w = 34,
     enemy_h = 36,
@@ -78,7 +113,7 @@ var debug = true,
 
     function removeAndReplaceEnemy(i){
       enemies.splice(i, 1);
-      enemies.push(createEnemy(enemy_x, (Math.random() * 500) + 50, enemy_w, enemy_h, enemy_speed));
+      enemies.push(enemy_module.createEnemy(enemy_x, (Math.random() * 500) + 50, enemy_w, enemy_h, enemy_speed));
       placePebblePickup((Math.random() * 500) + 50, (Math.random() * 500) + 50);
     }
 
@@ -173,16 +208,8 @@ var debug = true,
 
     // Initialisations
 
-    function createEnemy(x1, y1, w1, h1, speed1) {
-      return {x:x1, y:y1, w:w1, h:h1, speed:speed1, hitBoxColor: '#ff0000',
-            player_detection_box : {x:x1-60, y:y1-60, w:w1+120, h:h1+120, hitBoxColor: '#ff8c00'},
-            player_aggro_box : {x:x1-80, y:y1-80, w:w1+160, h:h1+160, hitBoxColor: '#ffff00'}
-          };
-    }
-
     for (var i = 0; i < enemyTotal; i++) {
-      enemies.push(createEnemy(enemy_x, enemy_y, enemy_w, enemy_h, enemy_speed));
-      // enemy_y += enemy_h + 60;
+      enemies.push(enemy_module.createEnemy(enemy_x, enemy_y, enemy_w, enemy_h, enemy_speed));
     }
 
     function clearCanvas() {
@@ -204,7 +231,7 @@ var debug = true,
       document.addEventListener(KEY_DOWN_EVENT, keyDown, false);
       document.addEventListener(KEY_UP_EVENT, keyUp, false);
       if(debug) {
-        debugControls.addDebugControls();
+        debug_module.addDebugControls();
       }
       gameLoop();
     }
@@ -270,26 +297,7 @@ var debug = true,
 
     function moveEnemies() {
       for (var i = 0; i < enemies.length; i++) {
-        if (enemies[i].x < player.x) {
-          enemies[i].x += enemies[i].speed;
-          enemies[i].player_detection_box.x += enemies[i].speed;
-          enemies[i].player_aggro_box.x += enemies[i].speed;
-        }
-        if (enemies[i].x > player.x) {
-          enemies[i].x -= enemies[i].speed;
-          enemies[i].player_detection_box.x -= enemies[i].speed;
-          enemies[i].player_aggro_box.x -= enemies[i].speed;
-        }
-        if (enemies[i].y < player.y) {
-          enemies[i].y += enemies[i].speed;
-          enemies[i].player_detection_box.y += enemies[i].speed;
-          enemies[i].player_aggro_box.y += enemies[i].speed;
-        }
-        if (enemies[i].y > player.y) {
-          enemies[i].y -= enemies[i].speed;
-          enemies[i].player_detection_box.y -= enemies[i].speed;
-          enemies[i].player_aggro_box.y -= enemies[i].speed;
-        }
+        enemy_module.moveEnemy(enemies[i], player);
       }
     }
 
@@ -352,4 +360,4 @@ var debug = true,
 
     window.onload = init;
 
-},{"./debugControls.js":1}]},{},[2]);
+},{"./debugControls.js":1,"./enemy.js":2}]},{},[3]);
