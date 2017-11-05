@@ -12,9 +12,6 @@
 }
 
 module.exports = {
-
   drawSprite: drawSprite,
-
   drawHitbox: drawHitbox
-
 }

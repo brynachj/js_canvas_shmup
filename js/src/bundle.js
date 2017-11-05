@@ -32,56 +32,72 @@ module.exports = {
 }
 
 module.exports = {
-
   drawSprite: drawSprite,
-
   drawHitbox: drawHitbox
-
 }
 
 },{}],3:[function(require,module,exports){
+var draw_module = require('./draw.js');
+
 const WIDTH = 34, HEIGHT = 36, SPEED = 3;
 
 enemy_sprite = new Image();
 enemy_sprite.src = 'images/enemy_sprite.png';
 
-module.exports = {
-
-  createEnemy : function(x1, y1) {
-    return {x:x1, y:y1, w:WIDTH, h:HEIGHT, speed:SPEED, hitBoxColor: '#ff0000',
-          player_detection_box : {x:x1-60, y:y1-60, w:WIDTH+120, h:HEIGHT+120, hitBoxColor: '#ff8c00'},
-          player_aggro_box : {x:x1-80, y:y1-80, w:WIDTH+160, h:HEIGHT+160, hitBoxColor: '#ffff00'}
-        };
-  },
-
-  moveEnemy : function(enemy, target) {
-    if (enemy.x < target.x) {
-      enemy.x += enemy.speed;
-      enemy.player_detection_box.x += enemy.speed;
-      enemy.player_aggro_box.x += enemy.speed;
+function drawEnemies(enemies, ctx) {
+  for (var i = 0; i < enemies.length; i++) {
+    draw_module.drawSprite(enemy_sprite, enemies[i], ctx);
+    if(window.drawHitboxes){
+      draw_module.drawHitbox(enemies[i].player_detection_box, ctx);
+      draw_module.drawHitbox(enemies[i].player_aggro_box, ctx);
     }
-    if (enemy.x > target.x) {
-      enemy.x -= enemy.speed;
-      enemy.player_detection_box.x -= enemy.speed;
-      enemy.player_aggro_box.x -= enemy.speed;
-    }
-    if (enemy.y < target.y) {
-      enemy.y += enemy.speed;
-      enemy.player_detection_box.y += enemy.speed;
-      enemy.player_aggro_box.y += enemy.speed;
-    }
-    if (enemy.y > target.y) {
-      enemy.y -= enemy.speed;
-      enemy.player_detection_box.y -= enemy.speed;
-      enemy.player_aggro_box.y -= enemy.speed;
-    }
-  },
-
-  enemy_sprite : enemy_sprite
-
+  }
 }
 
-},{}],4:[function(require,module,exports){
+function createEnemy(x1, y1) {
+  return {x:x1, y:y1, w:WIDTH, h:HEIGHT, speed:SPEED, hitBoxColor: '#ff0000',
+        player_detection_box : {x:x1-60, y:y1-60, w:WIDTH+120, h:HEIGHT+120, hitBoxColor: '#ff8c00'},
+        player_aggro_box : {x:x1-80, y:y1-80, w:WIDTH+160, h:HEIGHT+160, hitBoxColor: '#ffff00'}
+      };
+}
+
+function moveEnemy(enemy, target) {
+  if (enemy.x < target.x) {
+    enemy.x += enemy.speed;
+    enemy.player_detection_box.x += enemy.speed;
+    enemy.player_aggro_box.x += enemy.speed;
+  }
+  if (enemy.x > target.x) {
+    enemy.x -= enemy.speed;
+    enemy.player_detection_box.x -= enemy.speed;
+    enemy.player_aggro_box.x -= enemy.speed;
+  }
+  if (enemy.y < target.y) {
+    enemy.y += enemy.speed;
+    enemy.player_detection_box.y += enemy.speed;
+    enemy.player_aggro_box.y += enemy.speed;
+  }
+  if (enemy.y > target.y) {
+    enemy.y -= enemy.speed;
+    enemy.player_detection_box.y -= enemy.speed;
+    enemy.player_aggro_box.y -= enemy.speed;
+  }
+}
+
+function removeAndReplaceEnemy(enemies, i){
+  enemies.splice(i, 1);
+  enemies.push(createEnemy(Math.random() * 600, Math.random() * 600));
+}
+
+module.exports = {
+  createEnemy : createEnemy,
+  moveEnemy : moveEnemy,
+  drawEnemies : drawEnemies,
+  enemy_sprite : enemy_sprite,
+  removeAndReplaceEnemy : removeAndReplaceEnemy
+}
+
+},{"./draw.js":2}],4:[function(require,module,exports){
 // TODO: change pebble_sprite to sling ammo
 
 var debug_module = require('./debugControls.js');
@@ -129,14 +145,8 @@ var debug = true,
       experience = 0;
       player.x = 10, player.y = (height - player.h)/2;
       for (var i = 0; i < enemies.length; i++) {
-        removeAndReplaceEnemy(i);
+        enemy_module.removeAndReplaceEnemy(enemies, i);
       }
-    }
-
-    function removeAndReplaceEnemy(i){
-      enemies.splice(i, 1);
-      enemies.push(enemy_module.createEnemy(Math.random() * 600, Math.random() * 600));
-      placePebblePickup((Math.random() * 500) + 50, (Math.random() * 500) + 50);
     }
 
     function enemyHitTest() { // TODO: refactor to use collisionDetection function
@@ -145,7 +155,8 @@ var debug = true,
         for (var j = 0; j < enemies.length; j++) {
           if (on_screen_pebbles[i].y <= (enemies[j].y + enemies[j].h) && on_screen_pebbles[i].y >= enemies[j].y && on_screen_pebbles[i].x >= enemies[j].x && on_screen_pebbles[i].x <= (enemies[j].x + enemies[j].w)) {
             remove = true;
-            removeAndReplaceEnemy(j);
+            enemy_module.removeAndReplaceEnemy(enemies, j);
+            placePebblePickup((Math.random() * 500) + 50, (Math.random() * 500) + 50);
           }
         }
         if (remove == true) {
@@ -167,7 +178,7 @@ var debug = true,
 
     function playerEnemyCollision() {
       for (var i = 0; i < enemies.length; i++) {
-        collisionDetection(player, enemies[i], [[updatePlayerHealth, -40],[removeAndReplaceEnemy, i]]);
+        collisionDetection(player, enemies[i], [[updatePlayerHealth, -40], [enemy_module.removeAndReplaceEnemy, enemies, i]]);
       }
     }
 
@@ -188,7 +199,7 @@ var debug = true,
         firstThing.y < secondThing.y + secondThing.h &&
         firstThing.h + firstThing.y > secondThing.y) {
         for(var i = 0; i < callbackList.length; i++){
-          callbackList[i][0](callbackList[i][1]);
+          callbackList[i][0].apply(this, callbackList[i].slice(1));
         }
       }
     }
@@ -266,17 +277,6 @@ var debug = true,
       draw_module.drawSprite(player_sprite, player, ctx);
     }
 
-    function drawEnemies() {
-      for (var i = 0; i < enemies.length; i++) {
-        draw_module.drawSprite(enemy_module.enemy_sprite, enemies[i], ctx);
-        if(window.drawHitboxes){
-          draw_module.drawHitbox(enemies[i].player_detection_box, ctx);
-          draw_module.drawHitbox(enemies[i].player_aggro_box, ctx);
-          debug;
-        }
-      }
-    }
-
     function drawOnScreenPebble() {
       if (on_screen_pebbles.length)
         for (var i = 0; i < on_screen_pebbles.length; i++) {
@@ -289,13 +289,6 @@ var debug = true,
         draw_module.drawSprite(pebblePickup, pebblePickups[i], ctx);
       }
     }
-
-    // function drawHelper(sprite, object) {
-    //   ctx.drawImage(sprite, object.x, object.y);
-    //   if(window.drawHitboxes){
-    //     draw_module.drawHitbox(object, ctx);
-    //   }
-    // }
 
     // Move functions
 
@@ -365,7 +358,7 @@ var debug = true,
         movePlayer();
         moveOnScreenPebble();
         drawPebblePickup();
-        drawEnemies();
+        enemy_module.drawEnemies(enemies, ctx);
         drawPlayer();
         drawOnScreenPebble();
       }

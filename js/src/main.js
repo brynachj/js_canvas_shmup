@@ -45,14 +45,8 @@ var debug = true,
       experience = 0;
       player.x = 10, player.y = (height - player.h)/2;
       for (var i = 0; i < enemies.length; i++) {
-        removeAndReplaceEnemy(i);
+        enemy_module.removeAndReplaceEnemy(enemies, i);
       }
-    }
-
-    function removeAndReplaceEnemy(i){
-      enemies.splice(i, 1);
-      enemies.push(enemy_module.createEnemy(Math.random() * 600, Math.random() * 600));
-      placePebblePickup((Math.random() * 500) + 50, (Math.random() * 500) + 50);
     }
 
     function enemyHitTest() { // TODO: refactor to use collisionDetection function
@@ -61,7 +55,8 @@ var debug = true,
         for (var j = 0; j < enemies.length; j++) {
           if (on_screen_pebbles[i].y <= (enemies[j].y + enemies[j].h) && on_screen_pebbles[i].y >= enemies[j].y && on_screen_pebbles[i].x >= enemies[j].x && on_screen_pebbles[i].x <= (enemies[j].x + enemies[j].w)) {
             remove = true;
-            removeAndReplaceEnemy(j);
+            enemy_module.removeAndReplaceEnemy(enemies, j);
+            placePebblePickup((Math.random() * 500) + 50, (Math.random() * 500) + 50);
           }
         }
         if (remove == true) {
@@ -83,7 +78,7 @@ var debug = true,
 
     function playerEnemyCollision() {
       for (var i = 0; i < enemies.length; i++) {
-        collisionDetection(player, enemies[i], [[updatePlayerHealth, -40],[removeAndReplaceEnemy, i]]);
+        collisionDetection(player, enemies[i], [[updatePlayerHealth, -40], [enemy_module.removeAndReplaceEnemy, enemies, i]]);
       }
     }
 
@@ -104,7 +99,7 @@ var debug = true,
         firstThing.y < secondThing.y + secondThing.h &&
         firstThing.h + firstThing.y > secondThing.y) {
         for(var i = 0; i < callbackList.length; i++){
-          callbackList[i][0](callbackList[i][1]);
+          callbackList[i][0].apply(this, callbackList[i].slice(1));
         }
       }
     }
@@ -180,17 +175,6 @@ var debug = true,
 
     function drawPlayer() {
       draw_module.drawSprite(player_sprite, player, ctx);
-    }
-
-    function drawEnemies() {
-      for (var i = 0; i < enemies.length; i++) {
-        draw_module.drawSprite(enemy_module.enemy_sprite, enemies[i], ctx);
-        if(window.drawHitboxes){
-          draw_module.drawHitbox(enemies[i].player_detection_box, ctx);
-          draw_module.drawHitbox(enemies[i].player_aggro_box, ctx);
-          debug;
-        }
-      }
     }
 
     function drawOnScreenPebble() {
@@ -274,7 +258,7 @@ var debug = true,
         movePlayer();
         moveOnScreenPebble();
         drawPebblePickup();
-        drawEnemies();
+        enemy_module.drawEnemies(enemies, ctx);
         drawPlayer();
         drawOnScreenPebble();
       }
