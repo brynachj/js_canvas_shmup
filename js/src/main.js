@@ -28,7 +28,7 @@ var debug = true,
     upKey = false,
     downKey = false,
 
-    pebbleAmmo = 10, on_screen_pebbles = [], pebblePickups = [],
+    pebbleAmmo = 10, on_screen_pebbles = [],
 
     health = 100,
     experience = 0;
@@ -52,7 +52,7 @@ var debug = true,
           if (on_screen_pebbles[i].y <= (enemies[j].y + enemies[j].h) && on_screen_pebbles[i].y >= enemies[j].y && on_screen_pebbles[i].x >= enemies[j].x && on_screen_pebbles[i].x <= (enemies[j].x + enemies[j].w)) {
             remove = true;
             enemy_module.removeAndReplaceEnemy(enemies, j);
-            placePebblePickup((Math.random() * 500) + 50, (Math.random() * 500) + 50);
+            pebble_pickup_module.addToPebblePickups((Math.random() * 500) + 50, (Math.random() * 500) + 50);
           }
         }
         if (remove == true) {
@@ -79,14 +79,14 @@ var debug = true,
     }
 
     function pebblePickupCollision() {
-      for (var i = 0; i < pebblePickups.length; i++) {
-        collisionDetection(player, pebblePickups[i], [[pickUpPebbles, i]]);
+      for (var i = 0; i < pebble_pickup_module.pebblePickups.length; i++) {
+        collisionDetection(player, pebble_pickup_module.pebblePickups[i], [[pickUpPebbles, i]]);
       }
     }
 
     function pickUpPebbles(i) {
       pebbleAmmo += 3;
-      pebblePickups.splice(i,1);
+      pebble_pickup_module.removeFromPebblePickups(i);
     }
 
     function collisionDetection(firstThing, secondThing, callbackList){
@@ -158,10 +158,6 @@ var debug = true,
       gameLoop();
     }
 
-    function placePebblePickup(x, y) {
-      pebblePickups.push(pebble_pickup_module.createPebblePickup(x, y));
-    }
-
     // Draw functions
 
     function drawPlayer() {
@@ -225,7 +221,7 @@ var debug = true,
         moveEnemies();
         movePlayer();
         pebble_module.moveOnScreenPebbles(on_screen_pebbles);
-        pebble_pickup_module.drawPebblePickup(pebblePickups, ctx);
+        pebble_pickup_module.drawPebblePickup(ctx);
         enemy_module.drawEnemies(enemies, ctx);
         drawPlayer();
         pebble_module.drawOnScreenPebble(on_screen_pebbles, ctx);
