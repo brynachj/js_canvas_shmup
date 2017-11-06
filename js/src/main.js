@@ -1,4 +1,5 @@
-// TODO: change pebble_sprite to sling ammo
+// TODO: Create player module
+// TODO: Create eventlistner module
 
 var debug_module = require('./debugControls.js');
 var enemy_module = require('./enemy.js');
