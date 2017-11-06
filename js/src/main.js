@@ -25,8 +25,6 @@ var debug = true,
     upKey = false,
     downKey = false,
 
-    pebbleAmmo = 10, on_screen_pebbles = [],
-
     health = 100,
     experience = 0;
 
@@ -34,7 +32,7 @@ var debug = true,
 
     function reset() {
       health = 100;
-      pebbleAmmo = 10;
+      pebble_module.resetPebbleAmmo();
       experience = 0;
       player.x = 10, player.y = (height - player.h)/2;
       for (var i = 0; i < enemy_module.enemies.length; i++) {
@@ -44,16 +42,16 @@ var debug = true,
 
     function enemyHitTest() { // TODO: refactor to use collisionDetection function
       var remove = false;
-      for (var i = 0; i < on_screen_pebbles.length; i++) {
+      for (var i = 0; i < pebble_module.pebbles.length; i++) {
         for (var j = 0; j < enemy_module.enemies.length; j++) {
-          if (on_screen_pebbles[i].y <= (enemy_module.enemies[j].y + enemy_module.enemies[j].h) && on_screen_pebbles[i].y >= enemy_module.enemies[j].y && on_screen_pebbles[i].x >= enemy_module.enemies[j].x && on_screen_pebbles[i].x <= (enemy_module.enemies[j].x + enemy_module.enemies[j].w)) {
+          if (pebble_module.pebbles[i].y <= (enemy_module.enemies[j].y + enemy_module.enemies[j].h) && pebble_module.pebbles[i].y >= enemy_module.enemies[j].y && pebble_module.pebbles[i].x >= enemy_module.enemies[j].x && pebble_module.pebbles[i].x <= (enemy_module.enemies[j].x + enemy_module.enemies[j].w)) {
             remove = true;
             enemy_module.removeAndReplaceEnemy(enemy_module.enemies, j);
             pebble_pickup_module.addToPebblePickups((Math.random() * 500) + 50, (Math.random() * 500) + 50);
           }
         }
         if (remove == true) {
-          on_screen_pebbles.splice(i, 1);
+          pebble_module.removeFromPebbles(i);
           remove = false;
           experience += 10;
         }
@@ -82,7 +80,7 @@ var debug = true,
     }
 
     function pickUpPebbles(i) {
-      pebbleAmmo += 3;
+      pebble_module.addToAmmo(3);
       pebble_pickup_module.removeFromPebblePickups(i);
     }
 
@@ -127,7 +125,7 @@ var debug = true,
       ctx.fillText('Experience: ', 10, 30);
       ctx.fillText(experience, 120, 30);
       ctx.fillText('Pebbles: ', 160, 30);
-      ctx.fillText(pebbleAmmo, 260, 30);
+      ctx.fillText(pebble_module.ammo, 260, 30);
       ctx.fillText('Health:', 10, 60); // TODO: Replace with a health bar
       ctx.fillText(health, 68, 60);
     }
@@ -185,9 +183,9 @@ var debug = true,
       else if (e.keyCode == 37) leftKey = true;
       if (e.keyCode == 38) upKey = true;
       else if (e.keyCode == 40) downKey = true;
-      if (e.keyCode == 88 && pebbleAmmo > 0){
-        on_screen_pebbles.push(pebble_module.createPebble(player.x + 2, player.y));
-        pebbleAmmo--;
+      if (e.keyCode == 88 && pebble_module.ammo > 0){
+        pebble_module.addToPebbles(player.x + 2, player.y + 13);
+        pebble_module.takeOneFromAmmo();
       }
       if(e.keyCode == 32){
         if(!gameStarted){
@@ -215,11 +213,11 @@ var debug = true,
         pebblePickupCollision();
         moveEnemies();
         movePlayer();
-        pebble_module.moveOnScreenPebbles(on_screen_pebbles);
+        pebble_module.moveOnScreenPebbles();
         pebble_pickup_module.drawPebblePickup(ctx);
         enemy_module.drawEnemies(ctx);
         drawPlayer();
-        pebble_module.drawOnScreenPebble(on_screen_pebbles, ctx);
+        pebble_module.drawOnScreenPebble(ctx);
       }
       updateText();
       game = setTimeout(gameLoop, 1000 / 40);
