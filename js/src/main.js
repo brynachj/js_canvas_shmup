@@ -3,6 +3,7 @@
 var debug_module = require('./debugControls.js');
 var enemy_module = require('./enemy.js');
 var draw_module = require('./draw.js');
+var pebble_module = require('./pebble.js');
 
 const CANVAS = 'canvas', KEY_DOWN_EVENT = 'keydown', KEY_UP_EVENT = 'keyup';
 
@@ -13,7 +14,7 @@ var debug = true,
     height = 600,
     player = {x : 10, y : height/2 - 13, w : 20, h : 26, hitBoxColor: '#7cfc00'},
 
-    player_sprite, pebble_sprite,
+    player_sprite,
 
     gameStarted = false,
     alive = true,
@@ -154,11 +155,8 @@ var debug = true,
       ctx = canvas.getContext('2d');
       player_sprite = new Image();
       player_sprite.src = 'images/player_sprite.png';
-      pebble_sprite = new Image();
-      pebble_sprite.src = 'images/pebble.png';
       pebblePickup = new Image();
       pebblePickup.src = 'images/pebble_pickup.png';
-      // setInterval(gameLoop, 25); //40 fps
       document.addEventListener(KEY_DOWN_EVENT, keyDown, false);
       document.addEventListener(KEY_UP_EVENT, keyUp, false);
       if(debug) {
@@ -175,13 +173,6 @@ var debug = true,
 
     function drawPlayer() {
       draw_module.drawSprite(player_sprite, player, ctx);
-    }
-
-    function drawOnScreenPebble() {
-      if (on_screen_pebbles.length)
-        for (var i = 0; i < on_screen_pebbles.length; i++) {
-          draw_module.drawSprite(pebble_sprite, on_screen_pebbles[i], ctx);
-        }
     }
 
     function drawPebblePickup() {
@@ -209,16 +200,6 @@ var debug = true,
       }
     }
 
-    function moveOnScreenPebble() {
-      for (var i = 0; i < on_screen_pebbles.length; i++) {
-        if (on_screen_pebbles[i].x < width + pebble_sprite.width) {
-          on_screen_pebbles[i].x += 10;
-        } else {
-          on_screen_pebbles.splice(i, 1);
-        }
-      }
-    }
-
     // Event Listeners/Input handling
 
     function keyDown(e) {
@@ -227,7 +208,7 @@ var debug = true,
       if (e.keyCode == 38) upKey = true;
       else if (e.keyCode == 40) downKey = true;
       if (e.keyCode == 88 && pebbleAmmo > 0){
-        on_screen_pebbles.push({x:player.x + 2, y:player.y + 13, w:pebble_w, h:pebble_h, hitBoxColor: '#00bfff'});
+        on_screen_pebbles.push(pebble_module.createPebble(player.x + 2, player.y));
         pebbleAmmo--;
       }
       if(e.keyCode == 32){
@@ -256,11 +237,11 @@ var debug = true,
         pebblePickupCollision();
         moveEnemies();
         movePlayer();
-        moveOnScreenPebble();
+        pebble_module.moveOnScreenPebbles(on_screen_pebbles);
         drawPebblePickup();
         enemy_module.drawEnemies(enemies, ctx);
         drawPlayer();
-        drawOnScreenPebble();
+        pebble_module.drawOnScreenPebble(on_screen_pebbles, ctx);
       }
       updateText();
       game = setTimeout(gameLoop, 1000 / 40);
