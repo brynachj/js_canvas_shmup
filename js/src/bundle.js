@@ -122,6 +122,8 @@ var debug = true,
     player = {x : 10, y : height/2 - 13, w : 20, h : 26, hitBoxColor: '#7cfc00'},
 
     player_sprite,
+    health = 100,
+    experience = 0,
 
     gameStarted = false,
     alive = true,
@@ -129,10 +131,7 @@ var debug = true,
     rightKey = false,
     leftKey = false,
     upKey = false,
-    downKey = false,
-
-    health = 100,
-    experience = 0;
+    downKey = false;
 
     // Utility functions
 
