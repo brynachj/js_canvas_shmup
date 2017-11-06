@@ -5,7 +5,7 @@ const WIDTH = 10, HEIGHT = 13;
 pebble_pickup_sprite = new Image();
 pebble_pickup_sprite.src = 'images/pebble_pickup.png';
 
-pebblePickups = [];
+var pebblePickups = [];
 
 function addToPebblePickups(x, y) {
   pebblePickups.push(createPebblePickup(x,y));
