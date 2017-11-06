@@ -9,7 +9,7 @@ function createPebblePickup(x1, y1) {
   return {x:x1, y:y1 + 13, w:WIDTH, h:HEIGHT, hitBoxColor: '#00bfff'};
 }
 
-function drawPebblePickup(ctx) {
+function drawPebblePickup(pebblePickups, ctx) {
   for(var i = 0; i < pebblePickups.length; i ++){
     draw_module.drawSprite(pebble_pickup_sprite, pebblePickups[i], ctx);
   }

@@ -123,9 +123,6 @@ var debug = true,
     enemyTotal = 1,
     enemies = [],
 
-    pebble_pickup_w = 10;
-    pebble_pickup_h = 13;
-
     rightKey = false,
     leftKey = false,
     upKey = false,
@@ -328,7 +325,7 @@ var debug = true,
         moveEnemies();
         movePlayer();
         pebble_module.moveOnScreenPebbles(on_screen_pebbles);
-        pebble_pickup_module.drawPebblePickup(ctx);
+        pebble_pickup_module.drawPebblePickup(pebblePickups, ctx);
         enemy_module.drawEnemies(enemies, ctx);
         drawPlayer();
         pebble_module.drawOnScreenPebble(on_screen_pebbles, ctx);
@@ -386,7 +383,7 @@ function createPebblePickup(x1, y1) {
   return {x:x1, y:y1 + 13, w:WIDTH, h:HEIGHT, hitBoxColor: '#00bfff'};
 }
 
-function drawPebblePickup(ctx) {
+function drawPebblePickup(pebblePickups, ctx) {
   for(var i = 0; i < pebblePickups.length; i ++){
     draw_module.drawSprite(pebble_pickup_sprite, pebblePickups[i], ctx);
   }
