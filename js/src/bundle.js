@@ -44,6 +44,12 @@ const WIDTH = 34, HEIGHT = 36, SPEED = 3;
 enemy_sprite = new Image();
 enemy_sprite.src = 'images/enemy_sprite.png';
 
+var enemies = [];
+
+function addEnemy(x,y){
+  enemies.push(createEnemy(x,y));
+}
+
 function createEnemy(x1, y1) {
   return {x:x1, y:y1, w:WIDTH, h:HEIGHT, speed:SPEED, hitBoxColor: '#ff0000',
         player_detection_box : {x:x1-60, y:y1-60, w:WIDTH+120, h:HEIGHT+120, hitBoxColor: '#ff8c00'},
@@ -51,7 +57,7 @@ function createEnemy(x1, y1) {
       };
 }
 
-function drawEnemies(enemies, ctx) {
+function drawEnemies(ctx) {
   for (var i = 0; i < enemies.length; i++) {
     draw_module.drawSprite(enemy_sprite, enemies[i], ctx);
     if(window.drawHitboxes){
@@ -90,10 +96,10 @@ function removeAndReplaceEnemy(enemies, i){
 }
 
 module.exports = {
-  createEnemy : createEnemy,
+  enemies : enemies,
+  addEnemy : addEnemy,
   moveEnemy : moveEnemy,
   drawEnemies : drawEnemies,
-  enemy_sprite : enemy_sprite,
   removeAndReplaceEnemy : removeAndReplaceEnemy
 }
 
@@ -121,7 +127,6 @@ var debug = true,
     alive = true,
 
     enemyTotal = 1,
-    enemies = [],
 
     rightKey = false,
     leftKey = false,
@@ -140,18 +145,18 @@ var debug = true,
       pebbleAmmo = 10;
       experience = 0;
       player.x = 10, player.y = (height - player.h)/2;
-      for (var i = 0; i < enemies.length; i++) {
-        enemy_module.removeAndReplaceEnemy(enemies, i);
+      for (var i = 0; i < enemy_module.enemies.length; i++) {
+        enemy_module.removeAndReplaceEnemy(enemy_module.enemies, i);
       }
     }
 
     function enemyHitTest() { // TODO: refactor to use collisionDetection function
       var remove = false;
       for (var i = 0; i < on_screen_pebbles.length; i++) {
-        for (var j = 0; j < enemies.length; j++) {
-          if (on_screen_pebbles[i].y <= (enemies[j].y + enemies[j].h) && on_screen_pebbles[i].y >= enemies[j].y && on_screen_pebbles[i].x >= enemies[j].x && on_screen_pebbles[i].x <= (enemies[j].x + enemies[j].w)) {
+        for (var j = 0; j < enemy_module.enemies.length; j++) {
+          if (on_screen_pebbles[i].y <= (enemy_module.enemies[j].y + enemy_module.enemies[j].h) && on_screen_pebbles[i].y >= enemy_module.enemies[j].y && on_screen_pebbles[i].x >= enemy_module.enemies[j].x && on_screen_pebbles[i].x <= (enemy_module.enemies[j].x + enemy_module.enemies[j].w)) {
             remove = true;
-            enemy_module.removeAndReplaceEnemy(enemies, j);
+            enemy_module.removeAndReplaceEnemy(enemy_module.enemies, j);
             pebble_pickup_module.addToPebblePickups((Math.random() * 500) + 50, (Math.random() * 500) + 50);
           }
         }
@@ -173,8 +178,8 @@ var debug = true,
     }
 
     function playerEnemyCollision() {
-      for (var i = 0; i < enemies.length; i++) {
-        collisionDetection(player, enemies[i], [[updatePlayerHealth, -40], [enemy_module.removeAndReplaceEnemy, enemies, i]]);
+      for (var i = 0; i < enemy_module.enemies.length; i++) {
+        collisionDetection(player, enemy_module.enemies[i], [[updatePlayerHealth, -40], [enemy_module.removeAndReplaceEnemy, enemy_module.enemies, i]]);
       }
     }
 
@@ -237,9 +242,7 @@ var debug = true,
 
     // Initialisations
 
-    for (var i = 0; i < enemyTotal; i++) {
-      enemies.push(enemy_module.createEnemy(Math.random() * 600, Math.random() * 600));
-    }
+    enemy_module.addEnemy(Math.random() * 600, Math.random() * 600);
 
     function clearCanvas() {
       ctx.clearRect(0,0,width,height);
@@ -278,8 +281,8 @@ var debug = true,
     }
 
     function moveEnemies() {
-      for (var i = 0; i < enemies.length; i++) {
-        enemy_module.moveEnemy(enemies[i], player);
+      for (var i = 0; i < enemy_module.enemies.length; i++) {
+        enemy_module.moveEnemy(enemy_module.enemies[i], player);
       }
     }
 
@@ -322,7 +325,7 @@ var debug = true,
         movePlayer();
         pebble_module.moveOnScreenPebbles(on_screen_pebbles);
         pebble_pickup_module.drawPebblePickup(ctx);
-        enemy_module.drawEnemies(enemies, ctx);
+        enemy_module.drawEnemies(ctx);
         drawPlayer();
         pebble_module.drawOnScreenPebble(on_screen_pebbles, ctx);
       }
@@ -375,7 +378,7 @@ const WIDTH = 10, HEIGHT = 13;
 pebble_pickup_sprite = new Image();
 pebble_pickup_sprite.src = 'images/pebble_pickup.png';
 
-pebblePickups = [];
+var pebblePickups = [];
 
 function addToPebblePickups(x, y) {
   pebblePickups.push(createPebblePickup(x,y));

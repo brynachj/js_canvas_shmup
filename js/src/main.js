@@ -20,9 +20,6 @@ var debug = true,
     gameStarted = false,
     alive = true,
 
-    enemyTotal = 1,
-    enemies = [],
-
     rightKey = false,
     leftKey = false,
     upKey = false,
@@ -40,18 +37,18 @@ var debug = true,
       pebbleAmmo = 10;
       experience = 0;
       player.x = 10, player.y = (height - player.h)/2;
-      for (var i = 0; i < enemies.length; i++) {
-        enemy_module.removeAndReplaceEnemy(enemies, i);
+      for (var i = 0; i < enemy_module.enemies.length; i++) {
+        enemy_module.removeAndReplaceEnemy(enemy_module.enemies, i);
       }
     }
 
     function enemyHitTest() { // TODO: refactor to use collisionDetection function
       var remove = false;
       for (var i = 0; i < on_screen_pebbles.length; i++) {
-        for (var j = 0; j < enemies.length; j++) {
-          if (on_screen_pebbles[i].y <= (enemies[j].y + enemies[j].h) && on_screen_pebbles[i].y >= enemies[j].y && on_screen_pebbles[i].x >= enemies[j].x && on_screen_pebbles[i].x <= (enemies[j].x + enemies[j].w)) {
+        for (var j = 0; j < enemy_module.enemies.length; j++) {
+          if (on_screen_pebbles[i].y <= (enemy_module.enemies[j].y + enemy_module.enemies[j].h) && on_screen_pebbles[i].y >= enemy_module.enemies[j].y && on_screen_pebbles[i].x >= enemy_module.enemies[j].x && on_screen_pebbles[i].x <= (enemy_module.enemies[j].x + enemy_module.enemies[j].w)) {
             remove = true;
-            enemy_module.removeAndReplaceEnemy(enemies, j);
+            enemy_module.removeAndReplaceEnemy(enemy_module.enemies, j);
             pebble_pickup_module.addToPebblePickups((Math.random() * 500) + 50, (Math.random() * 500) + 50);
           }
         }
@@ -73,8 +70,8 @@ var debug = true,
     }
 
     function playerEnemyCollision() {
-      for (var i = 0; i < enemies.length; i++) {
-        collisionDetection(player, enemies[i], [[updatePlayerHealth, -40], [enemy_module.removeAndReplaceEnemy, enemies, i]]);
+      for (var i = 0; i < enemy_module.enemies.length; i++) {
+        collisionDetection(player, enemy_module.enemies[i], [[updatePlayerHealth, -40], [enemy_module.removeAndReplaceEnemy, enemy_module.enemies, i]]);
       }
     }
 
@@ -137,9 +134,7 @@ var debug = true,
 
     // Initialisations
 
-    for (var i = 0; i < enemyTotal; i++) {
-      enemies.push(enemy_module.createEnemy(Math.random() * 600, Math.random() * 600));
-    }
+    enemy_module.addEnemy(Math.random() * 600, Math.random() * 600);
 
     function clearCanvas() {
       ctx.clearRect(0,0,width,height);
@@ -178,8 +173,8 @@ var debug = true,
     }
 
     function moveEnemies() {
-      for (var i = 0; i < enemies.length; i++) {
-        enemy_module.moveEnemy(enemies[i], player);
+      for (var i = 0; i < enemy_module.enemies.length; i++) {
+        enemy_module.moveEnemy(enemy_module.enemies[i], player);
       }
     }
 
@@ -222,7 +217,7 @@ var debug = true,
         movePlayer();
         pebble_module.moveOnScreenPebbles(on_screen_pebbles);
         pebble_pickup_module.drawPebblePickup(ctx);
-        enemy_module.drawEnemies(enemies, ctx);
+        enemy_module.drawEnemies(ctx);
         drawPlayer();
         pebble_module.drawOnScreenPebble(on_screen_pebbles, ctx);
       }

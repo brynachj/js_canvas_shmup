@@ -5,6 +5,12 @@ const WIDTH = 34, HEIGHT = 36, SPEED = 3;
 enemy_sprite = new Image();
 enemy_sprite.src = 'images/enemy_sprite.png';
 
+var enemies = [];
+
+function addEnemy(x,y){
+  enemies.push(createEnemy(x,y));
+}
+
 function createEnemy(x1, y1) {
   return {x:x1, y:y1, w:WIDTH, h:HEIGHT, speed:SPEED, hitBoxColor: '#ff0000',
         player_detection_box : {x:x1-60, y:y1-60, w:WIDTH+120, h:HEIGHT+120, hitBoxColor: '#ff8c00'},
@@ -12,7 +18,7 @@ function createEnemy(x1, y1) {
       };
 }
 
-function drawEnemies(enemies, ctx) {
+function drawEnemies(ctx) {
   for (var i = 0; i < enemies.length; i++) {
     draw_module.drawSprite(enemy_sprite, enemies[i], ctx);
     if(window.drawHitboxes){
@@ -51,9 +57,9 @@ function removeAndReplaceEnemy(enemies, i){
 }
 
 module.exports = {
-  createEnemy : createEnemy,
+  enemies : enemies,
+  addEnemy : addEnemy,
   moveEnemy : moveEnemy,
   drawEnemies : drawEnemies,
-  enemy_sprite : enemy_sprite,
   removeAndReplaceEnemy : removeAndReplaceEnemy
 }
