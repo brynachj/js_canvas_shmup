@@ -22,9 +22,6 @@ var debug = true,
     enemyTotal = 1,
     enemies = [],
 
-    pebble_w = 4;
-    pebble_h = 5;
-
     pebble_pickup_w = 10;
     pebble_pickup_h = 13;
 
