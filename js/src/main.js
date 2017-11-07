@@ -2,6 +2,7 @@
 // TODO: Create eventlistner module
 
 var debug_module = require('./debugControls.js');
+var player_module = require('./player.js');
 var enemy_module = require('./enemy.js');
 var draw_module = require('./draw.js');
 var pebble_module = require('./pebble.js');
@@ -14,9 +15,8 @@ var debug = true,
     ctx,
     width = 600,
     height = 600,
-    player = {x : 10, y : height/2 - 13, w : 20, h : 26, hitBoxColor: '#7cfc00'},
+    player = player_module.createPlayer(10,height/2 - 13),
 
-    player_sprite,
     health = 100,
     experience = 0,
 
@@ -141,20 +141,12 @@ var debug = true,
     function init() {
       canvas = document.getElementById(CANVAS);
       ctx = canvas.getContext('2d');
-      player_sprite = new Image();
-      player_sprite.src = 'images/player_sprite.png';
       document.addEventListener(KEY_DOWN_EVENT, keyDown, false);
       document.addEventListener(KEY_UP_EVENT, keyUp, false);
       if(debug) {
         debug_module.addDebugControls();
       }
       gameLoop();
-    }
-
-    // Draw functions
-
-    function drawPlayer() {
-      draw_module.drawSprite(player_sprite, player, ctx);
     }
 
     // Move functions
@@ -216,7 +208,7 @@ var debug = true,
         pebble_module.moveOnScreenPebbles();
         pebble_pickup_module.drawPebblePickup(ctx);
         enemy_module.drawEnemies(ctx);
-        drawPlayer();
+        player_module.drawPlayer(player, ctx);
         pebble_module.drawOnScreenPebble(ctx);
       }
       updateText();

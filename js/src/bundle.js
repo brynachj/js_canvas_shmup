@@ -104,9 +104,11 @@ module.exports = {
 }
 
 },{"./draw.js":2}],4:[function(require,module,exports){
-// TODO: change pebble_sprite to sling ammo
+// TODO: Create player module
+// TODO: Create eventlistner module
 
 var debug_module = require('./debugControls.js');
+var player_module = require('./player.js');
 var enemy_module = require('./enemy.js');
 var draw_module = require('./draw.js');
 var pebble_module = require('./pebble.js');
@@ -119,9 +121,8 @@ var debug = true,
     ctx,
     width = 600,
     height = 600,
-    player = {x : 10, y : height/2 - 13, w : 20, h : 26, hitBoxColor: '#7cfc00'},
+    player = player_module.createPlayer(10,height/2 - 13),
 
-    player_sprite,
     health = 100,
     experience = 0,
 
@@ -246,20 +247,12 @@ var debug = true,
     function init() {
       canvas = document.getElementById(CANVAS);
       ctx = canvas.getContext('2d');
-      player_sprite = new Image();
-      player_sprite.src = 'images/player_sprite.png';
       document.addEventListener(KEY_DOWN_EVENT, keyDown, false);
       document.addEventListener(KEY_UP_EVENT, keyUp, false);
       if(debug) {
         debug_module.addDebugControls();
       }
       gameLoop();
-    }
-
-    // Draw functions
-
-    function drawPlayer() {
-      draw_module.drawSprite(player_sprite, player, ctx);
     }
 
     // Move functions
@@ -321,7 +314,7 @@ var debug = true,
         pebble_module.moveOnScreenPebbles();
         pebble_pickup_module.drawPebblePickup(ctx);
         enemy_module.drawEnemies(ctx);
-        drawPlayer();
+        player_module.drawPlayer(player, ctx);
         pebble_module.drawOnScreenPebble(ctx);
       }
       updateText();
@@ -330,7 +323,7 @@ var debug = true,
 
     window.onload = init;
 
-},{"./debugControls.js":1,"./draw.js":2,"./enemy.js":3,"./pebble.js":5,"./pebble_pickup.js":6}],5:[function(require,module,exports){
+},{"./debugControls.js":1,"./draw.js":2,"./enemy.js":3,"./pebble.js":5,"./pebble_pickup.js":6,"./player.js":7}],5:[function(require,module,exports){
 var draw_module = require('./draw.js');
 
 const WIDTH = 4, HEIGHT = 5, SPEED = 10;
@@ -430,6 +423,38 @@ module.exports = {
   addToPebblePickups : addToPebblePickups,
   pebblePickups : pebblePickups,
   removeFromPebblePickups : removeFromPebblePickups
+}
+
+},{"./draw.js":2}],7:[function(require,module,exports){
+var draw_module = require('./draw.js');
+
+const WIDTH = 20, HEIGHT = 26, SPEED = 10;
+
+player_sprite = new Image();
+player_sprite.src = 'images/player_sprite.png';
+
+function createPlayer(x1, y1) {
+  return {x : x1, y : y1, w : WIDTH, h : HEIGHT, hitBoxColor: '#7cfc00'};
+}
+
+function moveOnScreenPebbles() {
+  for (var i = 0; i < pebbles.length; i++) {
+    if (pebbles[i].x < 600 + pebble_sprite.width) {
+      pebbles[i].x += 10;
+    } else {
+      pebbles.splice(i, 1);
+    }
+  }
+}
+
+function drawPlayer(player, ctx) {
+  draw_module.drawSprite(player_sprite, player, ctx);
+}
+
+module.exports = {
+  createPlayer : createPlayer,
+  moveOnScreenPebbles : moveOnScreenPebbles,
+  drawPlayer : drawPlayer
 }
 
 },{"./draw.js":2}]},{},[4]);
