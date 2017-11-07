@@ -1,5 +1,6 @@
-// TODO: Create player module
+// TODO: Refactor more player stuff
 // TODO: Create eventlistner module
+// TODO: Create HUD module
 
 var debug_module = require('./debugControls.js');
 var player_module = require('./player.js');
