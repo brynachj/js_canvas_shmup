@@ -1,5 +1,4 @@
 // TODO: Create eventlistner module
-// TODO: Create HUD module
 
 var debug_module = require('./debugControls.js');
 var player_module = require('./player.js');
@@ -7,6 +6,7 @@ var enemy_module = require('./enemy.js');
 var draw_module = require('./draw.js');
 var pebble_module = require('./pebble.js');
 var pebble_pickup_module = require('./pebble_pickup.js');
+var hud_module = require('./hud.js');
 
 const CANVAS = 'canvas', KEY_DOWN_EVENT = 'keydown', KEY_UP_EVENT = 'keyup';
 
@@ -82,7 +82,7 @@ var debug = true,
       if (!gameStarted) {
         startScreen();
       }
-        updateHud();
+        hud_module.updateHud(ctx);
       if (!player_module.getAlive()) {
         deathScreen();
       }
@@ -100,17 +100,6 @@ var debug = true,
     function deathScreen() {
       ctx.fillText('Game Over!', width/2 - 50, height / 2);
       ctx.fillText('Press SPACE to continue', 252, (height / 2) + 35);
-    }
-
-    function updateHud() {
-      ctx.font = 'bold 18px Arial';
-      ctx.fillStyle = '#fff';
-      ctx.fillText('Experience: ', 10, 30);
-      ctx.fillText(player_module.getExperience(), 120, 30);
-      ctx.fillText('Pebbles: ', 160, 30);
-      ctx.fillText(pebble_module.ammo, 260, 30);
-      ctx.fillText('Health:', 10, 60); // TODO: Replace with a health bar
-      ctx.fillText(player_module.getHealth(), 68, 60);
     }
 
     // Initialisations

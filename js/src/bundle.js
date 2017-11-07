@@ -104,9 +104,26 @@ module.exports = {
 }
 
 },{"./draw.js":2}],4:[function(require,module,exports){
-// TODO: Refactor more player stuff
+var player_module = require('./player.js');
+var pebble_module = require('./pebble.js');
+
+function updateHud(ctx) {
+  ctx.font = 'bold 18px Arial';
+  ctx.fillStyle = '#fff';
+  ctx.fillText('Experience: ', 10, 30);
+  ctx.fillText(player_module.getExperience(), 120, 30);
+  ctx.fillText('Pebbles: ', 160, 30);
+  ctx.fillText(pebble_module.ammo, 260, 30);
+  ctx.fillText('Health:', 10, 60); // TODO: Replace with a health bar
+  ctx.fillText(player_module.getHealth(), 68, 60);
+}
+
+module.exports = {
+  updateHud : updateHud
+}
+
+},{"./pebble.js":6,"./player.js":8}],5:[function(require,module,exports){
 // TODO: Create eventlistner module
-// TODO: Create HUD module
 
 var debug_module = require('./debugControls.js');
 var player_module = require('./player.js');
@@ -114,6 +131,7 @@ var enemy_module = require('./enemy.js');
 var draw_module = require('./draw.js');
 var pebble_module = require('./pebble.js');
 var pebble_pickup_module = require('./pebble_pickup.js');
+var hud_module = require('./hud.js');
 
 const CANVAS = 'canvas', KEY_DOWN_EVENT = 'keydown', KEY_UP_EVENT = 'keyup';
 
@@ -151,17 +169,7 @@ var debug = true,
           [player_module.addExperience, 10]])){
             return;
           }
-          // if (pebble_module.pebbles[i].y <= (enemy_module.enemies[j].y + enemy_module.enemies[j].h) && pebble_module.pebbles[i].y >= enemy_module.enemies[j].y && pebble_module.pebbles[i].x >= enemy_module.enemies[j].x && pebble_module.pebbles[i].x <= (enemy_module.enemies[j].x + enemy_module.enemies[j].w)) {
-          //   remove = true;
-          //   enemy_module.removeAndReplaceEnemy(enemy_module.enemies, j);
-          //   pebble_pickup_module.addToPebblePickups((Math.random() * 500) + 50, (Math.random() * 500) + 50);
-          // }
         }
-        // if (remove == true) {
-        //   pebble_module.removeFromPebbles(i);
-        //   remove = false;
-        //   player_module.addExperience(10);
-        // }
       }
     }
 
@@ -199,7 +207,7 @@ var debug = true,
       if (!gameStarted) {
         startScreen();
       }
-        updateHud();
+        hud_module.updateHud(ctx);
       if (!player_module.getAlive()) {
         deathScreen();
       }
@@ -217,17 +225,6 @@ var debug = true,
     function deathScreen() {
       ctx.fillText('Game Over!', width/2 - 50, height / 2);
       ctx.fillText('Press SPACE to continue', 252, (height / 2) + 35);
-    }
-
-    function updateHud() {
-      ctx.font = 'bold 18px Arial';
-      ctx.fillStyle = '#fff';
-      ctx.fillText('Experience: ', 10, 30);
-      ctx.fillText(player_module.getExperience(), 120, 30);
-      ctx.fillText('Pebbles: ', 160, 30);
-      ctx.fillText(pebble_module.ammo, 260, 30);
-      ctx.fillText('Health:', 10, 60); // TODO: Replace with a health bar
-      ctx.fillText(player_module.getHealth(), 68, 60);
     }
 
     // Initialisations
@@ -317,7 +314,7 @@ var debug = true,
 
     window.onload = init;
 
-},{"./debugControls.js":1,"./draw.js":2,"./enemy.js":3,"./pebble.js":5,"./pebble_pickup.js":6,"./player.js":7}],5:[function(require,module,exports){
+},{"./debugControls.js":1,"./draw.js":2,"./enemy.js":3,"./hud.js":4,"./pebble.js":6,"./pebble_pickup.js":7,"./player.js":8}],6:[function(require,module,exports){
 var draw_module = require('./draw.js');
 
 const WIDTH = 4, HEIGHT = 5, SPEED = 10;
@@ -383,7 +380,7 @@ module.exports = {
   ammo : ammo
 }
 
-},{"./draw.js":2}],6:[function(require,module,exports){
+},{"./draw.js":2}],7:[function(require,module,exports){
 var draw_module = require('./draw.js');
 
 const WIDTH = 10, HEIGHT = 13;
@@ -419,7 +416,7 @@ module.exports = {
   removeFromPebblePickups : removeFromPebblePickups
 }
 
-},{"./draw.js":2}],7:[function(require,module,exports){
+},{"./draw.js":2}],8:[function(require,module,exports){
 var draw_module = require('./draw.js');
 
 const WIDTH = 20, HEIGHT = 26, SPEED = 10;
@@ -503,4 +500,4 @@ module.exports = {
   addExperience : addExperience
 }
 
-},{"./draw.js":2}]},{},[4]);
+},{"./draw.js":2}]},{},[5]);
