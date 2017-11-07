@@ -104,8 +104,9 @@ module.exports = {
 }
 
 },{"./draw.js":2}],4:[function(require,module,exports){
-// TODO: Create player module
+// TODO: Refactor more player stuff
 // TODO: Create eventlistner module
+// TODO: Create HUD module
 
 var debug_module = require('./debugControls.js');
 var player_module = require('./player.js');
@@ -121,7 +122,6 @@ var debug = true,
     ctx,
     width = 600,
     height = 600,
-    player = player_module.createPlayer(10,height/2 - 13),
 
     health = 100,
     experience = 0,
@@ -140,7 +140,8 @@ var debug = true,
       health = 100;
       pebble_module.resetPebbleAmmo();
       experience = 0;
-      player.x = 10, player.y = (height - player.h)/2;
+      player_module.resetPlayer();
+      console.log(player_module.getPlayer());
       for (var i = 0; i < enemy_module.enemies.length; i++) {
         enemy_module.removeAndReplaceEnemy(enemy_module.enemies, i);
       }
@@ -175,13 +176,13 @@ var debug = true,
 
     function playerEnemyCollision() {
       for (var i = 0; i < enemy_module.enemies.length; i++) {
-        collisionDetection(player, enemy_module.enemies[i], [[updatePlayerHealth, -40], [enemy_module.removeAndReplaceEnemy, enemy_module.enemies, i]]);
+        collisionDetection(player_module.getPlayer(), enemy_module.enemies[i], [[updatePlayerHealth, -40], [enemy_module.removeAndReplaceEnemy, enemy_module.enemies, i]]);
       }
     }
 
     function pebblePickupCollision() {
       for (var i = 0; i < pebble_pickup_module.pebblePickups.length; i++) {
-        collisionDetection(player, pebble_pickup_module.pebblePickups[i], [[pickUpPebbles, i]]);
+        collisionDetection(player_module.getPlayer(), pebble_pickup_module.pebblePickups[i], [[pickUpPebbles, i]]);
       }
     }
 
@@ -258,19 +259,19 @@ var debug = true,
     // Move functions
 
     function movePlayer() {
-      if (rightKey) player.x += 5;
-      else if (leftKey) player.x -= 5;
-      if (upKey) player.y -= 5;
-      else if (downKey) player.y += 5;
-      if (player.x <= 0) player.x = 0;
-      if ((player.x + player.w) >= width) player.x = width - player.w;
-      if (player.y <= 0) player.y = 0;
-      if ((player.y + player.h) >= height) player.y = height - player.h;
+      if (rightKey) player_module.getPlayer().x += 5;
+      else if (leftKey) player_module.getPlayer().x -= 5;
+      if (upKey) player_module.getPlayer().y -= 5;
+      else if (downKey) player_module.getPlayer().y += 5;
+      if (player_module.getPlayer().x <= 0) player_module.getPlayer().x = 0;
+      if ((player_module.getPlayer().x + player_module.getPlayer().w) >= width) player_module.getPlayer().x = width - player_module.getPlayer().w;
+      if (player_module.getPlayer().y <= 0) player_module.getPlayer().y = 0;
+      if ((player_module.getPlayer().y + player_module.getPlayer().h) >= height) player_module.getPlayer().y = height - player_module.getPlayer().h;
     }
 
     function moveEnemies() {
       for (var i = 0; i < enemy_module.enemies.length; i++) {
-        enemy_module.moveEnemy(enemy_module.enemies[i], player);
+        enemy_module.moveEnemy(enemy_module.enemies[i], player_module.getPlayer());
       }
     }
 
@@ -282,7 +283,7 @@ var debug = true,
       if (e.keyCode == 38) upKey = true;
       else if (e.keyCode == 40) downKey = true;
       if (e.keyCode == 88 && pebble_module.ammo > 0){
-        pebble_module.addToPebbles(player.x + 2, player.y + 13);
+        pebble_module.addToPebbles(player_module.getPlayer().x + 2, player_module.getPlayer().y + 13);
         pebble_module.takeOneFromAmmo();
       }
       if(e.keyCode == 32){
@@ -314,7 +315,7 @@ var debug = true,
         pebble_module.moveOnScreenPebbles();
         pebble_pickup_module.drawPebblePickup(ctx);
         enemy_module.drawEnemies(ctx);
-        player_module.drawPlayer(player, ctx);
+        player_module.drawPlayer(ctx);
         pebble_module.drawOnScreenPebble(ctx);
       }
       updateText();
@@ -430,11 +431,24 @@ var draw_module = require('./draw.js');
 
 const WIDTH = 20, HEIGHT = 26, SPEED = 10;
 
+var player;
+
 player_sprite = new Image();
 player_sprite.src = 'images/player_sprite.png';
 
 function createPlayer(x1, y1) {
   return {x : x1, y : y1, w : WIDTH, h : HEIGHT, hitBoxColor: '#7cfc00'};
+}
+
+function getPlayer(){
+  if(player === undefined) {
+    resetPlayer();
+  }
+  return player;
+}
+
+function resetPlayer() {
+  player = createPlayer(10, 287);
 }
 
 function moveOnScreenPebbles() {
@@ -447,12 +461,14 @@ function moveOnScreenPebbles() {
   }
 }
 
-function drawPlayer(player, ctx) {
+function drawPlayer(ctx) {
   draw_module.drawSprite(player_sprite, player, ctx);
 }
 
 module.exports = {
+  getPlayer : getPlayer,
   createPlayer : createPlayer,
+  resetPlayer : resetPlayer,
   moveOnScreenPebbles : moveOnScreenPebbles,
   drawPlayer : drawPlayer
 }
