@@ -80,26 +80,12 @@ var debug = true,
 
     function updateText() {
       if (!gameStarted) {
-        startScreen();
+        hud_module.startScreen(ctx);
       }
         hud_module.updateHud(ctx);
       if (!player_module.getAlive()) {
-        deathScreen();
+        hud_module.deathScreen(ctx);
       }
-    }
-
-    function startScreen() {
-      ctx.font = 'bold 50px VT323';
-      ctx.fillText('Canvas Shooter', width / 2 - 150, height / 2);
-      ctx.font = 'bold 20px VT323';
-      ctx.fillText('Hit SPACE to Play', width / 2 - 56, height / 2 + 30);
-      ctx.fillText('Use arrow keys to move', width / 2 - 100, height / 2 + 60);
-      ctx.fillText('Use the x key to shoot', width / 2 - 100, height / 2 + 90);
-    }
-
-    function deathScreen() {
-      ctx.fillText('Game Over!', width/2 - 50, height / 2);
-      ctx.fillText('Press SPACE to continue', 252, (height / 2) + 35);
     }
 
     // Initialisations
