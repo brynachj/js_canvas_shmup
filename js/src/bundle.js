@@ -123,11 +123,7 @@ var debug = true,
     width = 600,
     height = 600,
 
-    health = 100,
-    experience = 0,
-
     gameStarted = false,
-    alive = true,
 
     rightKey = false,
     leftKey = false,
@@ -137,46 +133,41 @@ var debug = true,
     // Utility functions
 
     function reset() {
-      health = 100;
       pebble_module.resetPebbleAmmo();
-      experience = 0;
       player_module.resetPlayer();
-      console.log(player_module.getPlayer());
       for (var i = 0; i < enemy_module.enemies.length; i++) {
         enemy_module.removeAndReplaceEnemy(enemy_module.enemies, i);
       }
     }
 
-    function enemyHitTest() { // TODO: refactor to use collisionDetection function
+    function enemyHitTest() {
       var remove = false;
       for (var i = 0; i < pebble_module.pebbles.length; i++) {
         for (var j = 0; j < enemy_module.enemies.length; j++) {
-          if (pebble_module.pebbles[i].y <= (enemy_module.enemies[j].y + enemy_module.enemies[j].h) && pebble_module.pebbles[i].y >= enemy_module.enemies[j].y && pebble_module.pebbles[i].x >= enemy_module.enemies[j].x && pebble_module.pebbles[i].x <= (enemy_module.enemies[j].x + enemy_module.enemies[j].w)) {
-            remove = true;
-            enemy_module.removeAndReplaceEnemy(enemy_module.enemies, j);
-            pebble_pickup_module.addToPebblePickups((Math.random() * 500) + 50, (Math.random() * 500) + 50);
+          if(collisionDetection(pebble_module.pebbles[i], enemy_module.enemies[j],
+          [[enemy_module.removeAndReplaceEnemy, enemy_module.enemies, j],
+          [pebble_pickup_module.addToPebblePickups, (Math.random() * 500) + 50, (Math.random() * 500) + 50],
+          [pebble_module.removeFromPebbles, i],
+          [player_module.addExperience, 10]])){
+            return;
           }
+          // if (pebble_module.pebbles[i].y <= (enemy_module.enemies[j].y + enemy_module.enemies[j].h) && pebble_module.pebbles[i].y >= enemy_module.enemies[j].y && pebble_module.pebbles[i].x >= enemy_module.enemies[j].x && pebble_module.pebbles[i].x <= (enemy_module.enemies[j].x + enemy_module.enemies[j].w)) {
+          //   remove = true;
+          //   enemy_module.removeAndReplaceEnemy(enemy_module.enemies, j);
+          //   pebble_pickup_module.addToPebblePickups((Math.random() * 500) + 50, (Math.random() * 500) + 50);
+          // }
         }
-        if (remove == true) {
-          pebble_module.removeFromPebbles(i);
-          remove = false;
-          experience += 10;
-        }
-      }
-    }
-
-    function updatePlayerHealth(value) {
-      health += value;
-      if (health > 0) {
-        // TODO: iframes and such
-      } else {
-        alive = false;
+        // if (remove == true) {
+        //   pebble_module.removeFromPebbles(i);
+        //   remove = false;
+        //   player_module.addExperience(10);
+        // }
       }
     }
 
     function playerEnemyCollision() {
       for (var i = 0; i < enemy_module.enemies.length; i++) {
-        collisionDetection(player_module.getPlayer(), enemy_module.enemies[i], [[updatePlayerHealth, -40], [enemy_module.removeAndReplaceEnemy, enemy_module.enemies, i]]);
+        collisionDetection(player_module.getPlayer(), enemy_module.enemies[i], [[player_module.updateHealth, -40], [enemy_module.removeAndReplaceEnemy, enemy_module.enemies, i]]);
       }
     }
 
@@ -199,7 +190,9 @@ var debug = true,
         for(var i = 0; i < callbackList.length; i++){
           callbackList[i][0].apply(this, callbackList[i].slice(1));
         }
+        return true;
       }
+      return false;
     }
 
     function updateText() {
@@ -207,7 +200,7 @@ var debug = true,
         startScreen();
       }
         updateHud();
-      if (!alive) {
+      if (!player_module.getAlive()) {
         deathScreen();
       }
     }
@@ -230,11 +223,11 @@ var debug = true,
       ctx.font = 'bold 18px Arial';
       ctx.fillStyle = '#fff';
       ctx.fillText('Experience: ', 10, 30);
-      ctx.fillText(experience, 120, 30);
+      ctx.fillText(player_module.getExperience(), 120, 30);
       ctx.fillText('Pebbles: ', 160, 30);
       ctx.fillText(pebble_module.ammo, 260, 30);
       ctx.fillText('Health:', 10, 60); // TODO: Replace with a health bar
-      ctx.fillText(health, 68, 60);
+      ctx.fillText(player_module.getHealth(), 68, 60);
     }
 
     // Initialisations
@@ -290,8 +283,8 @@ var debug = true,
         if(!gameStarted){
           gameStarted = true;
         }
-        if(!alive) {
-          alive = true;
+        if(!player_module.getAlive()) {
+          player_module.setAlive(true);
           reset();
         }
       }
@@ -306,7 +299,7 @@ var debug = true,
 
     function gameLoop() {
       clearCanvas();
-      if(alive && gameStarted){
+      if(player_module.getAlive() && gameStarted){
         enemyHitTest();
         playerEnemyCollision();
         pebblePickupCollision();
@@ -431,7 +424,7 @@ var draw_module = require('./draw.js');
 
 const WIDTH = 20, HEIGHT = 26, SPEED = 10;
 
-var player;
+var player, health, alive = true, experience = 0;
 
 player_sprite = new Image();
 player_sprite.src = 'images/player_sprite.png';
@@ -448,7 +441,29 @@ function getPlayer(){
 }
 
 function resetPlayer() {
+  experience = 0;
+  health = 100;
   player = createPlayer(10, 287);
+}
+
+function getHealth() {
+  return health;
+}
+
+function getAlive() {
+  return alive;
+}
+
+function setAlive(isAlive) {
+  return alive = isAlive;
+}
+
+function getExperience() {
+  return experience;
+}
+
+function addExperience(value) {
+  experience += value;
 }
 
 function moveOnScreenPebbles() {
@@ -465,12 +480,27 @@ function drawPlayer(ctx) {
   draw_module.drawSprite(player_sprite, player, ctx);
 }
 
+function updateHealth(value) {
+  health += value;
+  if (health > 0) {
+    // TODO: iframes and such
+  } else {
+    alive = false;
+  }
+}
+
 module.exports = {
   getPlayer : getPlayer,
   createPlayer : createPlayer,
   resetPlayer : resetPlayer,
   moveOnScreenPebbles : moveOnScreenPebbles,
-  drawPlayer : drawPlayer
+  drawPlayer : drawPlayer,
+  updateHealth : updateHealth,
+  getHealth : getHealth,
+  getAlive : getAlive,
+  setAlive : setAlive,
+  getExperience : getExperience,
+  addExperience : addExperience
 }
 
 },{"./draw.js":2}]},{},[4]);
