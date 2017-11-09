@@ -8,7 +8,7 @@ player_sprite = new Image();
 player_sprite.src = 'images/player_sprite.png';
 
 function createPlayer(x1, y1) {
-  return {x : x1, y : y1, w : WIDTH, h : HEIGHT, hitBoxColor: '#7cfc00'};
+  return {x : x1, y : y1, w : WIDTH, h : HEIGHT, hitBoxColor : '#7cfc00', isMoving : false};
 }
 
 function getPlayer(){

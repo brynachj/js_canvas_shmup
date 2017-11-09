@@ -53,8 +53,17 @@ function addEnemy(x,y){
 function createEnemy(x1, y1) {
   return {x:x1, y:y1, w:WIDTH, h:HEIGHT, speed:SPEED, hitBoxColor: '#ff0000',
         player_detection_box : {x:x1-60, y:y1-60, w:WIDTH+120, h:HEIGHT+120, hitBoxColor: '#ff8c00'},
-        player_aggro_box : {x:x1-80, y:y1-80, w:WIDTH+160, h:HEIGHT+160, hitBoxColor: '#ffff00'}
+        player_aggro_box : {x:x1-80, y:y1-80, w:WIDTH+160, h:HEIGHT+160, hitBoxColor: '#ffff00'},
+        aggro : false
       };
+}
+
+function getAggro(enemy) {
+  return enemy.aggro;
+}
+
+function setAggro(enemy, aggroBool){
+  enemy.aggro = aggroBool;
 }
 
 function drawEnemies(ctx) {
@@ -100,7 +109,9 @@ module.exports = {
   addEnemy : addEnemy,
   moveEnemy : moveEnemy,
   drawEnemies : drawEnemies,
-  removeAndReplaceEnemy : removeAndReplaceEnemy
+  removeAndReplaceEnemy : removeAndReplaceEnemy,
+  getAggro : getAggro,
+  setAggro : setAggro
 }
 
 },{"./draw.js":2}],4:[function(require,module,exports){
@@ -115,7 +126,7 @@ function updateHud(ctx) {
   ctx.fillText('Experience: ', 10, 30);
   ctx.fillText(player_module.getExperience(), 120, 30);
   ctx.fillText('Pebbles: ', 160, 30);
-  ctx.fillText(pebble_module.ammo, 260, 30);
+  ctx.fillText(pebble_module.getAmmo(), 260, 30);
   ctx.fillText('Health:', 10, 60); // TODO: Replace with a health bar
   ctx.fillText(player_module.getHealth(), 68, 60);
 }
@@ -197,6 +208,16 @@ var debug = true,
       }
     }
 
+
+    function playerEnemyDetectionBoxCollision() {
+      for (var i = 0; i < enemy_module.enemies.length; i++) {
+        if(collisionDetection(player_module.getPlayer(), enemy_module.enemies[i].player_detection_box, [])
+        && player_module.getPlayer().isMoving){
+          enemy_module.setAggro(enemy_module.enemies[i],true);
+        }
+    }
+    }
+
     function pebblePickupCollision() {
       for (var i = 0; i < pebble_pickup_module.pebblePickups.length; i++) {
         collisionDetection(player_module.getPlayer(), pebble_pickup_module.pebblePickups[i], [[pickUpPebbles, i]]);
@@ -253,10 +274,23 @@ var debug = true,
     // Move functions
 
     function movePlayer() {
-      if (rightKey) player_module.getPlayer().x += 5;
-      else if (leftKey) player_module.getPlayer().x -= 5;
-      if (upKey) player_module.getPlayer().y -= 5;
-      else if (downKey) player_module.getPlayer().y += 5;
+      player_module.getPlayer().isMoving = false;
+      if (rightKey) {
+        player_module.getPlayer().x += 5;
+        player_module.getPlayer().isMoving = true;
+      }
+      else if (leftKey) {
+        player_module.getPlayer().x -= 5;
+        player_module.getPlayer().isMoving = true;
+      }
+      if (upKey) {
+        player_module.getPlayer().y -= 5;
+        player_module.getPlayer().isMoving = true;
+      }
+      else if (downKey) {
+        player_module.getPlayer().y += 5;
+        player_module.getPlayer().isMoving = true;
+      }
       if (player_module.getPlayer().x <= 0) player_module.getPlayer().x = 0;
       if ((player_module.getPlayer().x + player_module.getPlayer().w) >= width) player_module.getPlayer().x = width - player_module.getPlayer().w;
       if (player_module.getPlayer().y <= 0) player_module.getPlayer().y = 0;
@@ -265,7 +299,9 @@ var debug = true,
 
     function moveEnemies() {
       for (var i = 0; i < enemy_module.enemies.length; i++) {
-        enemy_module.moveEnemy(enemy_module.enemies[i], player_module.getPlayer());
+        if(enemy_module.getAggro(enemy_module.enemies[i])){
+          enemy_module.moveEnemy(enemy_module.enemies[i], player_module.getPlayer());
+        }
       }
     }
 
@@ -276,7 +312,7 @@ var debug = true,
       else if (e.keyCode == 37) leftKey = true;
       if (e.keyCode == 38) upKey = true;
       else if (e.keyCode == 40) downKey = true;
-      if (e.keyCode == 88 && pebble_module.ammo > 0){
+      if (e.keyCode == 88 && pebble_module.getAmmo() > 0){
         pebble_module.addToPebbles(player_module.getPlayer().x + 2, player_module.getPlayer().y + 13);
         pebble_module.takeOneFromAmmo();
       }
@@ -303,6 +339,7 @@ var debug = true,
       if(player_module.getAlive() && gameStarted){
         enemyHitTest();
         playerEnemyCollision();
+        playerEnemyDetectionBoxCollision();
         pebblePickupCollision();
         moveEnemies();
         movePlayer();
@@ -328,6 +365,10 @@ pebble_sprite.src = 'images/pebble.png';
 
 var pebbles = [];
 var ammo = 10;
+
+function getAmmo() {
+  return ammo;
+}
 
 function resetPebbleAmmo() {
   ammo = 10;
@@ -381,7 +422,7 @@ module.exports = {
   resetPebbleAmmo : resetPebbleAmmo,
   takeOneFromAmmo : takeOneFromAmmo,
   addToAmmo : addToAmmo,
-  ammo : ammo
+  getAmmo : getAmmo
 }
 
 },{"./draw.js":2}],7:[function(require,module,exports){
@@ -431,7 +472,7 @@ player_sprite = new Image();
 player_sprite.src = 'images/player_sprite.png';
 
 function createPlayer(x1, y1) {
-  return {x : x1, y : y1, w : WIDTH, h : HEIGHT, hitBoxColor: '#7cfc00'};
+  return {x : x1, y : y1, w : WIDTH, h : HEIGHT, hitBoxColor : '#7cfc00', isMoving : false};
 }
 
 function getPlayer(){

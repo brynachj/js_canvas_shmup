@@ -54,6 +54,16 @@ var debug = true,
       }
     }
 
+
+    function playerEnemyDetectionBoxCollision() {
+      for (var i = 0; i < enemy_module.enemies.length; i++) {
+        if(collisionDetection(player_module.getPlayer(), enemy_module.enemies[i].player_detection_box, [])
+        && player_module.getPlayer().isMoving){
+          enemy_module.setAggro(enemy_module.enemies[i],true);
+        }
+    }
+    }
+
     function pebblePickupCollision() {
       for (var i = 0; i < pebble_pickup_module.pebblePickups.length; i++) {
         collisionDetection(player_module.getPlayer(), pebble_pickup_module.pebblePickups[i], [[pickUpPebbles, i]]);
@@ -110,10 +120,23 @@ var debug = true,
     // Move functions
 
     function movePlayer() {
-      if (rightKey) player_module.getPlayer().x += 5;
-      else if (leftKey) player_module.getPlayer().x -= 5;
-      if (upKey) player_module.getPlayer().y -= 5;
-      else if (downKey) player_module.getPlayer().y += 5;
+      player_module.getPlayer().isMoving = false;
+      if (rightKey) {
+        player_module.getPlayer().x += 5;
+        player_module.getPlayer().isMoving = true;
+      }
+      else if (leftKey) {
+        player_module.getPlayer().x -= 5;
+        player_module.getPlayer().isMoving = true;
+      }
+      if (upKey) {
+        player_module.getPlayer().y -= 5;
+        player_module.getPlayer().isMoving = true;
+      }
+      else if (downKey) {
+        player_module.getPlayer().y += 5;
+        player_module.getPlayer().isMoving = true;
+      }
       if (player_module.getPlayer().x <= 0) player_module.getPlayer().x = 0;
       if ((player_module.getPlayer().x + player_module.getPlayer().w) >= width) player_module.getPlayer().x = width - player_module.getPlayer().w;
       if (player_module.getPlayer().y <= 0) player_module.getPlayer().y = 0;
@@ -122,7 +145,9 @@ var debug = true,
 
     function moveEnemies() {
       for (var i = 0; i < enemy_module.enemies.length; i++) {
-        enemy_module.moveEnemy(enemy_module.enemies[i], player_module.getPlayer());
+        if(enemy_module.getAggro(enemy_module.enemies[i])){
+          enemy_module.moveEnemy(enemy_module.enemies[i], player_module.getPlayer());
+        }
       }
     }
 
@@ -133,7 +158,7 @@ var debug = true,
       else if (e.keyCode == 37) leftKey = true;
       if (e.keyCode == 38) upKey = true;
       else if (e.keyCode == 40) downKey = true;
-      if (e.keyCode == 88 && pebble_module.ammo > 0){
+      if (e.keyCode == 88 && pebble_module.getAmmo() > 0){
         pebble_module.addToPebbles(player_module.getPlayer().x + 2, player_module.getPlayer().y + 13);
         pebble_module.takeOneFromAmmo();
       }
@@ -160,6 +185,7 @@ var debug = true,
       if(player_module.getAlive() && gameStarted){
         enemyHitTest();
         playerEnemyCollision();
+        playerEnemyDetectionBoxCollision();
         pebblePickupCollision();
         moveEnemies();
         movePlayer();

@@ -8,6 +8,10 @@ pebble_sprite.src = 'images/pebble.png';
 var pebbles = [];
 var ammo = 10;
 
+function getAmmo() {
+  return ammo;
+}
+
 function resetPebbleAmmo() {
   ammo = 10;
 }
@@ -60,5 +64,5 @@ module.exports = {
   resetPebbleAmmo : resetPebbleAmmo,
   takeOneFromAmmo : takeOneFromAmmo,
   addToAmmo : addToAmmo,
-  ammo : ammo
+  getAmmo : getAmmo
 }
