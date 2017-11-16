@@ -9,3 +9,6 @@ http://browserify.org/index.html
 
 To build after making changes, navigate to js/src folder in terminal and run:
 browserify main.js -o bundle.js
+
+The trello board for this project can be found here:
+https://trello.com/b/xdZXT0VP/js-canvas-shmup
