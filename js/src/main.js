@@ -110,6 +110,7 @@ var canvas,
       document.addEventListener(KEY_UP_EVENT, keyUp, false);
       if(debug_module.debug) {
         debug_module.addDebugControls();
+        debug_module.addCheckBoxEventListeners();
       }
       gameLoop();
     }
