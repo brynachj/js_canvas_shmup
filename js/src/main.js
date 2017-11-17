@@ -1,5 +1,3 @@
-// TODO: Create eventlistner module
-
 var debug_module = require('./debugControls.js');
 var player_module = require('./player.js');
 var enemy_module = require('./enemy.js');
