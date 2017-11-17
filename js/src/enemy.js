@@ -1,4 +1,5 @@
 var draw_module = require('./draw.js');
+var debug_module = require('./debugControls.js')
 
 const WIDTH = 34, HEIGHT = 36, SPEED = 3;
 
@@ -67,6 +68,9 @@ function removeAndReplaceEnemy(enemies, i){
 
 function hitEnemy(i, damage){
   enemies[i].health -= damage;
+  if(debug_module.debug){
+    debug_module.writeOutDebug('enemy health: ' + enemies[i].health);
+  }
   if(enemies[i].health <= 0) {
     removeAndReplaceEnemy(enemies, i)
   }

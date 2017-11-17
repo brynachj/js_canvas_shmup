@@ -4,17 +4,26 @@ const DEBUG_DIV = 'debug-controls';
 
 window.drawHitboxes = false;
 
-module.exports = {
-  addDebugControls : function() {
-    debugDiv = document.getElementById(DEBUG_DIV);
-    debugDiv.innerHTML = '<h1>Debug</h1>';
-    debugDiv.innerHTML += '<input type="checkbox" id="hitbox_toggle" >Show HitBoxes</input>';
-    var checkbox = document.getElementById('hitbox_toggle');
+function addDebugControls() {
+  debugDiv = document.getElementById(DEBUG_DIV);
+  debugDiv.innerHTML = '<h1>Debug</h1>';
+  debugDiv.innerHTML += '<input type="checkbox" id="hitbox_toggle" >Show HitBoxes</input>';
+  var checkbox = document.getElementById('hitbox_toggle');
 
-    checkbox.addEventListener( 'change', function() {
-      window.drawHitboxes = this.checked;
-    });
-  }
+  checkbox.addEventListener( 'change', function() {
+    window.drawHitboxes = this.checked;
+  });
+}
+
+function writeOutDebug(debugInfo) {
+  debugDiv = document.getElementById(DEBUG_DIV);
+  debugDiv.innerHTML += '<p>' + debugInfo + '</p>'
+}
+
+module.exports = {
+  debug : true,
+  addDebugControls : addDebugControls,
+  writeOutDebug : writeOutDebug
 }
 
 },{}],2:[function(require,module,exports){
@@ -38,6 +47,7 @@ module.exports = {
 
 },{}],3:[function(require,module,exports){
 var draw_module = require('./draw.js');
+var debug_module = require('./debugControls.js')
 
 const WIDTH = 34, HEIGHT = 36, SPEED = 3;
 
@@ -106,6 +116,9 @@ function removeAndReplaceEnemy(enemies, i){
 
 function hitEnemy(i, damage){
   enemies[i].health -= damage;
+  if(debug_module.debug){
+    debug_module.writeOutDebug('enemy health: ' + enemies[i].health);
+  }
   if(enemies[i].health <= 0) {
     removeAndReplaceEnemy(enemies, i)
   }
@@ -122,7 +135,7 @@ module.exports = {
   hitEnemy : hitEnemy
 }
 
-},{"./draw.js":2}],4:[function(require,module,exports){
+},{"./debugControls.js":1,"./draw.js":2}],4:[function(require,module,exports){
 var player_module = require('./player.js');
 var pebble_module = require('./pebble.js');
 
@@ -170,8 +183,7 @@ var hud_module = require('./hud.js');
 
 const CANVAS = 'canvas', KEY_DOWN_EVENT = 'keydown', KEY_UP_EVENT = 'keyup';
 
-var debug = true,
-    canvas,
+var canvas,
     ctx,
     width = 600,
     height = 600,
@@ -271,7 +283,7 @@ var debug = true,
       ctx = canvas.getContext('2d');
       document.addEventListener(KEY_DOWN_EVENT, keyDown, false);
       document.addEventListener(KEY_UP_EVENT, keyUp, false);
-      if(debug) {
+      if(debug_module.debug) {
         debug_module.addDebugControls();
       }
       gameLoop();

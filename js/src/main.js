@@ -8,8 +8,7 @@ var hud_module = require('./hud.js');
 
 const CANVAS = 'canvas', KEY_DOWN_EVENT = 'keydown', KEY_UP_EVENT = 'keyup';
 
-var debug = true,
-    canvas,
+var canvas,
     ctx,
     width = 600,
     height = 600,
@@ -109,7 +108,7 @@ var debug = true,
       ctx = canvas.getContext('2d');
       document.addEventListener(KEY_DOWN_EVENT, keyDown, false);
       document.addEventListener(KEY_UP_EVENT, keyUp, false);
-      if(debug) {
+      if(debug_module.debug) {
         debug_module.addDebugControls();
       }
       gameLoop();
