@@ -36,7 +36,7 @@ var debug = true,
       for (var i = 0; i < pebble_module.pebbles.length; i++) {
         for (var j = 0; j < enemy_module.enemies.length; j++) {
           if(collisionDetection(pebble_module.pebbles[i], enemy_module.enemies[j],
-          [[enemy_module.removeAndReplaceEnemy, enemy_module.enemies, j],
+          [[enemy_module.hitEnemy, j, 50],
           [pebble_pickup_module.addToPebblePickups, (Math.random() * 500) + 50, (Math.random() * 500) + 50],
           [pebble_module.removeFromPebbles, i],
           [player_module.addExperience, 10]])){

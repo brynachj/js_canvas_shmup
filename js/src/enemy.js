@@ -12,7 +12,7 @@ function addEnemy(x,y){
 }
 
 function createEnemy(x1, y1) {
-  return {x:x1, y:y1, w:WIDTH, h:HEIGHT, speed:SPEED, hitBoxColor: '#ff0000',
+  return {x:x1, y:y1, w:WIDTH, h:HEIGHT, speed:SPEED, hitBoxColor: '#ff0000', health: 100,
         player_detection_box : {x:x1-60, y:y1-60, w:WIDTH+120, h:HEIGHT+120, hitBoxColor: '#ff8c00'},
         player_aggro_box : {x:x1-80, y:y1-80, w:WIDTH+160, h:HEIGHT+160, hitBoxColor: '#ffff00'},
         aggro : false
@@ -65,6 +65,13 @@ function removeAndReplaceEnemy(enemies, i){
   enemies.push(createEnemy(Math.random() * 600, Math.random() * 600));
 }
 
+function hitEnemy(i, damage){
+  enemies[i].health -= damage;
+  if(enemies[i].health <= 0) {
+    removeAndReplaceEnemy(enemies, i)
+  }
+}
+
 module.exports = {
   enemies : enemies,
   addEnemy : addEnemy,
@@ -72,5 +79,6 @@ module.exports = {
   drawEnemies : drawEnemies,
   removeAndReplaceEnemy : removeAndReplaceEnemy,
   getAggro : getAggro,
-  setAggro : setAggro
+  setAggro : setAggro,
+  hitEnemy : hitEnemy
 }
