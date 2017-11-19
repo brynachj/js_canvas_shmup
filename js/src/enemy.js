@@ -1,5 +1,6 @@
 var draw_module = require('./draw.js');
 var debug_module = require('./debugControls.js')
+var player_module = require('./player.js');
 
 const WIDTH = 34, HEIGHT = 36, SPEED = 3;
 
@@ -76,13 +77,19 @@ function hitEnemy(i, damage){
   }
 }
 
+function moveEnemies() {
+  enemies.filter(getAggro).map(function(enemy){
+    moveEnemy(enemy, player_module.getPlayer());
+  });
+}
+
 module.exports = {
   enemies : enemies,
   addEnemy : addEnemy,
-  moveEnemy : moveEnemy,
   drawEnemies : drawEnemies,
   removeAndReplaceEnemy : removeAndReplaceEnemy,
   getAggro : getAggro,
   setAggro : setAggro,
-  hitEnemy : hitEnemy
+  hitEnemy : hitEnemy,
+  moveEnemies: moveEnemies
 }

@@ -141,14 +141,6 @@ var canvas,
       if ((player_module.getPlayer().y + player_module.getPlayer().h) >= height) player_module.getPlayer().y = height - player_module.getPlayer().h;
     }
 
-    function moveEnemies() {
-      for (var i = 0; i < enemy_module.enemies.length; i++) {
-        if(enemy_module.getAggro(enemy_module.enemies[i])){
-          enemy_module.moveEnemy(enemy_module.enemies[i], player_module.getPlayer());
-        }
-      }
-    }
-
     // Event Listeners/Input handling
 
     function keyDown(e) {
@@ -185,7 +177,7 @@ var canvas,
         playerEnemyCollision();
         playerEnemyDetectionBoxCollision();
         pebblePickupCollision();
-        moveEnemies();
+        enemy_module.moveEnemies();
         movePlayer();
         pebble_module.moveOnScreenPebbles();
         pebble_pickup_module.drawPebblePickup(ctx);

@@ -54,6 +54,7 @@ module.exports = {
 },{}],3:[function(require,module,exports){
 var draw_module = require('./draw.js');
 var debug_module = require('./debugControls.js')
+var player_module = require('./player.js');
 
 const WIDTH = 34, HEIGHT = 36, SPEED = 3;
 
@@ -130,18 +131,29 @@ function hitEnemy(i, damage){
   }
 }
 
+function moveEnemies() {
+  enemies.filter(getAggro).map(function(enemy){
+    moveEnemy(enemy, player_module.getPlayer());
+  });
+  // for (var i = 0; i < enemies.length; i++) {
+  //   if(getAggro(enemies[i])){
+  //     moveEnemy(enemies[i], player_module.getPlayer());
+  //   }
+  // }
+}
+
 module.exports = {
   enemies : enemies,
   addEnemy : addEnemy,
-  moveEnemy : moveEnemy,
   drawEnemies : drawEnemies,
   removeAndReplaceEnemy : removeAndReplaceEnemy,
   getAggro : getAggro,
   setAggro : setAggro,
-  hitEnemy : hitEnemy
+  hitEnemy : hitEnemy,
+  moveEnemies: moveEnemies
 }
 
-},{"./debugControls.js":1,"./draw.js":2}],4:[function(require,module,exports){
+},{"./debugControls.js":1,"./draw.js":2,"./player.js":8}],4:[function(require,module,exports){
 var player_module = require('./player.js');
 var pebble_module = require('./pebble.js');
 
@@ -322,14 +334,6 @@ var canvas,
       if ((player_module.getPlayer().y + player_module.getPlayer().h) >= height) player_module.getPlayer().y = height - player_module.getPlayer().h;
     }
 
-    function moveEnemies() {
-      for (var i = 0; i < enemy_module.enemies.length; i++) {
-        if(enemy_module.getAggro(enemy_module.enemies[i])){
-          enemy_module.moveEnemy(enemy_module.enemies[i], player_module.getPlayer());
-        }
-      }
-    }
-
     // Event Listeners/Input handling
 
     function keyDown(e) {
@@ -366,7 +370,7 @@ var canvas,
         playerEnemyCollision();
         playerEnemyDetectionBoxCollision();
         pebblePickupCollision();
-        moveEnemies();
+        enemy_module.moveEnemies();
         movePlayer();
         pebble_module.moveOnScreenPebbles();
         pebble_pickup_module.drawPebblePickup(ctx);
