@@ -76,13 +76,13 @@ function removeAndReplaceEnemy(enemyToRemove){
   enemies.push(createEnemy(Math.random() * 600, Math.random() * 600));
 }
 
-function hitEnemy(i, damage){
-  enemies[i].health -= damage;
+function hitEnemy(enemy, damage) {
+  enemy.health -= damage;
   if(debug_module.debug){
-    debug_module.writeOutDebug('enemy health: ' + enemies[i].health);
+    debug_module.writeOutDebug('enemy health: ' + enemy.health);
   }
-  if(enemies[i].health <= 0) {
-    removeAndReplaceEnemy(enemies, i)
+  if(enemy.health <= 0) {
+    removeAndReplaceEnemy(enemy)
   }
 }
 
