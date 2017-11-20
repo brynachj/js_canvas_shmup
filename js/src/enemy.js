@@ -30,12 +30,12 @@ function setAggro(enemy, aggroBool){
 }
 
 function drawEnemies(ctx) {
-  for (var i = 0; i < enemies.length; i++) {
-    draw_module.drawSprite(enemy_sprite, enemies[i], ctx);
-    if(window.drawHitboxes){
-      draw_module.drawHitbox(enemies[i].player_detection_box, ctx);
-      draw_module.drawHitbox(enemies[i].player_aggro_box, ctx);
-    }
+  enemies.map(enemy => draw_module.drawSprite(enemy_sprite, enemy, ctx));
+  if(window.drawHitboxes){
+    enemies.map(enemy => {
+      draw_module.drawHitbox(enemy.player_detection_box, ctx);
+      draw_module.drawHitbox(enemy.player_aggro_box, ctx);
+    });
   }
 }
 
@@ -78,9 +78,7 @@ function hitEnemy(i, damage){
 }
 
 function moveEnemies() {
-  enemies.filter(getAggro).map(function(enemy){
-    moveEnemy(enemy, player_module.getPlayer());
-  });
+  enemies.filter(getAggro).map(enemy => moveEnemy(enemy, player_module.getPlayer()));
 }
 
 module.exports = {
