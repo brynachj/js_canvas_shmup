@@ -44,19 +44,12 @@ var canvas,
     }
 
     function playerEnemyCollision() {
-      for (var i = 0; i < enemy_module.enemies.length; i++) {
-        collisionDetection(player_module.getPlayer(), enemy_module.enemies[i], [[player_module.updateHealth, -40], [enemy_module.removeAndReplaceEnemy, enemy_module.enemies[i]]]);
-      }
+      enemy_module.enemies.map(enemy => collisionDetection(player_module.getPlayer(), enemy, [[player_module.updateHealth, -40], [enemy_module.removeAndReplaceEnemy, enemy]]));
     }
 
 
     function playerEnemyDetectionBoxCollision() {
-      for (var i = 0; i < enemy_module.enemies.length; i++) {
-        if(collisionDetection(player_module.getPlayer(), enemy_module.enemies[i].player_detection_box, [])
-        && player_module.getPlayer().isMoving){
-          enemy_module.setAggro(enemy_module.enemies[i],true);
-        }
-    }
+      enemy_module.enemies.filter(enemy => collisionDetection(player_module.getPlayer(), enemy.player_detection_box, [])).map(enemy => enemy_module.setAggro(enemy, true));
     }
 
     function pebblePickupCollision() {
