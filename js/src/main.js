@@ -25,9 +25,7 @@ var canvas,
     function reset() {
       pebble_module.resetPebbleAmmo();
       player_module.resetPlayer();
-      for (var i = 0; i < enemy_module.enemies.length; i++) {
-        enemy_module.removeAndReplaceEnemy(enemy_module.enemies, i);
-      }
+      enemy_module.enemies.map(enemy => enemy_module.removeAndReplaceEnemy(enemy));
     }
 
     function enemyHitTest() {
@@ -47,7 +45,7 @@ var canvas,
 
     function playerEnemyCollision() {
       for (var i = 0; i < enemy_module.enemies.length; i++) {
-        collisionDetection(player_module.getPlayer(), enemy_module.enemies[i], [[player_module.updateHealth, -40], [enemy_module.removeAndReplaceEnemy, enemy_module.enemies, i]]);
+        collisionDetection(player_module.getPlayer(), enemy_module.enemies[i], [[player_module.updateHealth, -40], [enemy_module.removeAndReplaceEnemy, enemy_module.enemies[i]]]);
       }
     }
 
@@ -96,7 +94,6 @@ var canvas,
     }
 
     // Initialisations
-
     enemy_module.addEnemy(Math.random() * 600, Math.random() * 600);
 
     function clearCanvas() {

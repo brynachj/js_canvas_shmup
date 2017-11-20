@@ -7,14 +7,22 @@ const WIDTH = 34, HEIGHT = 36, SPEED = 3;
 enemy_sprite = new Image();
 enemy_sprite.src = 'images/enemy_sprite.png';
 
-var enemies = [];
+let enemies = [];
 
 function addEnemy(x,y){
   enemies.push(createEnemy(x,y));
 }
 
+function newId() {
+  if (enemies.length === 0) {
+    return 1;
+  } else {
+    return enemies[enemies.length - 1].id + 1;
+  }
+}
+
 function createEnemy(x1, y1) {
-  return {x:x1, y:y1, w:WIDTH, h:HEIGHT, speed:SPEED, hitBoxColor: '#ff0000', health: 100,
+  return {id: newId(), x:x1, y:y1, w:WIDTH, h:HEIGHT, speed:SPEED, hitBoxColor: '#ff0000', health: 100,
         player_detection_box : {x:x1-60, y:y1-60, w:WIDTH+120, h:HEIGHT+120, hitBoxColor: '#ff8c00'},
         player_aggro_box : {x:x1-80, y:y1-80, w:WIDTH+160, h:HEIGHT+160, hitBoxColor: '#ffff00'},
         aggro : false
@@ -62,8 +70,9 @@ function moveEnemy(enemy, target) {
   }
 }
 
-function removeAndReplaceEnemy(enemies, i){
-  enemies.splice(i, 1);
+function removeAndReplaceEnemy(enemyToRemove){
+  var index = enemies.map(enemy => enemy.id).indexOf(enemyToRemove.id);
+  enemies.splice(index, 1);
   enemies.push(createEnemy(Math.random() * 600, Math.random() * 600));
 }
 
