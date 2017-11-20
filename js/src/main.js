@@ -31,15 +31,15 @@ var canvas,
     function enemyHitTest() {
       var remove = false;
       for (var i = 0; i < pebble_module.pebbles.length; i++) {
-        for (var j = 0; j < enemy_module.enemies.length; j++) {
-          if(collisionDetection(pebble_module.pebbles[i], enemy_module.enemies[j],
-          [[enemy_module.hitEnemy, enemy_module.enemies[j], 50],
+        enemy_module.enemies.map(enemy => {
+          if(collisionDetection(pebble_module.pebbles[i], enemy,
+          [[enemy_module.hitEnemy, enemy, 50],
           [pebble_pickup_module.addToPebblePickups, (Math.random() * 500) + 50, (Math.random() * 500) + 50],
           [pebble_module.removeFromPebbles, i],
           [player_module.addExperience, 10]])){
             return;
           }
-        }
+        });
       }
     }
 
