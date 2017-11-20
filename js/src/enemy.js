@@ -30,13 +30,13 @@ function setAggro(enemy, aggroBool){
 }
 
 function drawEnemies(ctx) {
-  enemies.map(enemy => draw_module.drawSprite(enemy_sprite, enemy, ctx));
-  if(window.drawHitboxes){
     enemies.map(enemy => {
-      draw_module.drawHitbox(enemy.player_detection_box, ctx);
-      draw_module.drawHitbox(enemy.player_aggro_box, ctx);
+        draw_module.drawSprite(enemy_sprite, enemy, ctx)
+        if (window.drawHitboxes) {
+            draw_module.drawHitbox(enemy.player_detection_box, ctx);
+            draw_module.drawHitbox(enemy.player_aggro_box, ctx);
+        }
     });
-  }
 }
 
 function moveEnemy(enemy, target) {
