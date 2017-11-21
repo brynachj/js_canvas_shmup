@@ -11,11 +11,9 @@ function addDebugControls() {
 
 function addCheckBoxEventListeners() {
   var checkbox = document.getElementById('hitbox_toggle');
-  console.log("setting up debug controls");
 
   checkbox.addEventListener( 'change', function() {
     window.drawHitboxes = this.checked;
-    console.log("added hitbox event listener");
   });
 }
 
