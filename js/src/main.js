@@ -30,17 +30,17 @@ var canvas,
 
     function enemyHitTest() {
       var remove = false;
-      for (var i = 0; i < pebble_module.pebbles.length; i++) {
+      pebble_module.pebbles.map(pebble => {
         enemy_module.enemies.map(enemy => {
-          if(collisionDetection(pebble_module.pebbles[i], enemy,
+          if(collisionDetection(pebble, enemy,
           [[enemy_module.hitEnemy, enemy, 50],
           [pebble_pickup_module.addToPebblePickups, (Math.random() * 500) + 50, (Math.random() * 500) + 50],
-          [pebble_module.removeFromPebbles, i],
+          [pebble_module.removeFromPebbles, pebble],
           [player_module.addExperience, 10]])){
             return;
           }
         });
-      }
+      });
     }
 
     function playerEnemyCollision() {

@@ -28,8 +28,9 @@ function addToPebbles(x, y) {
   pebbles.push(createPebble(x,y));
 }
 
-function removeFromPebbles(i) {
-  pebbles.splice(i,1);
+function removeFromPebbles(pebble) {
+  var index = pebbles.map(p => p.id).indexOf(pebble.id);
+  pebbles.splice(index,1);
 }
 
 function newId() {
@@ -52,8 +53,7 @@ function movePebble(pebble) {
   if (pebble.x < 600 + pebble_sprite.width) {
     pebble.x += 10;
   } else {
-    var index = pebbles.map(p => p.id).indexOf(pebble.id);
-    pebbles.splice(index, 1);
+    removeFromPebbles(pebble);
   }
 }
 
