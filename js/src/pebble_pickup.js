@@ -11,12 +11,21 @@ function addToPebblePickups(x, y) {
   pebblePickups.push(createPebblePickup(x,y));
 }
 
-function removeFromPebblePickups(i) {
-  pebblePickups.splice(i,1);
+function removeFromPebblePickups(pickup) {
+  var index = pebblePickups.map(p => p.id).indexOf(pickup.id);
+  pebblePickups.splice(index,1);
+}
+
+function newId() {
+  if (pebblePickups.length === 0) {
+    return 1;
+  } else {
+    return pebblePickups[pebblePickups.length - 1].id + 1;
+  }
 }
 
 function createPebblePickup(x1, y1) {
-  return {x:x1, y:y1 + 13, w:WIDTH, h:HEIGHT, hitBoxColor: '#00bfff'};
+  return {id:newId(), x:x1, y:y1 + 13, w:WIDTH, h:HEIGHT, hitBoxColor: '#00bfff'};
 }
 
 function drawPebblePickup(ctx) {

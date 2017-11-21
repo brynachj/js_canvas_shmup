@@ -44,30 +44,23 @@ var canvas,
     }
 
     function playerEnemyCollision() {
-      enemy_module.enemies.map(enemy => {
-        if(collisionDetection(player_module.getPlayer(), enemy)){
+      enemy_module.enemies.filter(e => collisionDetection(player_module.getPlayer(), e)).map(enemy => {
           player_module.updateHealth(-40);
           enemy_module.removeAndReplaceEnemy(enemy);
-        }
       });
     }
-
 
     function playerEnemyDetectionBoxCollision() {
       enemy_module.enemies.filter(enemy => collisionDetection(player_module.getPlayer(), enemy.player_detection_box)).map(enemy => enemy_module.setAggro(enemy, true));
     }
 
     function pebblePickupCollision() {
-      for (var i = 0; i < pebble_pickup_module.pebblePickups.length; i++) {
-        if(collisionDetection(player_module.getPlayer(), pebble_pickup_module.pebblePickups[i])){
-          pickUpPebbles(i);
-        }
-      }
+      pebble_pickup_module.pebblePickups.filter(p => collisionDetection(player_module.getPlayer(), p)).map(p => pickUpPebbles(p));
     }
 
-    function pickUpPebbles(i) {
+    function pickUpPebbles(pebble) {
       pebble_module.addToAmmo(3);
-      pebble_pickup_module.removeFromPebblePickups(i);
+      pebble_pickup_module.removeFromPebblePickups(pebble);
     }
 
     function collisionDetection(firstThing, secondThing, callbackList){
