@@ -1,5 +1,3 @@
-// TODO: Create eventlistner module
-
 var debug_module = require('./debugControls.js');
 var player_module = require('./player.js');
 var enemy_module = require('./enemy.js');
@@ -10,8 +8,7 @@ var hud_module = require('./hud.js');
 
 const CANVAS = 'canvas', KEY_DOWN_EVENT = 'keydown', KEY_UP_EVENT = 'keyup';
 
-var debug = true,
-    canvas,
+var canvas,
     ctx,
     width = 600,
     height = 600,
@@ -38,7 +35,7 @@ var debug = true,
       for (var i = 0; i < pebble_module.pebbles.length; i++) {
         for (var j = 0; j < enemy_module.enemies.length; j++) {
           if(collisionDetection(pebble_module.pebbles[i], enemy_module.enemies[j],
-          [[enemy_module.removeAndReplaceEnemy, enemy_module.enemies, j],
+          [[enemy_module.hitEnemy, j, 50],
           [pebble_pickup_module.addToPebblePickups, (Math.random() * 500) + 50, (Math.random() * 500) + 50],
           [pebble_module.removeFromPebbles, i],
           [player_module.addExperience, 10]])){
@@ -111,8 +108,9 @@ var debug = true,
       ctx = canvas.getContext('2d');
       document.addEventListener(KEY_DOWN_EVENT, keyDown, false);
       document.addEventListener(KEY_UP_EVENT, keyUp, false);
-      if(debug) {
+      if(debug_module.debug) {
         debug_module.addDebugControls();
+        debug_module.addCheckBoxEventListeners();
       }
       gameLoop();
     }
