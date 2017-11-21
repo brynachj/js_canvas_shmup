@@ -32,25 +32,35 @@ function removeFromPebbles(i) {
   pebbles.splice(i,1);
 }
 
+function newId() {
+  if (pebbles.length === 0) {
+    return 1;
+  } else {
+    return pebbles[pebbles.length - 1].id + 1;
+  }
+}
+
 function createPebble(x1, y1) {
-  return {x:x1, y:y1, w:WIDTH, h:HEIGHT, hitBoxColor: '#00bfff'};
+  return {id: newId(), x:x1, y:y1, w:WIDTH, h:HEIGHT, hitBoxColor: '#00bfff'};
 }
 
 function moveOnScreenPebbles() {
-  for (var i = 0; i < pebbles.length; i++) {
-    if (pebbles[i].x < 600 + pebble_sprite.width) {
-      pebbles[i].x += 10;
-    } else {
-      pebbles.splice(i, 1);
-    }
+  pebbles.map(pebble => movePebble(pebble));
+}
+
+function movePebble(pebble) {
+  if (pebble.x < 600 + pebble_sprite.width) {
+    pebble.x += 10;
+  } else {
+    var index = pebbles.map(p => p.id).indexOf(pebble.id);
+    pebbles.splice(index, 1);
   }
 }
 
 function drawOnScreenPebble(ctx) {
-  if (pebbles.length)
-    for (var i = 0; i < pebbles.length; i++) {
-      draw_module.drawSprite(pebble_sprite, pebbles[i], ctx);
-    }
+  if (pebbles.length){
+    pebbles.map(pebble => draw_module.drawSprite(pebble_sprite, pebble, ctx));
+  }
 }
 
 module.exports = {
