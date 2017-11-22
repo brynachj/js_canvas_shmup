@@ -25,40 +25,31 @@ var canvas,
     function reset() {
       pebble_module.resetPebbleAmmo();
       player_module.resetPlayer();
-      for (var i = 0; i < enemy_module.enemies.length; i++) {
-        enemy_module.removeAndReplaceEnemy(enemy_module.enemies, i);
-      }
+      enemy_module.enemies.map(enemy => enemy_module.removeAndReplaceEnemy(enemy));
     }
 
     function enemyHitTest() {
       var remove = false;
       for (var i = 0; i < pebble_module.pebbles.length; i++) {
-        for (var j = 0; j < enemy_module.enemies.length; j++) {
-          if(collisionDetection(pebble_module.pebbles[i], enemy_module.enemies[j],
-          [[enemy_module.hitEnemy, j, 50],
+        enemy_module.enemies.map(enemy => {
+          if(collisionDetection(pebble_module.pebbles[i], enemy,
+          [[enemy_module.hitEnemy, enemy, 50],
           [pebble_pickup_module.addToPebblePickups, (Math.random() * 500) + 50, (Math.random() * 500) + 50],
           [pebble_module.removeFromPebbles, i],
           [player_module.addExperience, 10]])){
             return;
           }
-        }
+        });
       }
     }
 
     function playerEnemyCollision() {
-      for (var i = 0; i < enemy_module.enemies.length; i++) {
-        collisionDetection(player_module.getPlayer(), enemy_module.enemies[i], [[player_module.updateHealth, -40], [enemy_module.removeAndReplaceEnemy, enemy_module.enemies, i]]);
-      }
+      enemy_module.enemies.map(enemy => collisionDetection(player_module.getPlayer(), enemy, [[player_module.updateHealth, -40], [enemy_module.removeAndReplaceEnemy, enemy]]));
     }
 
 
     function playerEnemyDetectionBoxCollision() {
-      for (var i = 0; i < enemy_module.enemies.length; i++) {
-        if(collisionDetection(player_module.getPlayer(), enemy_module.enemies[i].player_detection_box, [])
-        && player_module.getPlayer().isMoving){
-          enemy_module.setAggro(enemy_module.enemies[i],true);
-        }
-    }
+      enemy_module.enemies.filter(enemy => collisionDetection(player_module.getPlayer(), enemy.player_detection_box, [])).map(enemy => enemy_module.setAggro(enemy, true));
     }
 
     function pebblePickupCollision() {
@@ -96,7 +87,6 @@ var canvas,
     }
 
     // Initialisations
-
     enemy_module.addEnemy(Math.random() * 600, Math.random() * 600);
 
     function clearCanvas() {
@@ -141,14 +131,6 @@ var canvas,
       if ((player_module.getPlayer().y + player_module.getPlayer().h) >= height) player_module.getPlayer().y = height - player_module.getPlayer().h;
     }
 
-    function moveEnemies() {
-      for (var i = 0; i < enemy_module.enemies.length; i++) {
-        if(enemy_module.getAggro(enemy_module.enemies[i])){
-          enemy_module.moveEnemy(enemy_module.enemies[i], player_module.getPlayer());
-        }
-      }
-    }
-
     // Event Listeners/Input handling
 
     function keyDown(e) {
@@ -185,7 +167,7 @@ var canvas,
         playerEnemyCollision();
         playerEnemyDetectionBoxCollision();
         pebblePickupCollision();
-        moveEnemies();
+        enemy_module.moveEnemies();
         movePlayer();
         pebble_module.moveOnScreenPebbles();
         pebble_pickup_module.drawPebblePickup(ctx);
