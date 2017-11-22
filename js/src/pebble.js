@@ -1,4 +1,5 @@
 var draw_module = require('./draw.js');
+var utility_module = require('./utility.js');
 
 const WIDTH = 4, HEIGHT = 5, SPEED = 10;
 
@@ -33,16 +34,8 @@ function removeFromPebbles(pebble) {
   pebbles.splice(index,1);
 }
 
-function newId() {
-  if (pebbles.length === 0) {
-    return 1;
-  } else {
-    return pebbles[pebbles.length - 1].id + 1;
-  }
-}
-
 function createPebble(x1, y1) {
-  return {id: newId(), x:x1, y:y1, w:WIDTH, h:HEIGHT, hitBoxColor: '#00bfff'};
+  return {id: utility_module.newId(pebbles), x:x1, y:y1, w:WIDTH, h:HEIGHT, hitBoxColor: '#00bfff'};
 }
 
 function moveOnScreenPebbles() {
