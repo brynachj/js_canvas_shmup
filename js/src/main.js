@@ -52,6 +52,10 @@ var canvas,
       enemy_module.enemies.filter(enemy => collisionDetection(player_module.getPlayer(), enemy.player_detection_box)).map(enemy => enemy_module.setAggro(enemy, true));
     }
 
+    function playerEnemyDeaggroBoxCollision() {
+      enemy_module.enemies.filter(enemy => !collisionDetection(player_module.getPlayer(), enemy.player_aggro_box)).map(enemy => enemy_module.setAggro(enemy, false));
+    }
+
     function pebblePickupCollision() {
       pebble_pickup_module.pebblePickups.filter(p => collisionDetection(player_module.getPlayer(), p)).map(p => pickUpPebbles(p));
     }
@@ -156,6 +160,7 @@ var canvas,
         enemyHitTest();
         playerEnemyCollision();
         playerEnemyDetectionBoxCollision();
+        playerEnemyDeaggroBoxCollision();
         pebblePickupCollision();
         enemy_module.moveEnemies();
         movePlayer();
