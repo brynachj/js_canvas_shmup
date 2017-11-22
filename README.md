@@ -4,11 +4,15 @@
 
 Based on: http://atomicrobotdesign.com/blog/htmlcss/build-a-vertical-scrolling-shooter-game-with-html5-canvas-part-1/
 
+
+
 In order to modify, build and run - need to have browserify installed (node/npm dependency):
 http://browserify.org/index.html
 
-To build after making changes, navigate to js/src folder in terminal and run:
-browserify main.js -o bundle.js
+Note: running `npm install` from the project root will install browserify
+
+To build after making changes:
+browserify js/src/main.js -o js/src/bundle.js
 
 The trello board for this project can be found here:
 https://trello.com/b/xdZXT0VP/js-canvas-shmup
