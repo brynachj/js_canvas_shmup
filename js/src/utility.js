@@ -1,8 +1,8 @@
-function newId(arr) {
-  if (arr.length === 0) {
+function newId(array) {
+  if (array.length === 0) {
     return 1;
   } else {
-    return arr[arr.length - 1].id + 1;
+    return array[array.length - 1].id + 1;
   }
 }
 
