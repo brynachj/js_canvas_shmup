@@ -30,50 +30,40 @@ var canvas,
 
     function enemyHitTest() {
       var remove = false;
-      for (var i = 0; i < pebble_module.pebbles.length; i++) {
-        enemy_module.enemies.map(enemy => {
-          if(collisionDetection(pebble_module.pebbles[i], enemy,
-          [[enemy_module.hitEnemy, enemy, 50],
-          [pebble_pickup_module.addToPebblePickups, (Math.random() * 500) + 50, (Math.random() * 500) + 50],
-          [pebble_module.removeFromPebbles, i],
-          [player_module.addExperience, 10]])){
+      pebble_module.pebbles.map(pebble => {
+        enemy_module.enemies.filter(enemy => collisionDetection(pebble, enemy)).map(enemy => {
+            enemy_module.hitEnemy(enemy, 50);
+            pebble_pickup_module.addToPebblePickups((Math.random() * 500) + 50, (Math.random() * 500) + 50);
+            pebble_module.removeFromPebbles(pebble);
+            player_module.addExperience(10);
             return;
-          }
         });
-      }
+      });
     }
 
     function playerEnemyCollision() {
-      enemy_module.enemies.map(enemy => collisionDetection(player_module.getPlayer(), enemy, [[player_module.updateHealth, -40], [enemy_module.removeAndReplaceEnemy, enemy]]));
+      enemy_module.enemies.filter(e => collisionDetection(player_module.getPlayer(), e)).map(enemy => {
+          player_module.updateHealth(-40);
+          enemy_module.removeAndReplaceEnemy(enemy);
+      });
     }
 
-
     function playerEnemyDetectionBoxCollision() {
-      enemy_module.enemies.filter(enemy => collisionDetection(player_module.getPlayer(), enemy.player_detection_box, [])).map(enemy => enemy_module.setAggro(enemy, true));
+      enemy_module.enemies.filter(enemy => collisionDetection(player_module.getPlayer(), enemy.player_detection_box)).map(enemy => enemy_module.setAggro(enemy, true));
     }
 
     function pebblePickupCollision() {
-      for (var i = 0; i < pebble_pickup_module.pebblePickups.length; i++) {
-        collisionDetection(player_module.getPlayer(), pebble_pickup_module.pebblePickups[i], [[pickUpPebbles, i]]);
-      }
+      pebble_pickup_module.pebblePickups.filter(p => collisionDetection(player_module.getPlayer(), p)).map(p => pickUpPebbles(p));
     }
 
-    function pickUpPebbles(i) {
+    function pickUpPebbles(pebble) {
       pebble_module.addToAmmo(3);
-      pebble_pickup_module.removeFromPebblePickups(i);
+      pebble_pickup_module.removeFromPebblePickups(pebble);
     }
 
     function collisionDetection(firstThing, secondThing, callbackList){
-      if(firstThing.x < secondThing.x + secondThing.w &&
-        firstThing.x + firstThing.w > secondThing.x &&
-        firstThing.y < secondThing.y + secondThing.h &&
-        firstThing.h + firstThing.y > secondThing.y) {
-        for(var i = 0; i < callbackList.length; i++){
-          callbackList[i][0].apply(this, callbackList[i].slice(1));
-        }
-        return true;
-      }
-      return false;
+      return firstThing.x < secondThing.x + secondThing.w && firstThing.x + firstThing.w > secondThing.x &&
+      firstThing.y < secondThing.y + secondThing.h && firstThing.h + firstThing.y > secondThing.y;
     }
 
     function updateText() {
