@@ -19,7 +19,7 @@ function createEnemy(x1, y1) {
         player_detection_box : {x:x1-60, y:y1-60, w:WIDTH+120, h:HEIGHT+120, hitBoxColor: '#ff8c00'},
         player_aggro_box : {x:x1-80, y:y1-80, w:WIDTH+160, h:HEIGHT+160, hitBoxColor: '#ffff00'},
         player_attack_box: {x:x1-5, y:y1-5, w:WIDTH+10, h:HEIGHT+10, hitBoxColor: '#ff6961'},
-        aggro : false
+        aggro : false, attacking: false
       };
 }
 
@@ -93,7 +93,6 @@ module.exports = {
   addEnemy : addEnemy,
   drawEnemies : drawEnemies,
   removeAndReplaceEnemy : removeAndReplaceEnemy,
-  getAggro : getAggro,
   setAggro : setAggro,
   hitEnemy : hitEnemy,
   moveEnemies: moveEnemies
