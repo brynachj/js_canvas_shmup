@@ -31,6 +31,14 @@ function setAggro(enemy, aggroBool){
   enemy.aggro = aggroBool;
 }
 
+function getAttacking(enemy) {
+  return enemy.attacking;
+}
+
+function setAttacking(enemy, attackBool) {
+  enemy.attacking = attackBool;
+}
+
 function drawEnemies(ctx) {
     enemies.map(enemy => {
         draw_module.drawSprite(enemy_sprite, enemy, ctx)
@@ -85,7 +93,7 @@ function hitEnemy(enemy, damage) {
 }
 
 function moveEnemies() {
-  enemies.filter(getAggro).map(enemy => moveEnemyToward(enemy, player_module.getPlayer()));
+  enemies.filter(getAggro && !getAttack).map(enemy => moveEnemyToward(enemy, player_module.getPlayer()));
 }
 
 module.exports = {
