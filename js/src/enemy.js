@@ -37,6 +37,7 @@ function getAttacking(enemy) {
 
 function setAttacking(enemy, attackBool) {
   enemy.attacking = attackBool;
+  console.log("attacking " + enemy.attacking);
 }
 
 function drawEnemies(ctx) {
@@ -93,7 +94,7 @@ function hitEnemy(enemy, damage) {
 }
 
 function moveEnemies() {
-  enemies.filter(getAggro && !getAttack).map(enemy => moveEnemyToward(enemy, player_module.getPlayer()));
+  enemies.filter(getAggro).filter(e => !getAttacking(e)).map(enemy => moveEnemyToward(enemy, player_module.getPlayer()));
 }
 
 module.exports = {
@@ -102,6 +103,7 @@ module.exports = {
   drawEnemies : drawEnemies,
   removeAndReplaceEnemy : removeAndReplaceEnemy,
   setAggro : setAggro,
+  setAttacking : setAttacking,
   hitEnemy : hitEnemy,
   moveEnemies: moveEnemies
 }

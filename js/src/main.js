@@ -54,6 +54,7 @@ var canvas,
 
     function playerEnemyAttackBoxCollision() {
       enemy_module.enemies.filter(enemy => collisionDetection(player_module.getPlayer(), enemy.player_attack_box)).map(enemy => enemy_module.setAttacking(enemy, true));
+      enemy_module.enemies.filter(enemy => !collisionDetection(player_module.getPlayer(), enemy.player_attack_box)).map(enemy => enemy_module.setAttacking(enemy, false));
     }
 
     function playerEnemyDeaggroBoxCollision() {
@@ -165,6 +166,7 @@ var canvas,
         playerEnemyCollision();
         playerEnemyDetectionBoxCollision();
         playerEnemyDeaggroBoxCollision();
+        playerEnemyAttackBoxCollision();
         pebblePickupCollision();
         enemy_module.moveEnemies();
         movePlayer();
