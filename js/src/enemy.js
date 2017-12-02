@@ -18,7 +18,8 @@ function createEnemy(x1, y1) {
   return {id: utility_module.newId(enemies), x:x1, y:y1, w:WIDTH, h:HEIGHT, speed:SPEED, hitBoxColor: '#ff0000', health: 100,
         player_detection_box : {x:x1-60, y:y1-60, w:WIDTH+120, h:HEIGHT+120, hitBoxColor: '#ff8c00'},
         player_aggro_box : {x:x1-80, y:y1-80, w:WIDTH+160, h:HEIGHT+160, hitBoxColor: '#ffff00'},
-        aggro : false
+        player_attack_box: {x:x1-5, y:y1-5, w:10, h:HEIGHT+10, hitBoxColor: '#ff6961'},
+        aggro : false, attacking: false
       };
 }
 
@@ -30,37 +31,50 @@ function setAggro(enemy, aggroBool){
   enemy.aggro = aggroBool;
 }
 
+function getAttacking(enemy) {
+  return enemy.attacking;
+}
+
+function setAttacking(enemy, attackBool) {
+  enemy.attacking = attackBool;
+  console.log("attacking " + enemy.attacking);
+}
+
 function drawEnemies(ctx) {
     enemies.map(enemy => {
         draw_module.drawSprite(enemy_sprite, enemy, ctx)
         if (window.drawHitboxes) {
             draw_module.drawHitbox(enemy.player_detection_box, ctx);
             draw_module.drawHitbox(enemy.player_aggro_box, ctx);
+            draw_module.drawHitbox(enemy.player_attack_box, ctx);
         }
     });
 }
 
-function moveEnemy(enemy, target) {
+function moveEnemyToward(enemy, target) {
   if (enemy.x < target.x) {
-    enemy.x += enemy.speed;
-    enemy.player_detection_box.x += enemy.speed;
-    enemy.player_aggro_box.x += enemy.speed;
+    move(enemy, enemy.speed, 0);
   }
   if (enemy.x > target.x) {
-    enemy.x -= enemy.speed;
-    enemy.player_detection_box.x -= enemy.speed;
-    enemy.player_aggro_box.x -= enemy.speed;
+    move(enemy, -enemy.speed, 0);
   }
   if (enemy.y < target.y) {
-    enemy.y += enemy.speed;
-    enemy.player_detection_box.y += enemy.speed;
-    enemy.player_aggro_box.y += enemy.speed;
+    move(enemy, 0, enemy.speed);
   }
   if (enemy.y > target.y) {
-    enemy.y -= enemy.speed;
-    enemy.player_detection_box.y -= enemy.speed;
-    enemy.player_aggro_box.y -= enemy.speed;
+    move(enemy, 0, -enemy.speed);
   }
+}
+
+function move(enemy, move_x, move_y) {
+  enemy.x += move_x;
+  enemy.player_detection_box.x += move_x;
+  enemy.player_aggro_box.x += move_x;
+  enemy.player_attack_box.x += move_x;
+  enemy.y += move_y;
+  enemy.player_detection_box.y += move_y;
+  enemy.player_aggro_box.y += move_y;
+  enemy.player_attack_box.y += move_y;
 }
 
 function removeAndReplaceEnemy(enemyToRemove){
@@ -80,7 +94,7 @@ function hitEnemy(enemy, damage) {
 }
 
 function moveEnemies() {
-  enemies.filter(getAggro).map(enemy => moveEnemy(enemy, player_module.getPlayer()));
+  enemies.filter(getAggro).filter(e => !getAttacking(e)).map(enemy => moveEnemyToward(enemy, player_module.getPlayer()));
 }
 
 module.exports = {
@@ -88,8 +102,8 @@ module.exports = {
   addEnemy : addEnemy,
   drawEnemies : drawEnemies,
   removeAndReplaceEnemy : removeAndReplaceEnemy,
-  getAggro : getAggro,
   setAggro : setAggro,
+  setAttacking : setAttacking,
   hitEnemy : hitEnemy,
   moveEnemies: moveEnemies
 }
