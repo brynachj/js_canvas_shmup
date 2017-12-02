@@ -29,7 +29,7 @@ function createEnemy(x1, y1) {
   return {id: utility_module.newId(enemies), x:x1, y:y1, w:WIDTH, h:HEIGHT, speed:SPEED, hitBoxColor: '#ff0000', health: 100,
         player_detection_box : {x:x1-60, y:y1-60, w:WIDTH+120, h:HEIGHT+120, hitBoxColor: '#ff8c00'},
         player_aggro_box : {x:x1-80, y:y1-80, w:WIDTH+160, h:HEIGHT+160, hitBoxColor: '#ffff00'},
-        player_attack_box: {x:x1-5, y:y1-5, w:10, h:HEIGHT+10, hitBoxColor: '#ff6961'},
+        player_attack_box: {x:x1-10, y:y1-5, w:10, h:HEIGHT+10, hitBoxColor: '#ff6961'},
         aggro : false, attacking: false, facing: LEFT
       };
 }
@@ -91,15 +91,18 @@ function updateEnemyDirection(enemy, target) {
   if(x_difference*x_difference > y_difference*y_difference) {
     if(x_difference > 0){
       enemy.facing = LEFT;
+      enemy.player_attack_box = {x:enemy.x-10, y:enemy.y-5, w:10, h:HEIGHT+10, hitBoxColor: '#ff6961'};
     } else {
       enemy.facing = RIGHT;
+      enemy.player_attack_box = {x:enemy.x+enemy.w, y:enemy.y-5, w:10, h:HEIGHT+10, hitBoxColor: '#ff6961'};
     }
   } else {
     if(y_difference > 0){
       enemy.facing = UP;
+      enemy.player_attack_box = {x:enemy.x-5, y:enemy.y-10, w:WIDTH+10, h:10, hitBoxColor: '#ff6961'};
     } else {
       enemy.facing = DOWN;
-    }
+enemy.player_attack_box = {x:enemy.x-5, y:enemy.y+enemy.h, w:WIDTH+10, h:10, hitBoxColor: '#ff6961'};    }
   }
 }
 
