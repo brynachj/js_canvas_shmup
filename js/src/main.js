@@ -52,11 +52,6 @@ var canvas,
       enemy_module.enemies.filter(enemy => collisionDetection(player_module.getPlayer(), enemy.player_detection_box)).map(enemy => enemy_module.setAggro(enemy, true));
     }
 
-    function playerEnemyAttackBoxCollision() {
-      enemy_module.enemies.filter(enemy => collisionDetection(player_module.getPlayer(), enemy.player_attack_box)).map(enemy => enemy_module.setAttacking(enemy, true));
-      enemy_module.enemies.filter(enemy => !collisionDetection(player_module.getPlayer(), enemy.player_attack_box)).map(enemy => enemy_module.setAttacking(enemy, false));
-    }
-
     function playerEnemyDeaggroBoxCollision() {
       enemy_module.enemies.filter(enemy => !collisionDetection(player_module.getPlayer(), enemy.player_aggro_box)).map(enemy => enemy_module.setAggro(enemy, false));
     }
@@ -65,7 +60,7 @@ var canvas,
       enemyHitTest();
       playerEnemyCollision();
       playerEnemyDetectionBoxCollision();
-      playerEnemyAttackBoxCollision();
+      enemy_module.playerEnemyAttackBoxCollision();
       playerEnemyDeaggroBoxCollision();
       enemy_module.moveEnemies();
     }
