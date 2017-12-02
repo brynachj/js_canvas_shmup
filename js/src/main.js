@@ -41,27 +41,12 @@ var canvas,
       });
     }
 
-    function playerEnemyCollision() {
-      enemy_module.enemies.filter(e => collisionDetection(player_module.getPlayer(), e)).map(enemy => {
-          player_module.updateHealth(-40);
-          enemy_module.removeAndReplaceEnemy(enemy);
-      });
-    }
-
-    function playerEnemyDetectionBoxCollision() {
-      enemy_module.enemies.filter(enemy => collisionDetection(player_module.getPlayer(), enemy.player_detection_box)).map(enemy => enemy_module.setAggro(enemy, true));
-    }
-
-    function playerEnemyDeaggroBoxCollision() {
-      enemy_module.enemies.filter(enemy => !collisionDetection(player_module.getPlayer(), enemy.player_aggro_box)).map(enemy => enemy_module.setAggro(enemy, false));
-    }
-
     function updateEnemies() {
       enemyHitTest();
-      playerEnemyCollision();
-      playerEnemyDetectionBoxCollision();
+      enemy_module.playerEnemyCollision();
+      enemy_module.playerEnemyDetectionBoxCollision();
       enemy_module.playerEnemyAttackBoxCollision();
-      playerEnemyDeaggroBoxCollision();
+      enemy_module.playerEnemyDeaggroBoxCollision();
       enemy_module.moveEnemies();
     }
 

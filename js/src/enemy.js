@@ -173,6 +173,21 @@ function moveEnemies() {
   enemies.filter(e => getAttacking(e)).map(enemy => attack(enemy, player_module.getPlayer()));
 }
 
+function playerEnemyCollision() {
+  enemies.filter(e => collisionDetection(player_module.getPlayer(), e)).map(enemy => {
+      player_module.updateHealth(-40);
+      removeAndReplaceEnemy(enemy);
+  });
+}
+
+function playerEnemyDetectionBoxCollision() {
+  enemies.filter(enemy => collisionDetection(player_module.getPlayer(), enemy.player_detection_box)).map(enemy => setAggro(enemy, true));
+}
+
+function playerEnemyDeaggroBoxCollision() {
+  enemies.filter(enemy => !collisionDetection(player_module.getPlayer(), enemy.player_aggro_box)).map(enemy => setAggro(enemy, false));
+}
+
 function playerEnemyAttackBoxCollision() {
   enemies.filter(enemy => collisionDetection(player_module.getPlayer(), enemy.player_attack_box)).map(enemy => setAttacking(enemy, true));
 }
@@ -191,5 +206,8 @@ module.exports = {
   setAttacking : setAttacking,
   hitEnemy : hitEnemy,
   moveEnemies : moveEnemies,
+  playerEnemyCollision : playerEnemyCollision,
+  playerEnemyDetectionBoxCollision : playerEnemyDetectionBoxCollision,
+  playerEnemyDeaggroBoxCollision : playerEnemyDeaggroBoxCollision,
   playerEnemyAttackBoxCollision : playerEnemyAttackBoxCollision
 }
