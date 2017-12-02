@@ -61,6 +61,15 @@ var canvas,
       enemy_module.enemies.filter(enemy => !collisionDetection(player_module.getPlayer(), enemy.player_aggro_box)).map(enemy => enemy_module.setAggro(enemy, false));
     }
 
+    function updateEnemies() {
+      enemyHitTest();
+      playerEnemyCollision();
+      playerEnemyDetectionBoxCollision();
+      playerEnemyAttackBoxCollision();
+      playerEnemyDeaggroBoxCollision();
+      enemy_module.moveEnemies();
+    }
+
     function pebblePickupCollision() {
       pebble_pickup_module.pebblePickups.filter(p => collisionDetection(player_module.getPlayer(), p)).map(p => pickUpPebbles(p));
     }
@@ -162,13 +171,8 @@ var canvas,
     function gameLoop() {
       clearCanvas();
       if(player_module.getAlive() && gameStarted){
-        enemyHitTest();
-        playerEnemyCollision();
-        playerEnemyDetectionBoxCollision();
-        playerEnemyDeaggroBoxCollision();
-        playerEnemyAttackBoxCollision();
+        updateEnemies();
         pebblePickupCollision();
-        enemy_module.moveEnemies();
         movePlayer();
         pebble_module.moveOnScreenPebbles();
         pebble_pickup_module.drawPebblePickup(ctx);

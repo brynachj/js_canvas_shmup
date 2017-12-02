@@ -134,7 +134,8 @@ function hitEnemy(enemy, damage) {
 }
 
 function moveEnemies() {
-  enemies.filter(getAggro).filter(e => !getAttacking(e)).map(enemy => moveEnemyToward(enemy, player_module.getPlayer()));
+  let aggroEnemies = enemies.filter(getAggro);
+  aggroEnemies.filter(e => !getAttacking(e)).map(enemy => moveEnemyToward(enemy, player_module.getPlayer()));
 }
 
 module.exports = {
