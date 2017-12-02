@@ -146,7 +146,6 @@ function attack(enemy, player) {
       windingDown(enemy);
       break;
     case animationFrame === 29:
-      debug_module.writeOutDebug('wound down');
       setAttacking(enemy, false);
       enemy.hitPlayer = false;
       break;
@@ -156,20 +155,16 @@ function attack(enemy, player) {
 }
 
 function windingUp(enemy) {
-  debug_module.writeOutDebug('winding up');
 }
 
 function windingDown(enemy) {
-  debug_module.writeOutDebug('winding down');
 }
 
 function attacking(enemy) {
   if (collisionDetection(player_module.getPlayer(), enemy.player_attack_box) && !enemy.hitPlayer){
     player_module.updateHealth(-40);
-    debug_module.writeOutDebug('hit');
     enemy.hitPlayer = true;
   }
-  debug_module.writeOutDebug('attacking');
 }
 
 function moveEnemies() {
