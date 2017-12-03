@@ -9,7 +9,6 @@ var hud_module = require('./hud.js');
 const CANVAS = 'canvas', KEY_DOWN_EVENT = 'keydown', KEY_UP_EVENT = 'keyup';
 
 var canvas,
-    ctx,
     width = 600,
     height = 600,
 
@@ -66,11 +65,11 @@ var canvas,
 
     function updateText() {
       if (!gameStarted) {
-        hud_module.startScreen(ctx);
+        hud_module.startScreen(draw_module.ctx);
       }
-        hud_module.updateHud(ctx);
+        hud_module.updateHud(draw_module.ctx);
       if (!player_module.getAlive()) {
-        hud_module.deathScreen(ctx);
+        hud_module.deathScreen(draw_module.ctx);
       }
     }
 
@@ -78,12 +77,12 @@ var canvas,
     enemy_module.addEnemy(Math.random() * 600, Math.random() * 600);
 
     function clearCanvas() {
-      ctx.clearRect(0,0,width,height);
+      draw_module.ctx.clearRect(0,0,width,height);
     }
 
     function init() {
       canvas = document.getElementById(CANVAS);
-      ctx = canvas.getContext('2d');
+      draw_module.ctx = canvas.getContext('2d');
       document.addEventListener(KEY_DOWN_EVENT, keyDown, false);
       document.addEventListener(KEY_UP_EVENT, keyUp, false);
       if(debug_module.debug) {
@@ -155,10 +154,10 @@ var canvas,
         pebblePickupCollision();
         movePlayer();
         pebble_module.moveOnScreenPebbles();
-        pebble_pickup_module.drawPebblePickup(ctx);
-        enemy_module.drawEnemies(ctx);
-        player_module.drawPlayer(ctx);
-        pebble_module.drawOnScreenPebble(ctx);
+        pebble_pickup_module.drawPebblePickup(draw_module.ctx);
+        enemy_module.drawEnemies(draw_module.ctx);
+        player_module.drawPlayer(draw_module.ctx);
+        pebble_module.drawOnScreenPebble(draw_module.ctx);
       }
       updateText();
       game = setTimeout(gameLoop, 1000 / 40);
