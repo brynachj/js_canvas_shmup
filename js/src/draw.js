@@ -1,6 +1,5 @@
 
 let ctx;
-// var ctx;
 
  function drawHitbox(object, context) {
   context.strokeStyle=object.hitBoxColor;
