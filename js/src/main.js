@@ -5,6 +5,7 @@ var draw_module = require('./draw.js');
 var pebble_module = require('./pebble.js');
 var pebble_pickup_module = require('./pebble_pickup.js');
 var hud_module = require('./hud.js');
+var collision_detection_module = require('./collisionDetection.js');
 
 const CANVAS = 'canvas', KEY_DOWN_EVENT = 'keydown', KEY_UP_EVENT = 'keyup';
 
@@ -30,7 +31,7 @@ var canvas,
     function enemyHitTest() {
       var remove = false;
       pebble_module.pebbles.map(pebble => {
-        enemy_module.enemies.filter(enemy => collisionDetection(pebble, enemy)).map(enemy => {
+        enemy_module.enemies.filter(enemy => collision_detection_module.collisionDetection(pebble, enemy)).map(enemy => {
             enemy_module.hitEnemy(enemy, 50);
             pebble_pickup_module.addToPebblePickups((Math.random() * 500) + 50, (Math.random() * 500) + 50);
             pebble_module.removeFromPebbles(pebble);
@@ -51,17 +52,12 @@ var canvas,
     }
 
     function pebblePickupCollision() {
-      pebble_pickup_module.pebblePickups.filter(p => collisionDetection(player_module.getPlayer(), p)).map(p => pickUpPebbles(p));
+      pebble_pickup_module.pebblePickups.filter(p => collision_detection_module.collisionDetection(player_module.getPlayer(), p)).map(p => pickUpPebbles(p));
     }
 
     function pickUpPebbles(pebble) {
       pebble_module.addToAmmo(3);
       pebble_pickup_module.removeFromPebblePickups(pebble);
-    }
-
-    function collisionDetection(firstThing, secondThing){
-      return firstThing.x < secondThing.x + secondThing.w && firstThing.x + firstThing.w > secondThing.x &&
-      firstThing.y < secondThing.y + secondThing.h && firstThing.h + firstThing.y > secondThing.y;
     }
 
     function updateText() {

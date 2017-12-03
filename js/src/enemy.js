@@ -2,6 +2,7 @@ var draw_module = require('./draw.js');
 var debug_module = require('./debugControls.js')
 var player_module = require('./player.js');
 var utility_module = require('./utility.js');
+var collision_detection_module = require('./collisionDetection.js');
 
 const WIDTH = 34, HEIGHT = 36, SPEED = 3;
 
@@ -179,7 +180,7 @@ function windingDown(enemy) {
 
 function attacking(enemy) {
   drawAttacking(enemy);
-  if (collisionDetection(player_module.getPlayer(), enemy.player_attack_box) && !enemy.hitPlayer){
+  if (collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_attack_box) && !enemy.hitPlayer){
     player_module.updateHealth(-40);
     enemy.hitPlayer = true;
   }
@@ -199,27 +200,22 @@ function moveEnemies() {
 }
 
 function playerEnemyCollision() {
-  enemies.filter(e => collisionDetection(player_module.getPlayer(), e)).map(enemy => {
+  enemies.filter(e => collision_detection_module.collisionDetection(player_module.getPlayer(), e)).map(enemy => {
       player_module.updateHealth(-40);
       removeAndReplaceEnemy(enemy);
   });
 }
 
 function playerEnemyDetectionBoxCollision() {
-  enemies.filter(enemy => collisionDetection(player_module.getPlayer(), enemy.player_detection_box)).map(enemy => setAggro(enemy, true));
+  enemies.filter(enemy => collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_detection_box)).map(enemy => setAggro(enemy, true));
 }
 
 function playerEnemyDeaggroBoxCollision() {
-  enemies.filter(enemy => !collisionDetection(player_module.getPlayer(), enemy.player_aggro_box)).map(enemy => setAggro(enemy, false));
+  enemies.filter(enemy => !collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_aggro_box)).map(enemy => setAggro(enemy, false));
 }
 
 function playerEnemyAttackBoxCollision() {
-  enemies.filter(enemy => collisionDetection(player_module.getPlayer(), enemy.player_attack_box)).map(enemy => setAttacking(enemy, true));
-}
-
-function collisionDetection(firstThing, secondThing){
-  return firstThing.x < secondThing.x + secondThing.w && firstThing.x + firstThing.w > secondThing.x &&
-  firstThing.y < secondThing.y + secondThing.h && firstThing.h + firstThing.y > secondThing.y;
+  enemies.filter(enemy => collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_attack_box)).map(enemy => setAttacking(enemy, true));
 }
 
 module.exports = {
