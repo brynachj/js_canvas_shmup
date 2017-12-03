@@ -5,8 +5,19 @@ var utility_module = require('./utility.js');
 
 const WIDTH = 34, HEIGHT = 36, SPEED = 3;
 
+const UP = "up", DOWN = "down", LEFT = "left", RIGHT = "right";
+
 enemy_sprite = new Image();
 enemy_sprite.src = 'images/enemy_sprite.png';
+
+enemy_sprite_left = new Image();
+enemy_sprite_left.src = 'images/enemy_sprite_left.png';
+enemy_sprite_right = new Image();
+enemy_sprite_right.src = 'images/enemy_sprite_right.png';
+enemy_sprite_up = new Image();
+enemy_sprite_up.src = 'images/enemy_sprite_up.png';
+enemy_sprite_down = new Image();
+enemy_sprite_down.src = 'images/enemy_sprite_down.png';
 
 let enemies = [];
 
@@ -18,8 +29,8 @@ function createEnemy(x1, y1) {
   return {id: utility_module.newId(enemies), x:x1, y:y1, w:WIDTH, h:HEIGHT, speed:SPEED, hitBoxColor: '#ff0000', health: 100,
         player_detection_box : {x:x1-60, y:y1-60, w:WIDTH+120, h:HEIGHT+120, hitBoxColor: '#ff8c00'},
         player_aggro_box : {x:x1-80, y:y1-80, w:WIDTH+160, h:HEIGHT+160, hitBoxColor: '#ffff00'},
-        player_attack_box: {x:x1-5, y:y1-5, w:10, h:HEIGHT+10, hitBoxColor: '#ff6961'},
-        aggro : false, attacking: false
+        player_attack_box: {x:x1-10, y:y1-5, w:10, h:HEIGHT+10, hitBoxColor: '#ff6961'},
+        aggro : false, attacking: false, facing: LEFT
       };
 }
 
@@ -40,9 +51,16 @@ function setAttacking(enemy, attackBool) {
   console.log("attacking " + enemy.attacking);
 }
 
+function drawEnemy(enemy_sprite, enemy, ctx) {
+  if(enemy.facing === LEFT){draw_module.drawSprite(enemy_sprite_left, enemy, ctx);}
+  if(enemy.facing === RIGHT){draw_module.drawSprite(enemy_sprite_right, enemy, ctx);}
+  if(enemy.facing === UP){draw_module.drawSprite(enemy_sprite_up, enemy, ctx);}
+  if(enemy.facing === DOWN){draw_module.drawSprite(enemy_sprite_down, enemy, ctx);}
+}
+
 function drawEnemies(ctx) {
     enemies.map(enemy => {
-        draw_module.drawSprite(enemy_sprite, enemy, ctx)
+        drawEnemy(enemy_sprite, enemy, ctx)
         if (window.drawHitboxes) {
             draw_module.drawHitbox(enemy.player_detection_box, ctx);
             draw_module.drawHitbox(enemy.player_aggro_box, ctx);
@@ -52,6 +70,7 @@ function drawEnemies(ctx) {
 }
 
 function moveEnemyToward(enemy, target) {
+  updateEnemyDirection(enemy, target);
   if (enemy.x < target.x) {
     move(enemy, enemy.speed, 0);
   }
@@ -63,6 +82,27 @@ function moveEnemyToward(enemy, target) {
   }
   if (enemy.y > target.y) {
     move(enemy, 0, -enemy.speed);
+  }
+}
+
+function updateEnemyDirection(enemy, target) {
+  x_difference = (enemy.x + enemy.w/2) - (target.x + target.w/2);
+  y_difference = (enemy.y + enemy.h/2) - (target.y + target.h/2);
+  if(x_difference*x_difference > y_difference*y_difference) {
+    if(x_difference > 0){
+      enemy.facing = LEFT;
+      enemy.player_attack_box = {x:enemy.x-10, y:enemy.y-5, w:10, h:HEIGHT+10, hitBoxColor: '#ff6961'};
+    } else {
+      enemy.facing = RIGHT;
+      enemy.player_attack_box = {x:enemy.x+enemy.w, y:enemy.y-5, w:10, h:HEIGHT+10, hitBoxColor: '#ff6961'};
+    }
+  } else {
+    if(y_difference > 0){
+      enemy.facing = UP;
+      enemy.player_attack_box = {x:enemy.x-5, y:enemy.y-10, w:WIDTH+10, h:10, hitBoxColor: '#ff6961'};
+    } else {
+      enemy.facing = DOWN;
+enemy.player_attack_box = {x:enemy.x-5, y:enemy.y+enemy.h, w:WIDTH+10, h:10, hitBoxColor: '#ff6961'};    }
   }
 }
 
