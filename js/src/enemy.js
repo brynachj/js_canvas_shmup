@@ -19,6 +19,15 @@ enemy_sprite_up.src = 'images/enemy_sprite_up.png';
 enemy_sprite_down = new Image();
 enemy_sprite_down.src = 'images/enemy_sprite_down.png';
 
+attack_sprite_left = new Image();
+attack_sprite_left.src = 'images/enemy_sword_left.png';
+attack_sprite_right = new Image();
+attack_sprite_right.src = 'images/enemy_sword_right.png';
+attack_sprite_up = new Image();
+attack_sprite_up.src = 'images/enemy_sword_up.png';
+attack_sprite_down = new Image();
+attack_sprite_down.src = 'images/enemy_sword_down.png';
+
 let enemies = [];
 
 function addEnemy(x,y){
@@ -30,7 +39,7 @@ function createEnemy(x1, y1) {
         player_detection_box : {x:x1-60, y:y1-60, w:WIDTH+120, h:HEIGHT+120, hitBoxColor: '#ff8c00'},
         player_aggro_box : {x:x1-80, y:y1-80, w:WIDTH+160, h:HEIGHT+160, hitBoxColor: '#ffff00'},
         player_attack_box: {x:x1-10, y:y1-5, w:10, h:HEIGHT+10, hitBoxColor: '#ff6961'},
-        aggro : false, attacking: false, facing: LEFT
+        aggro : false, attacking: false, facing: LEFT, attackAnimationFrame : 0, hitPlayer : false
       };
 }
 
@@ -51,20 +60,20 @@ function setAttacking(enemy, attackBool) {
   console.log("attacking " + enemy.attacking);
 }
 
-function drawEnemy(enemy_sprite, enemy, ctx) {
-  if(enemy.facing === LEFT){draw_module.drawSprite(enemy_sprite_left, enemy, ctx);}
-  if(enemy.facing === RIGHT){draw_module.drawSprite(enemy_sprite_right, enemy, ctx);}
-  if(enemy.facing === UP){draw_module.drawSprite(enemy_sprite_up, enemy, ctx);}
-  if(enemy.facing === DOWN){draw_module.drawSprite(enemy_sprite_down, enemy, ctx);}
+function drawEnemy(enemy_sprite, enemy) {
+  if(enemy.facing === LEFT){draw_module.drawSprite(enemy_sprite_left, enemy, draw_module.ctx);}
+  if(enemy.facing === RIGHT){draw_module.drawSprite(enemy_sprite_right, enemy, draw_module.ctx);}
+  if(enemy.facing === UP){draw_module.drawSprite(enemy_sprite_up, enemy, draw_module.ctx);}
+  if(enemy.facing === DOWN){draw_module.drawSprite(enemy_sprite_down, enemy, draw_module.ctx);}
 }
 
 function drawEnemies(ctx) {
     enemies.map(enemy => {
-        drawEnemy(enemy_sprite, enemy, ctx)
+        drawEnemy(enemy_sprite, enemy)
         if (window.drawHitboxes) {
-            draw_module.drawHitbox(enemy.player_detection_box, ctx);
-            draw_module.drawHitbox(enemy.player_aggro_box, ctx);
-            draw_module.drawHitbox(enemy.player_attack_box, ctx);
+            draw_module.drawHitbox(enemy.player_detection_box, draw_module.ctx);
+            draw_module.drawHitbox(enemy.player_aggro_box, draw_module.ctx);
+            draw_module.drawHitbox(enemy.player_attack_box, draw_module.ctx);
         }
     });
 }
@@ -133,8 +142,84 @@ function hitEnemy(enemy, damage) {
   }
 }
 
+function attack(enemy, player) {
+  let animationFrame = enemy.attackAnimationFrame
+  switch(true) {
+    case animationFrame < 10:
+      windingUp(enemy);
+      break;
+    case animationFrame < 20:
+      attacking(enemy);
+      break;
+    case animationFrame < 29:
+      windingDown(enemy);
+      break;
+    case animationFrame === 29:
+      setAttacking(enemy, false);
+      enemy.hitPlayer = false;
+      break;
+  }
+  animationFrame += 1
+  enemy.attackAnimationFrame = animationFrame % 30
+}
+
+function windingUp(enemy) {
+  drawWindUpAttack(enemy);
+}
+
+function drawWindUpAttack(enemy) {
+  if(enemy.facing === LEFT){draw_module.drawSprite(attack_sprite_left, {x: enemy.x, y: enemy.y+enemy.h/2}, draw_module.ctx);}
+  if(enemy.facing === RIGHT){draw_module.drawSprite(attack_sprite_right, {x: enemy.x, y: enemy.y+enemy.h/2}, draw_module.ctx);}
+  if(enemy.facing === UP){draw_module.drawSprite(attack_sprite_up, {x: enemy.x + enemy.w/2, y: enemy.y}, draw_module.ctx);}
+  if(enemy.facing === DOWN){draw_module.drawSprite(attack_sprite_down, {x: enemy.x + enemy.w/2, y: enemy.y}, draw_module.ctx);}
+}
+
+function windingDown(enemy) {
+}
+
+function attacking(enemy) {
+  drawAttacking(enemy);
+  if (collisionDetection(player_module.getPlayer(), enemy.player_attack_box) && !enemy.hitPlayer){
+    player_module.updateHealth(-40);
+    enemy.hitPlayer = true;
+  }
+}
+
+function drawAttacking(enemy) {
+  if(enemy.facing === LEFT){draw_module.drawSprite(attack_sprite_left, {x: enemy.x-30, y: enemy.y+enemy.h/2}, draw_module.ctx);}
+  if(enemy.facing === RIGHT){draw_module.drawSprite(attack_sprite_right, {x: enemy.x+30, y: enemy.y+enemy.h/2}, draw_module.ctx);}
+  if(enemy.facing === UP){draw_module.drawSprite(attack_sprite_up, {x: enemy.x + enemy.w/2, y: enemy.y-30}, draw_module.ctx);}
+  if(enemy.facing === DOWN){draw_module.drawSprite(attack_sprite_down, {x: enemy.x + enemy.w/2, y: enemy.y+30}, draw_module.ctx);}
+}
+
 function moveEnemies() {
-  enemies.filter(getAggro).filter(e => !getAttacking(e)).map(enemy => moveEnemyToward(enemy, player_module.getPlayer()));
+  let aggroEnemies = enemies.filter(getAggro);
+  aggroEnemies.filter(e => !getAttacking(e)).map(enemy => moveEnemyToward(enemy, player_module.getPlayer()));
+  enemies.filter(e => getAttacking(e)).map(enemy => attack(enemy, player_module.getPlayer()));
+}
+
+function playerEnemyCollision() {
+  enemies.filter(e => collisionDetection(player_module.getPlayer(), e)).map(enemy => {
+      player_module.updateHealth(-40);
+      removeAndReplaceEnemy(enemy);
+  });
+}
+
+function playerEnemyDetectionBoxCollision() {
+  enemies.filter(enemy => collisionDetection(player_module.getPlayer(), enemy.player_detection_box)).map(enemy => setAggro(enemy, true));
+}
+
+function playerEnemyDeaggroBoxCollision() {
+  enemies.filter(enemy => !collisionDetection(player_module.getPlayer(), enemy.player_aggro_box)).map(enemy => setAggro(enemy, false));
+}
+
+function playerEnemyAttackBoxCollision() {
+  enemies.filter(enemy => collisionDetection(player_module.getPlayer(), enemy.player_attack_box)).map(enemy => setAttacking(enemy, true));
+}
+
+function collisionDetection(firstThing, secondThing){
+  return firstThing.x < secondThing.x + secondThing.w && firstThing.x + firstThing.w > secondThing.x &&
+  firstThing.y < secondThing.y + secondThing.h && firstThing.h + firstThing.y > secondThing.y;
 }
 
 module.exports = {
@@ -145,5 +230,9 @@ module.exports = {
   setAggro : setAggro,
   setAttacking : setAttacking,
   hitEnemy : hitEnemy,
-  moveEnemies: moveEnemies
+  moveEnemies : moveEnemies,
+  playerEnemyCollision : playerEnemyCollision,
+  playerEnemyDetectionBoxCollision : playerEnemyDetectionBoxCollision,
+  playerEnemyDeaggroBoxCollision : playerEnemyDeaggroBoxCollision,
+  playerEnemyAttackBoxCollision : playerEnemyAttackBoxCollision
 }

@@ -9,7 +9,6 @@ var hud_module = require('./hud.js');
 const CANVAS = 'canvas', KEY_DOWN_EVENT = 'keydown', KEY_UP_EVENT = 'keyup';
 
 var canvas,
-    ctx,
     width = 600,
     height = 600,
 
@@ -41,24 +40,14 @@ var canvas,
       });
     }
 
-    function playerEnemyCollision() {
-      enemy_module.enemies.filter(e => collisionDetection(player_module.getPlayer(), e)).map(enemy => {
-          player_module.updateHealth(-40);
-          enemy_module.removeAndReplaceEnemy(enemy);
-      });
-    }
-
-    function playerEnemyDetectionBoxCollision() {
-      enemy_module.enemies.filter(enemy => collisionDetection(player_module.getPlayer(), enemy.player_detection_box)).map(enemy => enemy_module.setAggro(enemy, true));
-    }
-
-    function playerEnemyAttackBoxCollision() {
-      enemy_module.enemies.filter(enemy => collisionDetection(player_module.getPlayer(), enemy.player_attack_box)).map(enemy => enemy_module.setAttacking(enemy, true));
-      enemy_module.enemies.filter(enemy => !collisionDetection(player_module.getPlayer(), enemy.player_attack_box)).map(enemy => enemy_module.setAttacking(enemy, false));
-    }
-
-    function playerEnemyDeaggroBoxCollision() {
-      enemy_module.enemies.filter(enemy => !collisionDetection(player_module.getPlayer(), enemy.player_aggro_box)).map(enemy => enemy_module.setAggro(enemy, false));
+    function updateEnemies() {
+      enemyHitTest();
+      enemy_module.playerEnemyCollision();
+      enemy_module.playerEnemyDetectionBoxCollision();
+      enemy_module.playerEnemyAttackBoxCollision();
+      enemy_module.playerEnemyDeaggroBoxCollision();
+      enemy_module.moveEnemies();
+      enemy_module.drawEnemies(draw_module.ctx);
     }
 
     function pebblePickupCollision() {
@@ -70,18 +59,18 @@ var canvas,
       pebble_pickup_module.removeFromPebblePickups(pebble);
     }
 
-    function collisionDetection(firstThing, secondThing, callbackList){
+    function collisionDetection(firstThing, secondThing){
       return firstThing.x < secondThing.x + secondThing.w && firstThing.x + firstThing.w > secondThing.x &&
       firstThing.y < secondThing.y + secondThing.h && firstThing.h + firstThing.y > secondThing.y;
     }
 
     function updateText() {
       if (!gameStarted) {
-        hud_module.startScreen(ctx);
+        hud_module.startScreen(draw_module.ctx);
       }
-        hud_module.updateHud(ctx);
+        hud_module.updateHud(draw_module.ctx);
       if (!player_module.getAlive()) {
-        hud_module.deathScreen(ctx);
+        hud_module.deathScreen(draw_module.ctx);
       }
     }
 
@@ -89,12 +78,12 @@ var canvas,
     enemy_module.addEnemy(Math.random() * 600, Math.random() * 600);
 
     function clearCanvas() {
-      ctx.clearRect(0,0,width,height);
+      draw_module.ctx.clearRect(0,0,width,height);
     }
 
     function init() {
       canvas = document.getElementById(CANVAS);
-      ctx = canvas.getContext('2d');
+      draw_module.ctx = canvas.getContext('2d');
       document.addEventListener(KEY_DOWN_EVENT, keyDown, false);
       document.addEventListener(KEY_UP_EVENT, keyUp, false);
       if(debug_module.debug) {
@@ -162,19 +151,13 @@ var canvas,
     function gameLoop() {
       clearCanvas();
       if(player_module.getAlive() && gameStarted){
-        enemyHitTest();
-        playerEnemyCollision();
-        playerEnemyDetectionBoxCollision();
-        playerEnemyDeaggroBoxCollision();
-        playerEnemyAttackBoxCollision();
+        updateEnemies();
         pebblePickupCollision();
-        enemy_module.moveEnemies();
         movePlayer();
         pebble_module.moveOnScreenPebbles();
-        pebble_pickup_module.drawPebblePickup(ctx);
-        enemy_module.drawEnemies(ctx);
-        player_module.drawPlayer(ctx);
-        pebble_module.drawOnScreenPebble(ctx);
+        pebble_pickup_module.drawPebblePickup(draw_module.ctx);
+        player_module.drawPlayer(draw_module.ctx);
+        pebble_module.drawOnScreenPebble(draw_module.ctx);
       }
       updateText();
       game = setTimeout(gameLoop, 1000 / 40);

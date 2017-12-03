@@ -1,17 +1,20 @@
 
- function drawHitbox(object, ctx) {
-  ctx.strokeStyle=object.hitBoxColor;
-  ctx.strokeRect(object.x,object.y,object.w, object.h);
+let ctx;
+
+ function drawHitbox(object, context) {
+  context.strokeStyle=object.hitBoxColor;
+  context.strokeRect(object.x,object.y,object.w, object.h);
 }
 
- function drawSprite(sprite, object, ctx) {
-  ctx.drawImage(sprite, object.x, object.y);
+ function drawSprite(sprite, object, context) {
+  context.drawImage(sprite, object.x, object.y);
   if(window.drawHitboxes){
-    drawHitbox(object, ctx);
+    drawHitbox(object, context);
   }
 }
 
 module.exports = {
   drawSprite: drawSprite,
-  drawHitbox: drawHitbox
+  drawHitbox: drawHitbox,
+  ctx : ctx
 }
