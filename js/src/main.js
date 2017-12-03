@@ -47,6 +47,7 @@ var canvas,
       enemy_module.playerEnemyAttackBoxCollision();
       enemy_module.playerEnemyDeaggroBoxCollision();
       enemy_module.moveEnemies();
+      enemy_module.drawEnemies(draw_module.ctx);
     }
 
     function pebblePickupCollision() {
@@ -155,7 +156,6 @@ var canvas,
         movePlayer();
         pebble_module.moveOnScreenPebbles();
         pebble_pickup_module.drawPebblePickup(draw_module.ctx);
-        enemy_module.drawEnemies(draw_module.ctx);
         player_module.drawPlayer(draw_module.ctx);
         pebble_module.drawOnScreenPebble(draw_module.ctx);
       }
