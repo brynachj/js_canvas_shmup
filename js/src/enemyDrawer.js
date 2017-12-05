@@ -35,12 +35,6 @@ function drawIdle(enemy) {
   }
 }
 
-function drawEnemies(enemies) {
-    enemies.map(enemy => {
-        drawIdle(enemy)
-    });
-}
-
 function drawWindUpAttack(enemy) {
   drawIdle(enemy);
   if(enemy.facing === LEFT){draw_module.drawSprite(attack_sprite_left, {x: enemy.x, y: enemy.y+enemy.h/2}, draw_module.ctx);}
@@ -63,7 +57,6 @@ function drawWindDownAttack(enemy) {
 
 module.exports = {
   drawIdle : drawIdle,
-  drawEnemies : drawEnemies,
   drawWindUpAttack : drawWindUpAttack,
   drawAttacking : drawAttacking,
   drawWindDownAttack : drawWindDownAttack
