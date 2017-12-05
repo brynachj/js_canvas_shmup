@@ -2,6 +2,7 @@ var debug_module = require('./debugControls.js');
 var player_module = require('./player.js');
 var enemy_module = require('./enemy.js');
 var enemy_manager = require('./enemyManager.js');
+var enemy_drawer = require('./enemyDrawer.js');
 var draw_module = require('./draw.js');
 var pebble_module = require('./pebble.js');
 var pebble_pickup_module = require('./pebble_pickup.js');
@@ -49,7 +50,7 @@ var canvas,
       enemy_module.playerEnemyAttackBoxCollision();
       enemy_module.playerEnemyDeaggroBoxCollision();
       enemy_module.moveEnemies();
-      enemy_module.drawEnemies(draw_module.ctx);
+      enemy_drawer.drawEnemies(draw_module.ctx);
     }
 
     function pebblePickupCollision() {

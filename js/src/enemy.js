@@ -1,7 +1,7 @@
 var enemy_manager = require('./enemyManager.js');
-var draw_module = require('./draw.js');
 var debug_module = require('./debugControls.js')
 var player_module = require('./player.js');
+var draw_module = require('./draw.js');
 var collision_detection_module = require('./collisionDetection.js');
 
 const WIDTH = 34, HEIGHT = 36, SPEED = 3;
@@ -44,24 +44,6 @@ function getAttacking(enemy) {
 function setAttacking(enemy, attackBool) {
   enemy.attacking = attackBool;
   console.log("attacking " + enemy.attacking);
-}
-
-function drawEnemy(enemy_sprite, enemy) {
-  if(enemy.facing === LEFT){draw_module.drawSprite(enemy_sprite_left, enemy, draw_module.ctx);}
-  if(enemy.facing === RIGHT){draw_module.drawSprite(enemy_sprite_right, enemy, draw_module.ctx);}
-  if(enemy.facing === UP){draw_module.drawSprite(enemy_sprite_up, enemy, draw_module.ctx);}
-  if(enemy.facing === DOWN){draw_module.drawSprite(enemy_sprite_down, enemy, draw_module.ctx);}
-}
-
-function drawEnemies(ctx) {
-    enemy_manager.enemies.map(enemy => {
-        drawEnemy(enemy_sprite, enemy)
-        if (window.drawHitboxes) {
-            draw_module.drawHitbox(enemy.player_detection_box, draw_module.ctx);
-            draw_module.drawHitbox(enemy.player_aggro_box, draw_module.ctx);
-            draw_module.drawHitbox(enemy.player_attack_box, draw_module.ctx);
-        }
-    });
 }
 
 function moveEnemyToward(enemy, target) {
@@ -199,7 +181,6 @@ function playerEnemyAttackBoxCollision() {
 }
 
 module.exports = {
-  drawEnemies : drawEnemies,
   setAggro : setAggro,
   setAttacking : setAttacking,
   hitEnemy : hitEnemy,
