@@ -113,19 +113,13 @@ function move(enemy, move_x, move_y) {
   enemy.player_attack_box.y += move_y;
 }
 
-function removeAndReplaceEnemy(enemyToRemove){
-  var index = enemy_manager.enemies.map(enemy => enemy.id).indexOf(enemyToRemove.id);
-  enemy_manager.enemies.splice(index, 1);
-  enemy_manager.addEnemy(Math.random() * 600, Math.random() * 600);
-}
-
 function hitEnemy(enemy, damage) {
   enemy.health -= damage;
   if(debug_module.debug){
     debug_module.writeOutDebug('enemy health: ' + enemy.health);
   }
   if(enemy.health <= 0) {
-    removeAndReplaceEnemy(enemy)
+    enemy_manager.removeAndReplaceEnemy(enemy)
   }
 }
 
@@ -188,7 +182,7 @@ function moveEnemies() {
 function playerEnemyCollision() {
   enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection(player_module.getPlayer(), e)).map(enemy => {
       player_module.updateHealth(-40);
-      removeAndReplaceEnemy(enemy);
+      enemy_manager.removeAndReplaceEnemy(enemy);
   });
 }
 
@@ -206,7 +200,6 @@ function playerEnemyAttackBoxCollision() {
 
 module.exports = {
   drawEnemies : drawEnemies,
-  removeAndReplaceEnemy : removeAndReplaceEnemy,
   setAggro : setAggro,
   setAttacking : setAttacking,
   hitEnemy : hitEnemy,

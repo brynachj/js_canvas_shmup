@@ -19,7 +19,14 @@ function createEnemy(x1, y1) {
       };
 }
 
+function removeAndReplaceEnemy(enemyToRemove){
+  var index = enemy_manager.enemies.map(enemy => enemy.id).indexOf(enemyToRemove.id);
+  enemy_manager.enemies.splice(index, 1);
+  enemy_manager.addEnemy(Math.random() * 600, Math.random() * 600);
+}
+
 module.exports = {
   enemies : enemies,
-  addEnemy : addEnemy
+  addEnemy : addEnemy,
+  removeAndReplaceEnemy : removeAndReplaceEnemy
 }
