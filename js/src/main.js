@@ -1,6 +1,6 @@
 var debug_module = require('./debugControls.js');
 var player_module = require('./player.js');
-var enemy_module = require('./enemy.js');
+var enemy_module = require('./enemyService.js');
 var enemy_manager = require('./enemyManager.js');
 var enemy_drawer = require('./enemyDrawer.js');
 var draw_module = require('./draw.js');
