@@ -17,22 +17,6 @@ function updateEnemies() {
   enemy_drawer.drawEnemies();
 }
 
-function getAggro(enemy) {
-  return enemy.aggro;
-}
-
-function setAggro(enemy, aggroBool){
-  enemy.aggro = aggroBool;
-}
-
-function getAttacking(enemy) {
-  return enemy.attacking;
-}
-
-function setAttacking(enemy, attackBool) {
-  enemy.attacking = attackBool;
-}
-
 function moveEnemyToward(enemy, target) {
   updateEnemyDirection(enemy, target);
   if (enemy.x < target.x) {
@@ -105,7 +89,7 @@ function attack(enemy, player) {
       windingDown(enemy);
       break;
     case animationFrame === 29:
-      setAttacking(enemy, false);
+      enemy.attacking = false;
       enemy.hitPlayer = false;
       break;
   }
@@ -129,9 +113,9 @@ function attacking(enemy) {
 }
 
 function moveEnemies() {
-  let aggroEnemies = enemy_manager.enemies.filter(getAggro);
-  aggroEnemies.filter(e => !getAttacking(e)).map(enemy => moveEnemyToward(enemy, player_module.getPlayer()));
-  enemy_manager.enemies.filter(e => getAttacking(e)).map(enemy => attack(enemy, player_module.getPlayer()));
+  let aggroEnemies = enemy_manager.enemies.filter(e => e.aggro);
+  aggroEnemies.filter(e => !e.attacking).map(enemy => moveEnemyToward(enemy, player_module.getPlayer()));
+  enemy_manager.enemies.filter(e => e.attacking).map(enemy => attack(enemy, player_module.getPlayer()));
 }
 
 function playerEnemyCollision() {
@@ -142,20 +126,18 @@ function playerEnemyCollision() {
 }
 
 function playerEnemyDetectionBoxCollision() {
-  enemy_manager.enemies.filter(enemy => collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_detection_box)).map(enemy => setAggro(enemy, true));
+  enemy_manager.enemies.filter(enemy => collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_detection_box)).map(enemy => enemy.aggro = true);
 }
 
 function playerEnemyDeaggroBoxCollision() {
-  enemy_manager.enemies.filter(enemy => !collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_aggro_box)).map(enemy => setAggro(enemy, false));
+  enemy_manager.enemies.filter(enemy => !collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_aggro_box)).map(enemy => enemy.aggro = false);
 }
 
 function playerEnemyAttackBoxCollision() {
-  enemy_manager.enemies.filter(enemy => collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_attack_box)).map(enemy => setAttacking(enemy, true));
+  enemy_manager.enemies.filter(enemy => collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_attack_box)).map(enemy => enemy.attacking = true);
 }
 
 module.exports = {
   updateEnemies : updateEnemies,
-  setAggro : setAggro,
-  setAttacking : setAttacking,
   hitEnemy : hitEnemy
 }
