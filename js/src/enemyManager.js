@@ -74,10 +74,18 @@ function move(enemy, move_x, move_y) {
   enemy.player_attack_box.y += move_y;
 }
 
+function hitEnemy(enemy, damage) {
+  enemy.health -= damage;
+  if(enemy.health <= 0) {
+    removeAndReplaceEnemy(enemy)
+  }
+}
+
 module.exports = {
   enemies : enemies,
   addEnemy : addEnemy,
   removeAndReplaceEnemy : removeAndReplaceEnemy,
   updateEnemyDirection : updateEnemyDirection,
-  moveEnemyToward : moveEnemyToward
+  moveEnemyToward : moveEnemyToward,
+  hitEnemy : hitEnemy
 }

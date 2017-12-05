@@ -14,13 +14,7 @@ function updateEnemies() {
 }
 
 function hitEnemy(enemy, damage) {
-  enemy.health -= damage;
-  if(debug_module.debug){
-    debug_module.writeOutDebug('enemy health: ' + enemy.health);
-  }
-  if(enemy.health <= 0) {
-    enemy_manager.removeAndReplaceEnemy(enemy)
-  }
+  enemy_manager.hitEnemy(enemy, damage);
 }
 
 function attack(enemy, player) {
