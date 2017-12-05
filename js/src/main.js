@@ -1,6 +1,7 @@
 var debug_module = require('./debugControls.js');
 var player_module = require('./player.js');
 var enemy_module = require('./enemy.js');
+var enemy_manager = require('./enemyManager.js');
 var draw_module = require('./draw.js');
 var pebble_module = require('./pebble.js');
 var pebble_pickup_module = require('./pebble_pickup.js');
@@ -25,13 +26,13 @@ var canvas,
     function reset() {
       pebble_module.resetPebbleAmmo();
       player_module.resetPlayer();
-      enemy_module.enemies.map(enemy => enemy_module.removeAndReplaceEnemy(enemy));
+      enemy_manager.enemies.map(enemy => enemy_module.removeAndReplaceEnemy(enemy));
     }
 
     function enemyHitTest() {
       var remove = false;
       pebble_module.pebbles.map(pebble => {
-        enemy_module.enemies.filter(enemy => collision_detection_module.collisionDetection(pebble, enemy)).map(enemy => {
+        enemy_manager.enemies.filter(enemy => collision_detection_module.collisionDetection(pebble, enemy)).map(enemy => {
             enemy_module.hitEnemy(enemy, 50);
             pebble_pickup_module.addToPebblePickups((Math.random() * 500) + 50, (Math.random() * 500) + 50);
             pebble_module.removeFromPebbles(pebble);
@@ -71,7 +72,7 @@ var canvas,
     }
 
     // Initialisations
-    enemy_module.addEnemy(Math.random() * 600, Math.random() * 600);
+    enemy_manager.addEnemy(Math.random() * 600, Math.random() * 600);
 
     function clearCanvas() {
       draw_module.ctx.clearRect(0,0,width,height);

@@ -1,7 +1,7 @@
+var enemy_manager = require('./enemyManager.js');
 var draw_module = require('./draw.js');
 var debug_module = require('./debugControls.js')
 var player_module = require('./player.js');
-var utility_module = require('./utility.js');
 var collision_detection_module = require('./collisionDetection.js');
 
 const WIDTH = 34, HEIGHT = 36, SPEED = 3;
@@ -29,21 +29,6 @@ attack_sprite_up.src = 'images/enemy_sword_up.png';
 attack_sprite_down = new Image();
 attack_sprite_down.src = 'images/enemy_sword_down.png';
 
-let enemies = [];
-
-function addEnemy(x,y){
-  enemies.push(createEnemy(x,y));
-}
-
-function createEnemy(x1, y1) {
-  return {id: utility_module.newId(enemies), x:x1, y:y1, w:WIDTH, h:HEIGHT, speed:SPEED, hitBoxColor: '#ff0000', health: 100,
-        player_detection_box : {x:x1-60, y:y1-60, w:WIDTH+120, h:HEIGHT+120, hitBoxColor: '#ff8c00'},
-        player_aggro_box : {x:x1-80, y:y1-80, w:WIDTH+160, h:HEIGHT+160, hitBoxColor: '#ffff00'},
-        player_attack_box: {x:x1-10, y:y1-5, w:10, h:HEIGHT+10, hitBoxColor: '#ff6961'},
-        aggro : false, attacking: false, facing: LEFT, attackAnimationFrame : 0, hitPlayer : false
-      };
-}
-
 function getAggro(enemy) {
   return enemy.aggro;
 }
@@ -69,7 +54,7 @@ function drawEnemy(enemy_sprite, enemy) {
 }
 
 function drawEnemies(ctx) {
-    enemies.map(enemy => {
+    enemy_manager.enemies.map(enemy => {
         drawEnemy(enemy_sprite, enemy)
         if (window.drawHitboxes) {
             draw_module.drawHitbox(enemy.player_detection_box, draw_module.ctx);
@@ -128,9 +113,9 @@ function move(enemy, move_x, move_y) {
 }
 
 function removeAndReplaceEnemy(enemyToRemove){
-  var index = enemies.map(enemy => enemy.id).indexOf(enemyToRemove.id);
-  enemies.splice(index, 1);
-  enemies.push(createEnemy(Math.random() * 600, Math.random() * 600));
+  var index = enemy_manager.enemies.map(enemy => enemy.id).indexOf(enemyToRemove.id);
+  enemy_manager.enemies.splice(index, 1);
+  enemy_manager.addEnemy(Math.random() * 600, Math.random() * 600);
 }
 
 function hitEnemy(enemy, damage) {
@@ -194,33 +179,31 @@ function drawAttacking(enemy) {
 }
 
 function moveEnemies() {
-  let aggroEnemies = enemies.filter(getAggro);
+  let aggroEnemies = enemy_manager.enemies.filter(getAggro);
   aggroEnemies.filter(e => !getAttacking(e)).map(enemy => moveEnemyToward(enemy, player_module.getPlayer()));
-  enemies.filter(e => getAttacking(e)).map(enemy => attack(enemy, player_module.getPlayer()));
+  enemy_manager.enemies.filter(e => getAttacking(e)).map(enemy => attack(enemy, player_module.getPlayer()));
 }
 
 function playerEnemyCollision() {
-  enemies.filter(e => collision_detection_module.collisionDetection(player_module.getPlayer(), e)).map(enemy => {
+  enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection(player_module.getPlayer(), e)).map(enemy => {
       player_module.updateHealth(-40);
       removeAndReplaceEnemy(enemy);
   });
 }
 
 function playerEnemyDetectionBoxCollision() {
-  enemies.filter(enemy => collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_detection_box)).map(enemy => setAggro(enemy, true));
+  enemy_manager.enemies.filter(enemy => collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_detection_box)).map(enemy => setAggro(enemy, true));
 }
 
 function playerEnemyDeaggroBoxCollision() {
-  enemies.filter(enemy => !collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_aggro_box)).map(enemy => setAggro(enemy, false));
+  enemy_manager.enemies.filter(enemy => !collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_aggro_box)).map(enemy => setAggro(enemy, false));
 }
 
 function playerEnemyAttackBoxCollision() {
-  enemies.filter(enemy => collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_attack_box)).map(enemy => setAttacking(enemy, true));
+  enemy_manager.enemies.filter(enemy => collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_attack_box)).map(enemy => setAttacking(enemy, true));
 }
 
 module.exports = {
-  enemies : enemies,
-  addEnemy : addEnemy,
   drawEnemies : drawEnemies,
   removeAndReplaceEnemy : removeAndReplaceEnemy,
   setAggro : setAggro,
