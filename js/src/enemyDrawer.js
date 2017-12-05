@@ -31,7 +31,7 @@ function drawEnemy(enemy_sprite, enemy) {
   if(enemy.facing === DOWN){draw_module.drawSprite(enemy_sprite_down, enemy, draw_module.ctx);}
 }
 
-function drawEnemies(ctx) {
+function drawEnemies() {
     enemy_manager.enemies.map(enemy => {
         drawEnemy(enemy_sprite, enemy)
         if (window.drawHitboxes) {

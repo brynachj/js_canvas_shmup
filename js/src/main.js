@@ -45,12 +45,7 @@ var canvas,
 
     function updateEnemies() {
       enemyHitTest();
-      enemy_module.playerEnemyCollision();
-      enemy_module.playerEnemyDetectionBoxCollision();
-      enemy_module.playerEnemyAttackBoxCollision();
-      enemy_module.playerEnemyDeaggroBoxCollision();
-      enemy_module.moveEnemies();
-      enemy_drawer.drawEnemies(draw_module.ctx);
+      enemy_module.updateEnemies();
     }
 
     function pebblePickupCollision() {

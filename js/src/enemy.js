@@ -8,6 +8,15 @@ const WIDTH = 34, HEIGHT = 36, SPEED = 3;
 
 const UP = "up", DOWN = "down", LEFT = "left", RIGHT = "right";
 
+function updateEnemies() {
+  playerEnemyCollision();
+  playerEnemyDetectionBoxCollision();
+  playerEnemyAttackBoxCollision();
+  playerEnemyDeaggroBoxCollision();
+  moveEnemies();
+  enemy_drawer.drawEnemies();
+}
+
 function getAggro(enemy) {
   return enemy.aggro;
 }
@@ -22,7 +31,6 @@ function getAttacking(enemy) {
 
 function setAttacking(enemy, attackBool) {
   enemy.attacking = attackBool;
-  console.log("attacking " + enemy.attacking);
 }
 
 function moveEnemyToward(enemy, target) {
@@ -146,12 +154,8 @@ function playerEnemyAttackBoxCollision() {
 }
 
 module.exports = {
+  updateEnemies : updateEnemies,
   setAggro : setAggro,
   setAttacking : setAttacking,
-  hitEnemy : hitEnemy,
-  moveEnemies : moveEnemies,
-  playerEnemyCollision : playerEnemyCollision,
-  playerEnemyDetectionBoxCollision : playerEnemyDetectionBoxCollision,
-  playerEnemyDeaggroBoxCollision : playerEnemyDeaggroBoxCollision,
-  playerEnemyAttackBoxCollision : playerEnemyAttackBoxCollision
+  hitEnemy : hitEnemy
 }
