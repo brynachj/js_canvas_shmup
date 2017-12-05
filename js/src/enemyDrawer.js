@@ -28,16 +28,16 @@ function drawEnemy(enemy) {
   if(enemy.facing === RIGHT){draw_module.drawSprite(enemy_sprite_right, enemy, draw_module.ctx);}
   if(enemy.facing === UP){draw_module.drawSprite(enemy_sprite_up, enemy, draw_module.ctx);}
   if(enemy.facing === DOWN){draw_module.drawSprite(enemy_sprite_down, enemy, draw_module.ctx);}
+  if (window.drawHitboxes) {
+      draw_module.drawHitbox(enemy.player_detection_box, draw_module.ctx);
+      draw_module.drawHitbox(enemy.player_aggro_box, draw_module.ctx);
+      draw_module.drawHitbox(enemy.player_attack_box, draw_module.ctx);
+  }
 }
 
 function drawEnemies(enemies) {
     enemies.map(enemy => {
         drawEnemy(enemy)
-        if (window.drawHitboxes) {
-            draw_module.drawHitbox(enemy.player_detection_box, draw_module.ctx);
-            draw_module.drawHitbox(enemy.player_aggro_box, draw_module.ctx);
-            draw_module.drawHitbox(enemy.player_attack_box, draw_module.ctx);
-        }
     });
 }
 
