@@ -1,7 +1,6 @@
 var enemy_manager = require('./enemyManager.js');
 var debug_module = require('./debugControls.js')
 var player_module = require('./player.js');
-var draw_module = require('./draw.js');
 var enemy_drawer = require('./enemyDrawer.js');
 var collision_detection_module = require('./collisionDetection.js');
 
@@ -135,18 +134,11 @@ function windingDown(enemy) {
 }
 
 function attacking(enemy) {
-  drawAttacking(enemy);
+  enemy_drawer.drawAttacking(enemy);
   if (collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_attack_box) && !enemy.hitPlayer){
     player_module.updateHealth(-40);
     enemy.hitPlayer = true;
   }
-}
-
-function drawAttacking(enemy) {
-  if(enemy.facing === LEFT){draw_module.drawSprite(attack_sprite_left, {x: enemy.x-30, y: enemy.y+enemy.h/2}, draw_module.ctx);}
-  if(enemy.facing === RIGHT){draw_module.drawSprite(attack_sprite_right, {x: enemy.x+30, y: enemy.y+enemy.h/2}, draw_module.ctx);}
-  if(enemy.facing === UP){draw_module.drawSprite(attack_sprite_up, {x: enemy.x + enemy.w/2, y: enemy.y-30}, draw_module.ctx);}
-  if(enemy.facing === DOWN){draw_module.drawSprite(attack_sprite_down, {x: enemy.x + enemy.w/2, y: enemy.y+30}, draw_module.ctx);}
 }
 
 function moveEnemies() {
