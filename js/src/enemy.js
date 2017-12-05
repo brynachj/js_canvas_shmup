@@ -8,27 +8,6 @@ const WIDTH = 34, HEIGHT = 36, SPEED = 3;
 
 const UP = "up", DOWN = "down", LEFT = "left", RIGHT = "right";
 
-enemy_sprite = new Image();
-enemy_sprite.src = 'images/enemy_sprite.png';
-
-enemy_sprite_left = new Image();
-enemy_sprite_left.src = 'images/enemy_sprite_left.png';
-enemy_sprite_right = new Image();
-enemy_sprite_right.src = 'images/enemy_sprite_right.png';
-enemy_sprite_up = new Image();
-enemy_sprite_up.src = 'images/enemy_sprite_up.png';
-enemy_sprite_down = new Image();
-enemy_sprite_down.src = 'images/enemy_sprite_down.png';
-
-attack_sprite_left = new Image();
-attack_sprite_left.src = 'images/enemy_sword_left.png';
-attack_sprite_right = new Image();
-attack_sprite_right.src = 'images/enemy_sword_right.png';
-attack_sprite_up = new Image();
-attack_sprite_up.src = 'images/enemy_sword_up.png';
-attack_sprite_down = new Image();
-attack_sprite_down.src = 'images/enemy_sword_down.png';
-
 function getAggro(enemy) {
   return enemy.aggro;
 }
