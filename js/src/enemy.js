@@ -97,7 +97,8 @@ function updateEnemyDirection(enemy, target) {
       enemy.player_attack_box = {x:enemy.x-5, y:enemy.y-10, w:WIDTH+10, h:10, hitBoxColor: '#ff6961'};
     } else {
       enemy.facing = DOWN;
-enemy.player_attack_box = {x:enemy.x-5, y:enemy.y+enemy.h, w:WIDTH+10, h:10, hitBoxColor: '#ff6961'};    }
+      enemy.player_attack_box = {x:enemy.x-5, y:enemy.y+enemy.h, w:WIDTH+10, h:10, hitBoxColor: '#ff6961'};
+    }
   }
 }
 
