@@ -10,7 +10,7 @@ function updateEnemies() {
   playerEnemyAttackBoxCollision();
   playerEnemyDeaggroBoxCollision();
   moveEnemies();
-  enemy_drawer.drawEnemies(enemy_manager.enemies.filter(e => !e.attacking));
+  enemy_manager.enemies.filter(e => !e.attacking).map(enemy => enemy_drawer.drawIdle(enemy));
   enemy_manager.enemies.filter(e => e.attacking).map(enemy => attack(enemy, player_module.getPlayer()));
 }
 
