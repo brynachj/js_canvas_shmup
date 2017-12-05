@@ -10,7 +10,7 @@ function updateEnemies() {
   playerEnemyAttackBoxCollision();
   playerEnemyDeaggroBoxCollision();
   moveEnemies();
-  enemy_drawer.drawEnemies();
+  enemy_drawer.drawEnemies(enemy_manager.enemies);
 }
 
 function hitEnemy(enemy, damage) {

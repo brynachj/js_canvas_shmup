@@ -1,5 +1,4 @@
 var draw_module = require('./draw.js');
-var enemy_manager = require('./enemyManager.js');
 
 const UP = "up", DOWN = "down", LEFT = "left", RIGHT = "right";
 
@@ -31,8 +30,8 @@ function drawEnemy(enemy_sprite, enemy) {
   if(enemy.facing === DOWN){draw_module.drawSprite(enemy_sprite_down, enemy, draw_module.ctx);}
 }
 
-function drawEnemies() {
-    enemy_manager.enemies.map(enemy => {
+function drawEnemies(enemies) {
+    enemies.map(enemy => {
         drawEnemy(enemy_sprite, enemy)
         if (window.drawHitboxes) {
             draw_module.drawHitbox(enemy.player_detection_box, draw_module.ctx);
