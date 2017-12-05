@@ -47,9 +47,37 @@ function updateEnemyDirection(enemy, target) {
   }
 }
 
+function moveEnemyToward(enemy, target) {
+  updateEnemyDirection(enemy, target);
+  if (enemy.x < target.x) {
+    move(enemy, enemy.speed, 0);
+  }
+  if (enemy.x > target.x) {
+    move(enemy, -enemy.speed, 0);
+  }
+  if (enemy.y < target.y) {
+    move(enemy, 0, enemy.speed);
+  }
+  if (enemy.y > target.y) {
+    move(enemy, 0, -enemy.speed);
+  }
+}
+
+function move(enemy, move_x, move_y) {
+  enemy.x += move_x;
+  enemy.player_detection_box.x += move_x;
+  enemy.player_aggro_box.x += move_x;
+  enemy.player_attack_box.x += move_x;
+  enemy.y += move_y;
+  enemy.player_detection_box.y += move_y;
+  enemy.player_aggro_box.y += move_y;
+  enemy.player_attack_box.y += move_y;
+}
+
 module.exports = {
   enemies : enemies,
   addEnemy : addEnemy,
   removeAndReplaceEnemy : removeAndReplaceEnemy,
-  updateEnemyDirection : updateEnemyDirection
+  updateEnemyDirection : updateEnemyDirection,
+  moveEnemyToward : moveEnemyToward
 }

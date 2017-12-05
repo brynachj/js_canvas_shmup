@@ -13,33 +13,6 @@ function updateEnemies() {
   enemy_drawer.drawEnemies();
 }
 
-function moveEnemyToward(enemy, target) {
-  enemy_manager.updateEnemyDirection(enemy, target);
-  if (enemy.x < target.x) {
-    move(enemy, enemy.speed, 0);
-  }
-  if (enemy.x > target.x) {
-    move(enemy, -enemy.speed, 0);
-  }
-  if (enemy.y < target.y) {
-    move(enemy, 0, enemy.speed);
-  }
-  if (enemy.y > target.y) {
-    move(enemy, 0, -enemy.speed);
-  }
-}
-
-function move(enemy, move_x, move_y) {
-  enemy.x += move_x;
-  enemy.player_detection_box.x += move_x;
-  enemy.player_aggro_box.x += move_x;
-  enemy.player_attack_box.x += move_x;
-  enemy.y += move_y;
-  enemy.player_detection_box.y += move_y;
-  enemy.player_aggro_box.y += move_y;
-  enemy.player_attack_box.y += move_y;
-}
-
 function hitEnemy(enemy, damage) {
   enemy.health -= damage;
   if(debug_module.debug){
@@ -88,7 +61,7 @@ function attacking(enemy) {
 
 function moveEnemies() {
   let aggroEnemies = enemy_manager.enemies.filter(e => e.aggro);
-  aggroEnemies.filter(e => !e.attacking).map(enemy => moveEnemyToward(enemy, player_module.getPlayer()));
+  aggroEnemies.filter(e => !e.attacking).map(enemy => enemy_manager.moveEnemyToward(enemy, player_module.getPlayer()));
   enemy_manager.enemies.filter(e => e.attacking).map(enemy => attack(enemy, player_module.getPlayer()));
 }
 
