@@ -21,7 +21,14 @@ function drawEnemies(ctx) {
     });
 }
 
+function drawWindUpAttack(enemy) {
+  if(enemy.facing === LEFT){draw_module.drawSprite(attack_sprite_left, {x: enemy.x, y: enemy.y+enemy.h/2}, draw_module.ctx);}
+  if(enemy.facing === RIGHT){draw_module.drawSprite(attack_sprite_right, {x: enemy.x, y: enemy.y+enemy.h/2}, draw_module.ctx);}
+  if(enemy.facing === UP){draw_module.drawSprite(attack_sprite_up, {x: enemy.x + enemy.w/2, y: enemy.y}, draw_module.ctx);}
+  if(enemy.facing === DOWN){draw_module.drawSprite(attack_sprite_down, {x: enemy.x + enemy.w/2, y: enemy.y}, draw_module.ctx);}
+}
 
 module.exports = {
-  drawEnemies : drawEnemies
+  drawEnemies : drawEnemies,
+  drawWindUpAttack : drawWindUpAttack
 }
