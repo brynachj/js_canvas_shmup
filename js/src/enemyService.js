@@ -9,7 +9,8 @@ function updateEnemies() {
   playerEnemyAttackBoxCollision();
   playerEnemyDeaggroBoxCollision();
   moveEnemies();
-  enemy_drawer.drawEnemies(enemy_manager.enemies);
+  enemy_manager.enemies.filter(e => !e.attacking).map(enemy => enemy_drawer.drawIdle(enemy));
+  enemy_manager.enemies.filter(e => e.attacking).map(enemy => attack(enemy, player_module.getPlayer()));
 }
 
 function hitEnemy(enemy, damage) {
@@ -29,6 +30,7 @@ function attack(enemy, player) {
       windingDown(enemy);
       break;
     case animationFrame === 29:
+      windingDown(enemy);
       enemy.attacking = false;
       enemy.hitPlayer = false;
       break;
@@ -42,6 +44,7 @@ function windingUp(enemy) {
 }
 
 function windingDown(enemy) {
+  enemy_drawer.drawWindDownAttack(enemy);
 }
 
 function attacking(enemy) {
@@ -55,7 +58,6 @@ function attacking(enemy) {
 function moveEnemies() {
   let aggroEnemies = enemy_manager.enemies.filter(e => e.aggro);
   aggroEnemies.filter(e => !e.attacking).map(enemy => enemy_manager.moveEnemyToward(enemy, player_module.getPlayer()));
-  enemy_manager.enemies.filter(e => e.attacking).map(enemy => attack(enemy, player_module.getPlayer()));
 }
 
 function playerEnemyDetectionBoxCollision() {
