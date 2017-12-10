@@ -9,7 +9,7 @@ var hud_module = require('./hud.js');
 var collision_detection_module = require('./collisionDetection.js');
 
 const CANVAS = 'canvas', KEY_DOWN_EVENT = 'keydown', KEY_UP_EVENT = 'keyup',
-RANGED_ATTACK_KEY_CODE = 88
+RANGED_ATTACK_KEY_CODE = 88, MELEE_ATTACK_KEY_CODE = 67,
 LEFT_KEY_CODE = 37, UP_KEY_CODE = 38, RIGHT_KEY_CODE = 39, DOWN_KEY_CODE = 40;
 
 var canvas,
@@ -93,6 +93,9 @@ var canvas,
       else if (e.keyCode == LEFT_KEY_CODE) leftKey = true;
       if (e.keyCode == UP_KEY_CODE) upKey = true;
       else if (e.keyCode == DOWN_KEY_CODE) downKey = true;
+      if (e.keyCode == MELEE_ATTACK_KEY_CODE) {
+        console.log('attacking in a melee fashion');
+      }
       if (e.keyCode == RANGED_ATTACK_KEY_CODE && pebble_module.getAmmo() > 0){
         pebble_module.addToPebbles(player_module.getPlayer().x + 2, player_module.getPlayer().y + 13);
         pebble_module.takeOneFromAmmo();
