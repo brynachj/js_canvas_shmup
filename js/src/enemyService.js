@@ -61,8 +61,8 @@ function moveEnemies() {
 
 function playerEnemyCollision() {
   enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection(player_module.getPlayer(), e)).map(enemy => {
-      player_module.updateHealth(-40);
-      enemy_manager.removeAndReplaceEnemy(enemy);
+      // player_module.updateHealth(-40);
+      // enemy_manager.removeAndReplaceEnemy(enemy);
   });
 }
 

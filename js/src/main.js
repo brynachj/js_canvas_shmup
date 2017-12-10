@@ -90,20 +90,32 @@ var canvas,
     function movePlayer() {
       player_module.getPlayer().isMoving = false;
       if (rightKey) {
-        player_module.getPlayer().x += 5;
-        player_module.getPlayer().isMoving = true;
+        colliding_right = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player_module.getPlayer().x + 5, y:player_module.getPlayer().y, w: 20, h: 26}, e));
+        if(colliding_right.length === 0){
+          player_module.getPlayer().x += 5;
+          player_module.getPlayer().isMoving = true;
+        }
       }
       else if (leftKey) {
-        player_module.getPlayer().x -= 5;
-        player_module.getPlayer().isMoving = true;
+        colliding_left = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player_module.getPlayer().x - 5, y:player_module.getPlayer().y, w: 20, h: 26}, e));
+        if(colliding_left.length === 0){
+          player_module.getPlayer().x -= 5;
+          player_module.getPlayer().isMoving = true;
+        }
       }
       if (upKey) {
-        player_module.getPlayer().y -= 5;
-        player_module.getPlayer().isMoving = true;
+        colliding_up = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player_module.getPlayer().x, y:player_module.getPlayer().y - 5, w: 20, h: 26}, e));
+        if(colliding_up.length === 0){
+          player_module.getPlayer().y -= 5;
+          player_module.getPlayer().isMoving = true;
+        }
       }
       else if (downKey) {
-        player_module.getPlayer().y += 5;
-        player_module.getPlayer().isMoving = true;
+        colliding_down = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player_module.getPlayer().x, y:player_module.getPlayer().y + 5, w: 20, h: 26}, e));
+        if(colliding_down.length === 0){
+          player_module.getPlayer().y += 5;
+          player_module.getPlayer().isMoving = true;
+        }
       }
       if (player_module.getPlayer().x <= 0) player_module.getPlayer().x = 0;
       if ((player_module.getPlayer().x + player_module.getPlayer().w) >= width) player_module.getPlayer().x = width - player_module.getPlayer().w;
