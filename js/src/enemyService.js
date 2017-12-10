@@ -5,7 +5,6 @@ var enemy_drawer = require('./enemyDrawer.js');
 var collision_detection_module = require('./collisionDetection.js');
 
 function updateEnemies() {
-  playerEnemyCollision();
   playerEnemyDetectionBoxCollision();
   playerEnemyAttackBoxCollision();
   playerEnemyDeaggroBoxCollision();
@@ -59,13 +58,6 @@ function attacking(enemy) {
 function moveEnemies() {
   let aggroEnemies = enemy_manager.enemies.filter(e => e.aggro);
   aggroEnemies.filter(e => !e.attacking).map(enemy => enemy_manager.moveEnemyToward(enemy, player_module.getPlayer()));
-}
-
-function playerEnemyCollision() {
-  enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection(player_module.getPlayer(), e)).map(enemy => {
-      player_module.updateHealth(-40);
-      enemy_manager.removeAndReplaceEnemy(enemy);
-  });
 }
 
 function playerEnemyDetectionBoxCollision() {

@@ -85,32 +85,6 @@ var canvas,
       gameLoop();
     }
 
-    // Move functions
-
-    function movePlayer() {
-      player_module.getPlayer().isMoving = false;
-      if (rightKey) {
-        player_module.getPlayer().x += 5;
-        player_module.getPlayer().isMoving = true;
-      }
-      else if (leftKey) {
-        player_module.getPlayer().x -= 5;
-        player_module.getPlayer().isMoving = true;
-      }
-      if (upKey) {
-        player_module.getPlayer().y -= 5;
-        player_module.getPlayer().isMoving = true;
-      }
-      else if (downKey) {
-        player_module.getPlayer().y += 5;
-        player_module.getPlayer().isMoving = true;
-      }
-      if (player_module.getPlayer().x <= 0) player_module.getPlayer().x = 0;
-      if ((player_module.getPlayer().x + player_module.getPlayer().w) >= width) player_module.getPlayer().x = width - player_module.getPlayer().w;
-      if (player_module.getPlayer().y <= 0) player_module.getPlayer().y = 0;
-      if ((player_module.getPlayer().y + player_module.getPlayer().h) >= height) player_module.getPlayer().y = height - player_module.getPlayer().h;
-    }
-
     // Event Listeners/Input handling
 
     function keyDown(e) {
@@ -145,7 +119,7 @@ var canvas,
       if(player_module.getAlive() && gameStarted){
         updateEnemies();
         pebblePickupCollision();
-        movePlayer();
+        player_module.movePlayer(rightKey, leftKey, upKey, downKey);
         pebble_module.moveOnScreenPebbles();
         pebble_pickup_module.drawPebblePickup(draw_module.ctx);
         player_module.drawPlayer(draw_module.ctx);
