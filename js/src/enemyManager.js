@@ -1,4 +1,5 @@
 var utility_module = require('./utility.js');
+var pebble_pickup_module = require('./pebble_pickup.js');
 
 const WIDTH = 34, HEIGHT = 36, SPEED = 3;
 
@@ -77,7 +78,10 @@ function move(enemy, move_x, move_y) {
 function hitEnemy(enemy, damage) {
   enemy.health -= damage;
   if(enemy.health <= 0) {
-    removeAndReplaceEnemy(enemy)
+    removeAndReplaceEnemy(enemy);
+    if(Math.random() < 0.2){
+      pebble_pickup_module.addToPebblePickups(enemy.x, enemy.y);
+    }
   }
 }
 

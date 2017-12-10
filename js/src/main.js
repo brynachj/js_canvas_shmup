@@ -34,7 +34,6 @@ var canvas,
       pebble_module.pebbles.map(pebble => {
         enemy_manager.enemies.filter(enemy => collision_detection_module.collisionDetection(pebble, enemy)).map(enemy => {
             enemy_service.hitEnemy(enemy, 50);
-            pebble_pickup_module.addToPebblePickups((Math.random() * 500) + 50, (Math.random() * 500) + 50);
             pebble_module.removeFromPebbles(pebble);
             player_module.addExperience(10);
             return;
