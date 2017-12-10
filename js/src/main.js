@@ -94,7 +94,7 @@ var canvas,
       if (e.keyCode == UP_KEY_CODE) upKey = true;
       else if (e.keyCode == DOWN_KEY_CODE) downKey = true;
       if (e.keyCode == MELEE_ATTACK_KEY_CODE) {
-        console.log('attacking in a melee fashion');
+        player_module.attack();
       }
       if (e.keyCode == RANGED_ATTACK_KEY_CODE && pebble_module.getAmmo() > 0){
         pebble_module.addToPebbles(player_module.getPlayer().x + 2, player_module.getPlayer().y + 13);

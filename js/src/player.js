@@ -105,6 +105,10 @@ function movePlayer(rightKey, leftKey, upKey, downKey) {
   if ((player.y + player.h) >= 600) player.y = 600 - player.h;
 }
 
+function attack() {
+  console.log('attacking in a melee fashion');
+}
+
 module.exports = {
   getPlayer : getPlayer,
   createPlayer : createPlayer,
@@ -117,5 +121,6 @@ module.exports = {
   setAlive : setAlive,
   getExperience : getExperience,
   addExperience : addExperience,
-  movePlayer : movePlayer
+  movePlayer : movePlayer,
+  attack : attack
 }
