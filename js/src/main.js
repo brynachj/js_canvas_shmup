@@ -4,7 +4,7 @@ var enemy_service = require('./enemyService.js');
 var enemy_manager = require('./enemyManager.js');
 var draw_module = require('./draw.js');
 var pebble_module = require('./pebble.js');
-var pebble_pickup_module = require('./pebble_pickup.js');
+var pebble_pickup_module = require('./pebblePickup.js');
 var hud_module = require('./hud.js');
 var collision_detection_module = require('./collisionDetection.js');
 

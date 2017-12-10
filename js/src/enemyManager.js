@@ -1,5 +1,5 @@
 var utility_module = require('./utility.js');
-var pebble_pickup_module = require('./pebble_pickup.js');
+var pebble_pickup_module = require('./pebblePickup.js');
 
 const WIDTH = 34, HEIGHT = 36, SPEED = 3;
 
