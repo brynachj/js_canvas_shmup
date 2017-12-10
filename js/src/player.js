@@ -72,28 +72,28 @@ function updateHealth(value) {
 function movePlayer(rightKey, leftKey, upKey, downKey) {
   player.isMoving = false;
   if (rightKey) {
-    colliding_right = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player.x + 5, y:player.y, w: 20, h: 26}, e));
+    colliding_right = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player.x + 5, y:player.y, w: WIDTH, h: HEIGHT}, e));
     if(colliding_right.length === 0){
       player.x += 5;
       player.isMoving = true;
     }
   }
   else if (leftKey) {
-    colliding_left = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player.x - 5, y:player.y, w: 20, h: 26}, e));
+    colliding_left = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player.x - 5, y:player.y, w: WIDTH, h: HEIGHT}, e));
     if(colliding_left.length === 0){
       player.x -= 5;
       player.isMoving = true;
     }
   }
   if (upKey) {
-    colliding_up = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player.x, y:player.y - 5, w: 20, h: 26}, e));
+    colliding_up = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player.x, y:player.y - 5, w: WIDTH, h: HEIGHT}, e));
     if(colliding_up.length === 0){
       player.y -= 5;
       player.isMoving = true;
     }
   }
   else if (downKey) {
-    colliding_down = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player.x, y:player.y + 5, w: 20, h: 26}, e));
+    colliding_down = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player.x, y:player.y + 5, w: WIDTH, h: HEIGHT}, e));
     if(colliding_down.length === 0){
       player.y += 5;
       player.isMoving = true;
