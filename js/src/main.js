@@ -8,7 +8,9 @@ var pebble_pickup_module = require('./pebblePickup.js');
 var hud_module = require('./hud.js');
 var collision_detection_module = require('./collisionDetection.js');
 
-const CANVAS = 'canvas', KEY_DOWN_EVENT = 'keydown', KEY_UP_EVENT = 'keyup';
+const CANVAS = 'canvas', KEY_DOWN_EVENT = 'keydown', KEY_UP_EVENT = 'keyup',
+RANGED_ATTACK_KEY_CODE = 88
+LEFT_KEY_CODE = 37, UP_KEY_CODE = 38, RIGHT_KEY_CODE = 39, DOWN_KEY_CODE = 40;
 
 var canvas,
     width = 600,
@@ -87,11 +89,11 @@ var canvas,
     // Event Listeners/Input handling
 
     function keyDown(e) {
-      if (e.keyCode == 39) rightKey = true;
-      else if (e.keyCode == 37) leftKey = true;
-      if (e.keyCode == 38) upKey = true;
-      else if (e.keyCode == 40) downKey = true;
-      if (e.keyCode == 88 && pebble_module.getAmmo() > 0){
+      if (e.keyCode == RIGHT_KEY_CODE) rightKey = true;
+      else if (e.keyCode == LEFT_KEY_CODE) leftKey = true;
+      if (e.keyCode == UP_KEY_CODE) upKey = true;
+      else if (e.keyCode == DOWN_KEY_CODE) downKey = true;
+      if (e.keyCode == RANGED_ATTACK_KEY_CODE && pebble_module.getAmmo() > 0){
         pebble_module.addToPebbles(player_module.getPlayer().x + 2, player_module.getPlayer().y + 13);
         pebble_module.takeOneFromAmmo();
       }
