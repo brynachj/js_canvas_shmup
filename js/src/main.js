@@ -93,7 +93,7 @@ var canvas,
       else if (e.keyCode == LEFT_KEY_CODE) leftKey = true;
       if (e.keyCode == UP_KEY_CODE) upKey = true;
       else if (e.keyCode == DOWN_KEY_CODE) downKey = true;
-      if (e.keyCode == MELEE_ATTACK_KEY_CODE) {
+      if (e.keyCode == MELEE_ATTACK_KEY_CODE & player_module.getPlayer().state === 'idle') {
         player_module.attack();
       }
       if (e.keyCode == RANGED_ATTACK_KEY_CODE && pebble_module.getAmmo() > 0){
