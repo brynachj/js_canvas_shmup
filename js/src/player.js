@@ -1,5 +1,6 @@
 var draw_module = require('./draw.js');
 var enemy_manager = require('./enemyManager.js');
+// var enemy_service = require('./enemyService.js');
 var collision_detection_module = require('./collisionDetection.js');
 
 const WIDTH = 20, HEIGHT = 26, SPEED = 10;
@@ -14,7 +15,7 @@ player_sprite.src = 'images/player_sprite.png';
 
 function createPlayer(x1, y1) {
   return {x : x1, y : y1, w : WIDTH, h : HEIGHT, hitBoxColor : '#7cfc00', isMoving : false,
-  state: IDLE, attackAnimationFrame : 0};
+  state: IDLE, attackAnimationFrame : 0, attack_box: {x:x1+30, y:y1-5, w:10, h:HEIGHT+10, hitBoxColor: '#ff6961'}};
 }
 
 function getPlayer(){
@@ -85,6 +86,7 @@ function movePlayer(rightKey, leftKey, upKey, downKey) {
       colliding_right = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player.x + 5, y:player.y, w: WIDTH, h: HEIGHT}, e));
       if(colliding_right.length === 0){
         player.x += 5;
+        player.attack_box.x += 5;
         player.isMoving = true;
       }
     }
@@ -92,6 +94,7 @@ function movePlayer(rightKey, leftKey, upKey, downKey) {
       colliding_left = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player.x - 5, y:player.y, w: WIDTH, h: HEIGHT}, e));
       if(colliding_left.length === 0){
         player.x -= 5;
+        player.attack_box.x -= 5;
         player.isMoving = true;
       }
     }
@@ -99,6 +102,7 @@ function movePlayer(rightKey, leftKey, upKey, downKey) {
       colliding_up = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player.x, y:player.y - 5, w: WIDTH, h: HEIGHT}, e));
       if(colliding_up.length === 0){
         player.y -= 5;
+        player.attack_box.y -= 5;
         player.isMoving = true;
       }
     }
@@ -106,6 +110,7 @@ function movePlayer(rightKey, leftKey, upKey, downKey) {
       colliding_down = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player.x, y:player.y + 5, w: WIDTH, h: HEIGHT}, e));
       if(colliding_down.length === 0){
         player.y += 5;
+        player.attack_box.y += 5;
         player.isMoving = true;
       }
     }
@@ -144,6 +149,7 @@ function windingUp(){
 
 function attacking() {
   player.state = ATTACKING;
+  enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection(player.attack_box, e)).map(e => enemy_manager.hitEnemy(e, 50));
 }
 
 function windingDown() {
