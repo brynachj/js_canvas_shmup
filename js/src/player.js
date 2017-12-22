@@ -9,6 +9,15 @@ var player, health, alive = true, experience = 0;
 
 hitEnemyList = [];
 
+attack_sprite_left = new Image();
+attack_sprite_left.src = 'images/enemy_sword_left.png';
+attack_sprite_right = new Image();
+attack_sprite_right.src = 'images/enemy_sword_right.png';
+attack_sprite_up = new Image();
+attack_sprite_up.src = 'images/enemy_sword_up.png';
+attack_sprite_down = new Image();
+attack_sprite_down.src = 'images/enemy_sword_down.png';
+
 // player states
 const IDLE = 'idle', ATTACKING = 'attacking', WINDING_DOWN = 'winding_down';
 
@@ -147,13 +156,23 @@ function attack() {
 }
 
 function windingUp(){
+  drawWindUpAttack();
   player.state = ATTACKING;
 }
 
+function drawWindUpAttack() {
+  draw_module.drawSprite(attack_sprite_right, {x: player.x, y: player.y+player.h/2}, draw_module.ctx);
+}
+
 function attacking() {
+  drawAttacking();
   player.state = ATTACKING;
   enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection(player.attack_box, e))
                         .filter(e => hitEnemyList.indexOf(e) < 0).map(e => hitEnemy(e));
+}
+
+function drawAttacking() {
+  draw_module.drawSprite(attack_sprite_right, {x: player.x+30, y: player.y+player.h/2}, draw_module.ctx);
 }
 
 function hitEnemy(enemy) {
