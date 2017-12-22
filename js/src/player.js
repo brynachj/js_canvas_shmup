@@ -7,6 +7,8 @@ const WIDTH = 20, HEIGHT = 26, SPEED = 10;
 
 var player, health, alive = true, experience = 0;
 
+hitEnemyList = [];
+
 // player states
 const IDLE = 'idle', ATTACKING = 'attacking', WINDING_DOWN = 'winding_down';
 
@@ -135,6 +137,7 @@ function attack() {
       break;
     case animationFrame === 19:
       windingDown();
+      hitEnemyList = [];
       player.state = IDLE;
       break;
   }
@@ -149,7 +152,13 @@ function windingUp(){
 
 function attacking() {
   player.state = ATTACKING;
-  enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection(player.attack_box, e)).map(e => enemy_manager.hitEnemy(e, 50));
+  enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection(player.attack_box, e))
+                        .filter(e => hitEnemyList.indexOf(e) < 0).map(e => hitEnemy(e));
+}
+
+function hitEnemy(enemy) {
+  enemy_manager.hitEnemy(enemy, 50);
+  hitEnemyList.push(enemy);
 }
 
 function windingDown() {
