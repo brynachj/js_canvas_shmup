@@ -18,7 +18,7 @@ function hitEnemy(enemy, damage) {
 }
 
 function attack(enemy, player) {
-  let animationFrame = enemy.attackAnimationFrame
+  let animationFrame = enemy.attackAnimationFrame;
   switch(true) {
     case animationFrame < 10:
       windingUp(enemy);
@@ -35,8 +35,8 @@ function attack(enemy, player) {
       enemy.hitPlayer = false;
       break;
   }
-  animationFrame += 1
-  enemy.attackAnimationFrame = animationFrame % 30
+  animationFrame += 1;
+  enemy.attackAnimationFrame = animationFrame % 30;
 }
 
 function windingUp(enemy) {
