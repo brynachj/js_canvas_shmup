@@ -1,6 +1,5 @@
 var draw_module = require('./draw.js');
 var enemy_manager = require('./enemyManager.js');
-// var enemy_service = require('./enemyService.js');
 var collision_detection_module = require('./collisionDetection.js');
 
 const WIDTH = 20, HEIGHT = 26, SPEED = 10;
