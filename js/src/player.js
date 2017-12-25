@@ -24,7 +24,7 @@ player_sprite = new Image();
 player_sprite.src = 'images/player_sprite.png';
 
 function createPlayer(x1, y1) {
-  return {x : x1, y : y1, w : WIDTH, h : HEIGHT, hitBoxColor : '#7cfc00', isMoving : false,
+  return {x : x1, y : y1, w : WIDTH, h : HEIGHT, hitBoxColor : '#7cfc00',
   state: IDLE, attackAnimationFrame : 0, attack_box: {x:x1+30, y:y1-5, w:10, h:HEIGHT+10, hitBoxColor: '#ff6961'}};
 }
 
@@ -91,13 +91,11 @@ function movePlayer(rightKey, leftKey, upKey, downKey) {
     if(player.state == WINDING_DOWN){
       attack();
     }
-    player.isMoving = false;
     if (rightKey) {
       colliding_right = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player.x + 5, y:player.y, w: WIDTH, h: HEIGHT}, e));
       if(colliding_right.length === 0){
         player.x += 5;
         player.attack_box.x += 5;
-        player.isMoving = true;
       }
     }
     else if (leftKey) {
@@ -105,7 +103,6 @@ function movePlayer(rightKey, leftKey, upKey, downKey) {
       if(colliding_left.length === 0){
         player.x -= 5;
         player.attack_box.x -= 5;
-        player.isMoving = true;
       }
     }
     if (upKey) {
@@ -113,7 +110,6 @@ function movePlayer(rightKey, leftKey, upKey, downKey) {
       if(colliding_up.length === 0){
         player.y -= 5;
         player.attack_box.y -= 5;
-        player.isMoving = true;
       }
     }
     else if (downKey) {
@@ -121,7 +117,6 @@ function movePlayer(rightKey, leftKey, upKey, downKey) {
       if(colliding_down.length === 0){
         player.y += 5;
         player.attack_box.y += 5;
-        player.isMoving = true;
       }
     }
     if (player.x <= 0) player.x = 0;
@@ -149,9 +144,8 @@ function attack() {
       player.state = IDLE;
       break;
   }
-  console.log(player.state);
-  animationFrame += 1
-  player.attackAnimationFrame = animationFrame % 20
+  animationFrame += 1;
+  player.attackAnimationFrame = animationFrame % 20;
 }
 
 function windingUp(){
