@@ -4,7 +4,7 @@ var collision_detection_module = require('./collisionDetection.js');
 
 const WIDTH = 20, HEIGHT = 26, SPEED = 10;
 
-var player, health, alive = true, experience = 0, facing = RIGHT;
+var player, health, alive = true, experience = 0;
 
 hitEnemyList = [];
 
