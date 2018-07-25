@@ -82,7 +82,18 @@ function moveOnScreenPebbles() {
 }
 
 function drawPlayer() {
-  draw_module.drawSprite(player_sprite_right, player, draw_module.ctx);
+  if(player.facing == RIGHT){
+    draw_module.drawSprite(player_sprite_right, player, draw_module.ctx);
+  }
+  if(player.facing == LEFT){
+    draw_module.drawSprite(player_sprite_left, player, draw_module.ctx);
+  }
+  if(player.facing == DOWN){
+    draw_module.drawSprite(player_sprite_down, player, draw_module.ctx);
+  }
+  if(player.facing == UP){
+    draw_module.drawSprite(player_sprite_up, player, draw_module.ctx);
+  }
 }
 
 function updateHealth(value) {
