@@ -33,8 +33,9 @@ player_sprite_down = new Image();
 player_sprite_down.src = 'images/player_sprite_down.png';
 
 function createPlayer(x1, y1) {
-  return {x : x1, y : y1, w : WIDTH, h : HEIGHT, hitBoxColor : '#7cfc00', facing: RIGHT,
-  state: IDLE, attackAnimationFrame : 0, attack_box: {x:x1+30, y:y1-5, w:10, h:HEIGHT+10, hitBoxColor: '#ff6961'}};
+  return {x : x1, y : y1, w : WIDTH, h : HEIGHT, hitBoxColor : '#7cfc00',
+  state: IDLE, attackAnimationFrame : 0, attack_box: {x:x1+30, y:y1-5, w:10, h:HEIGHT+10, hitBoxColor: '#ff6961'},
+  facing: RIGHT};
 }
 
 function getPlayer(){
