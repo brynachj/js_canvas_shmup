@@ -31,13 +31,13 @@ var canvas,
       enemy_manager.enemies.map(enemy => enemy_manager.removeAndReplaceEnemy(enemy));
     }
 
-    function enemyHitTest() {
+    function enemyHitTest() { // should be in enemy classes
       var remove = false;
       pebble_module.pebbles.map(pebble => {
         enemy_manager.enemies.filter(enemy => collision_detection_module.collisionDetection(pebble, enemy)).map(enemy => {
-            enemy_service.hitEnemy(enemy, 50);
-            pebble_module.removeFromPebbles(pebble);
-            player_module.addExperience(10);
+            enemy_service.hitEnemy(enemy, 15);
+            pebble_module.removeFromPebbles(pebble); 
+            player_module.addExperience(10); // Should be tied to damaging the enemy - 1/5 of damage done
             return;
         });
       });
