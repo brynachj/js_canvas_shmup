@@ -4,7 +4,7 @@ var collision_detection_module = require('./collisionDetection.js');
 
 const WIDTH = 20, HEIGHT = 26, SPEED = 10;
 
-var player, health, alive = true, experience = 0;
+var player, health, alive = true, experience = 0, facing = RIGHT;
 
 hitEnemyList = [];
 
@@ -16,6 +16,9 @@ attack_sprite_up = new Image();
 attack_sprite_up.src = 'images/enemy_sword_up.png';
 attack_sprite_down = new Image();
 attack_sprite_down.src = 'images/enemy_sword_down.png';
+
+// player directions
+const UP = 'up', DOWN = 'down', LEFT = 'left', RIGHT = 'right';
 
 // player states
 const IDLE = 'idle', ATTACKING = 'attacking', WINDING_DOWN = 'winding_down';
@@ -30,7 +33,7 @@ player_sprite_down = new Image();
 player_sprite_down.src = 'images/player_sprite_down.png';
 
 function createPlayer(x1, y1) {
-  return {x : x1, y : y1, w : WIDTH, h : HEIGHT, hitBoxColor : '#7cfc00',
+  return {x : x1, y : y1, w : WIDTH, h : HEIGHT, hitBoxColor : '#7cfc00', facing: RIGHT,
   state: IDLE, attackAnimationFrame : 0, attack_box: {x:x1+30, y:y1-5, w:10, h:HEIGHT+10, hitBoxColor: '#ff6961'}};
 }
 
