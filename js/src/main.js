@@ -123,10 +123,9 @@ var canvas,
       if(player_module.getAlive() && gameStarted){
         updateEnemies();
         pebblePickupCollision();
-        player_module.movePlayer(rightKey, leftKey, upKey, downKey);
+        player_module.updatePlayer(rightKey, leftKey, upKey, downKey);
         pebble_module.moveOnScreenPebbles();
         pebble_pickup_module.drawPebblePickup(draw_module.ctx);
-        player_module.drawPlayer(draw_module.ctx);
         pebble_module.drawOnScreenPebble(draw_module.ctx);
       }
       updateText();
