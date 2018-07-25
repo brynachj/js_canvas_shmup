@@ -20,8 +20,14 @@ attack_sprite_down.src = 'images/enemy_sword_down.png';
 // player states
 const IDLE = 'idle', ATTACKING = 'attacking', WINDING_DOWN = 'winding_down';
 
-player_sprite = new Image();
-player_sprite.src = 'images/player_sprite.png';
+player_sprite_right = new Image();
+player_sprite_right.src = 'images/player_sprite_right.png';
+player_sprite_left = new Image();
+player_sprite_left.src = 'images/player_sprite_left.png';
+player_sprite_up = new Image();
+player_sprite_up.src = 'images/player_sprite_up.png';
+player_sprite_down = new Image();
+player_sprite_down.src = 'images/player_sprite_down.png';
 
 function createPlayer(x1, y1) {
   return {x : x1, y : y1, w : WIDTH, h : HEIGHT, hitBoxColor : '#7cfc00',
@@ -72,7 +78,7 @@ function moveOnScreenPebbles() {
 }
 
 function drawPlayer(ctx) {
-  draw_module.drawSprite(player_sprite, player, ctx);
+  draw_module.drawSprite(player_sprite_right, player, ctx);
 }
 
 function updateHealth(value) {
