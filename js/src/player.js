@@ -96,7 +96,23 @@ function updateHealth(value) {
 
 function updatePlayer(rightKey, leftKey, upKey, downKey) {
   movePlayer(rightKey, leftKey, upKey, downKey);
+  facePlayer(rightKey, leftKey, upKey, downKey);
   drawPlayer();
+}
+
+function facePlayer(rightKey, leftKey, upKey, downKey) {
+  if(upKey) {
+    player.facing =  UP;
+  }
+  if(downKey) {
+    player.facing =  DOWN;
+  }
+  if(rightKey) {
+    player.facing =  RIGHT;
+  }
+  if(leftKey) {
+    player.facing =  LEFT;
+  }
 }
 
 function movePlayer(rightKey, leftKey, upKey, downKey) {
