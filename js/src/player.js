@@ -34,7 +34,7 @@ player_sprite_down.src = 'images/player_sprite_down.png';
 
 function createPlayer(x1, y1) {
   return {x : x1, y : y1, w : WIDTH, h : HEIGHT, hitBoxColor : '#7cfc00',
-  state: IDLE, attackAnimationFrame : 0, attack_box: {x:x1+30, y:y1-5, w:10, h:HEIGHT+10, hitBoxColor: '#ff6961'},
+  state: IDLE, attackAnimationFrame : 0, attack_box: {x:x1+WIDTH, y:y1-5, w:15, h:HEIGHT+10, hitBoxColor: '#ff6961'},
   facing: RIGHT};
 }
 
@@ -93,6 +93,9 @@ function drawPlayer() {
   }
   if(player.facing == UP){
     draw_module.drawSprite(player_sprite_up, player, draw_module.ctx);
+  }
+  if (window.drawHitboxes) {
+    draw_module.drawHitbox(player.attack_box, draw_module.ctx);
   }
 }
 
