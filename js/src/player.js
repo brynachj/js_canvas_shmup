@@ -2,7 +2,7 @@ var draw_module = require('./draw.js');
 var enemy_manager = require('./enemyManager.js');
 var collision_detection_module = require('./collisionDetection.js');
 
-const WIDTH = 20, HEIGHT = 26, SPEED = 10;
+const WIDTH = 20, HEIGHT = 26, SPEED = 10, ATTACK_WIDTH = 15;
 
 var player, health, alive = true, experience = 0;
 
@@ -34,7 +34,7 @@ player_sprite_down.src = 'images/player_sprite_down.png';
 
 function createPlayer(x1, y1) {
   return {x : x1, y : y1, w : WIDTH, h : HEIGHT, hitBoxColor : '#7cfc00',
-  state: IDLE, attackAnimationFrame : 0, attack_box: {x:x1+WIDTH, y:y1-5, w:15, h:HEIGHT+10, hitBoxColor: '#ff6961'},
+  state: IDLE, attackAnimationFrame : 0, attack_box: {x:x1+WIDTH, y:y1-5, w:ATTACK_WIDTH, h:HEIGHT+10, hitBoxColor: '#ff6961'},
   facing: RIGHT};
 }
 
@@ -117,15 +117,19 @@ function updatePlayer(rightKey, leftKey, upKey, downKey) {
 function facePlayer(rightKey, leftKey, upKey, downKey) {
   if(upKey) {
     player.facing =  UP;
+    player.attack_box = {x:player.x-5, y:player.y-10, w:WIDTH+10, h:ATTACK_WIDTH, hitBoxColor: '#ff6961'};
   }
   if(downKey) {
     player.facing =  DOWN;
+    player.attack_box = {x:player.x-5, y:player.y+player.h, w:WIDTH+10, h:ATTACK_WIDTH, hitBoxColor: '#ff6961'};
   }
   if(rightKey) {
     player.facing =  RIGHT;
+    player.attack_box = {x:player.x+player.w, y:player.y-5, w:ATTACK_WIDTH, h:HEIGHT+10, hitBoxColor: '#ff6961'};
   }
   if(leftKey) {
     player.facing =  LEFT;
+    player.attack_box = {x:player.x-10, y:player.y-5, w:ATTACK_WIDTH, h:HEIGHT+10, hitBoxColor: '#ff6961'};
   }
 }
 
