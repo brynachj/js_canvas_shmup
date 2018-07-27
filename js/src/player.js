@@ -136,38 +136,34 @@ function movePlayer(rightKey, leftKey, upKey, downKey) {
     if(player.state == WINDING_DOWN){
       attack();
     }
-    if (rightKey) {
+    if (rightKey && (player.x + player.w) < 600) {
       colliding_right = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player.x + 5, y:player.y, w: WIDTH, h: HEIGHT}, e));
       if(colliding_right.length === 0){
         player.x += 5;
         player.attack_box.x += 5;
       }
     }
-    else if (leftKey) {
+    else if (leftKey && player.x > 0) {
       colliding_left = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player.x - 5, y:player.y, w: WIDTH, h: HEIGHT}, e));
       if(colliding_left.length === 0){
         player.x -= 5;
         player.attack_box.x -= 5;
       }
     }
-    if (upKey) {
+    if (upKey && player.y > 0) {
       colliding_up = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player.x, y:player.y - 5, w: WIDTH, h: HEIGHT}, e));
       if(colliding_up.length === 0){
         player.y -= 5;
         player.attack_box.y -= 5;
       }
     }
-    else if (downKey) {
+    else if (downKey && (player.y + player.h) < 600) {
       colliding_down = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player.x, y:player.y + 5, w: WIDTH, h: HEIGHT}, e));
       if(colliding_down.length === 0){
         player.y += 5;
         player.attack_box.y += 5;
       }
     }
-    if (player.x <= 0) player.x = 0;
-    if ((player.x + player.w) >= 600) player.x = 600 - player.w;
-    if (player.y <= 0) player.y = 0;
-    if ((player.y + player.h) >= 600) player.y = 600 - player.h;
   }
 }
 
