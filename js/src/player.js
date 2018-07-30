@@ -81,6 +81,9 @@ function updateHealth(value) {
 }
 
 function updatePlayer(rightKey, leftKey, upKey, downKey) {
+  if(player.state === ATTACKING || player.state === WINDING_DOWN){
+    attack();
+  }
   movePlayer(rightKey, leftKey, upKey, downKey);
   facePlayer(rightKey, leftKey, upKey, downKey);
   player_drawer.drawPlayer(player);
@@ -106,12 +109,7 @@ function facePlayer(rightKey, leftKey, upKey, downKey) {
 }
 
 function movePlayer(rightKey, leftKey, upKey, downKey) {
-  if(player.state === ATTACKING){
-    attack();
-  } else {
-    if(player.state === WINDING_DOWN){
-      attack();
-    }
+  if(player.state !== ATTACKING){
     if (rightKey && (player.x + player.w) < 600) {
       colliding_right = enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection({x:player.x + 5, y:player.y, w: WIDTH, h: HEIGHT}, e));
       if(colliding_right.length === 0){
