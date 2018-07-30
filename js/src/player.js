@@ -1,7 +1,6 @@
-var enemy_manager = require('./enemyManager.js');
-var collision_detection_module = require('./collisionDetection.js');
 var player_drawer = require('./playerDrawer.js');
 var player_movement = require('./playerMovement.js');
+var player_attack = require('./playerAttack.js');
 
 const WIDTH = 20, HEIGHT = 26, SPEED = 10, ATTACK_WIDTH = 15;
 
@@ -65,7 +64,8 @@ function updateHealth(value) {
 
 function updatePlayer(rightKey, leftKey, upKey, downKey) {
   if(player.state === ATTACKING || player.state === WINDING_DOWN){
-    attack();
+    console.log("fighting");
+    player_attack.attack(player);
   }
   player_movement.movePlayer(player, rightKey, leftKey, upKey, downKey);
   player_movement.facePlayer(player, rightKey, leftKey, upKey, downKey);
@@ -73,46 +73,7 @@ function updatePlayer(rightKey, leftKey, upKey, downKey) {
 }
 
 function attack() {
-  let animationFrame = player.attackAnimationFrame;
-  switch(true) {
-    case animationFrame < 5:
-      windingUp();
-      break;
-    case animationFrame < 10:
-      attacking();
-      break;
-    case animationFrame < 19:
-      windingDown();
-      break;
-    case animationFrame === 19:
-      windingDown();
-      hitEnemyList = [];
-      player.state = IDLE;
-      break;
-  }
-  animationFrame += 1;
-  player.attackAnimationFrame = animationFrame % 20;
-}
-
-function windingUp(){
-  player_drawer.drawWindUpAttack(player);
   player.state = ATTACKING;
-}
-
-function attacking() {
-  player_drawer.drawAttacking(player);
-  player.state = ATTACKING;
-  enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection(player.attack_box, e))
-                        .filter(e => hitEnemyList.indexOf(e) < 0).map(e => hitEnemy(e));
-}
-
-function hitEnemy(enemy) {
-  enemy_manager.hitEnemy(enemy, 50);
-  hitEnemyList.push(enemy);
-}
-
-function windingDown() {
-  player.state = WINDING_DOWN;
 }
 
 module.exports = {
