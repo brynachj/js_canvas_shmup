@@ -1,6 +1,6 @@
-var draw_module = require('./draw.js');
 var enemy_manager = require('./enemyManager.js');
 var collision_detection_module = require('./collisionDetection.js');
+var player_drawer = require('./playerDrawer.js');
 
 const WIDTH = 20, HEIGHT = 26, SPEED = 10, ATTACK_WIDTH = 15;
 
@@ -81,24 +81,6 @@ function moveOnScreenPebbles() {
   }
 }
 
-function drawPlayer() {
-  if(player.facing === RIGHT){
-    draw_module.drawSprite(player_sprite_right, player, draw_module.ctx);
-  }
-  if(player.facing === LEFT){
-    draw_module.drawSprite(player_sprite_left, player, draw_module.ctx);
-  }
-  if(player.facing === DOWN){
-    draw_module.drawSprite(player_sprite_down, player, draw_module.ctx);
-  }
-  if(player.facing === UP){
-    draw_module.drawSprite(player_sprite_up, player, draw_module.ctx);
-  }
-  if (window.drawHitboxes) {
-    draw_module.drawHitbox(player.attack_box, draw_module.ctx);
-  }
-}
-
 function updateHealth(value) {
   health += value;
   if (health > 0) {
@@ -111,7 +93,7 @@ function updateHealth(value) {
 function updatePlayer(rightKey, leftKey, upKey, downKey) {
   movePlayer(rightKey, leftKey, upKey, downKey);
   facePlayer(rightKey, leftKey, upKey, downKey);
-  drawPlayer();
+  player_drawer.drawPlayer(player);
 }
 
 function facePlayer(rightKey, leftKey, upKey, downKey) {
@@ -194,29 +176,15 @@ function attack() {
 }
 
 function windingUp(){
-  drawWindUpAttack();
+  player_drawer.drawWindUpAttack(player);
   player.state = ATTACKING;
-}
-
-function drawWindUpAttack() {
-  if(player.facing === RIGHT){draw_module.drawSprite(attack_sprite_right, {x: player.x, y: player.y+player.h/2}, draw_module.ctx);}
-  if(player.facing === LEFT){draw_module.drawSprite(attack_sprite_left, {x: player.x, y: player.y+player.h/2}, draw_module.ctx);}
-  if(player.facing === UP){draw_module.drawSprite(attack_sprite_up, {x: player.x + player.w/2, y: player.y}, draw_module.ctx);}
-  if(player.facing === DOWN){draw_module.drawSprite(attack_sprite_down, {x: player.x + player.w/2, y: player.y}, draw_module.ctx);}
 }
 
 function attacking() {
-  drawAttacking();
+  player_drawer.drawAttacking(player);
   player.state = ATTACKING;
   enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection(player.attack_box, e))
                         .filter(e => hitEnemyList.indexOf(e) < 0).map(e => hitEnemy(e));
-}
-
-function drawAttacking() {
-  if(player.facing === RIGHT){draw_module.drawSprite(attack_sprite_right, {x: player.x+30, y: player.y+player.h/2}, draw_module.ctx);}
-  if(player.facing === LEFT){draw_module.drawSprite(attack_sprite_left, {x: player.x-30, y: player.y+player.h/2}, draw_module.ctx);}
-  if(player.facing === UP){draw_module.drawSprite(attack_sprite_up, {x: player.x + player.w/2, y: player.y-30}, draw_module.ctx);}
-  if(player.facing === DOWN){draw_module.drawSprite(attack_sprite_down, {x: player.x + player.w/2, y: player.y+30}, draw_module.ctx);}
 }
 
 function hitEnemy(enemy) {
