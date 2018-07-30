@@ -89,18 +89,18 @@ var canvas,
     // Event Listeners/Input handling
 
     function keyDown(e) {
-      if (e.keyCode == RIGHT_KEY_CODE) rightKey = true;
-      else if (e.keyCode == LEFT_KEY_CODE) leftKey = true;
-      if (e.keyCode == UP_KEY_CODE) upKey = true;
-      else if (e.keyCode == DOWN_KEY_CODE) downKey = true;
-      if (e.keyCode == MELEE_ATTACK_KEY_CODE & player_module.getPlayer().state === 'idle') {
+      if (e.keyCode === RIGHT_KEY_CODE) rightKey = true;
+      else if (e.keyCode === LEFT_KEY_CODE) leftKey = true;
+      if (e.keyCode === UP_KEY_CODE) upKey = true;
+      else if (e.keyCode === DOWN_KEY_CODE) downKey = true;
+      if (e.keyCode === MELEE_ATTACK_KEY_CODE & player_module.getPlayer().state === 'idle') {
         player_module.attack();
       }
-      if (e.keyCode == RANGED_ATTACK_KEY_CODE && pebble_module.getAmmo() > 0){
+      if (e.keyCode === RANGED_ATTACK_KEY_CODE && pebble_module.getAmmo() > 0){
         pebble_module.addToPebbles(player_module.getPlayer().x + 2, player_module.getPlayer().y + 13);
         pebble_module.takeOneFromAmmo();
       }
-      if(e.keyCode == 32){
+      if(e.keyCode === 32){
         if(!gameStarted){
           gameStarted = true;
         }
@@ -112,10 +112,10 @@ var canvas,
     }
 
     function keyUp(e) {
-      if (e.keyCode == 39) rightKey = false;
-      else if (e.keyCode == 37) leftKey = false;
-      if (e.keyCode == 38) upKey = false;
-      else if (e.keyCode == 40) downKey = false;
+      if (e.keyCode === 39) rightKey = false;
+      else if (e.keyCode === 37) leftKey = false;
+      if (e.keyCode === 38) upKey = false;
+      else if (e.keyCode === 40) downKey = false;
     }
 
     function gameLoop() {

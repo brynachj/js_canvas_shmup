@@ -82,16 +82,16 @@ function moveOnScreenPebbles() {
 }
 
 function drawPlayer() {
-  if(player.facing == RIGHT){
+  if(player.facing === RIGHT){
     draw_module.drawSprite(player_sprite_right, player, draw_module.ctx);
   }
-  if(player.facing == LEFT){
+  if(player.facing === LEFT){
     draw_module.drawSprite(player_sprite_left, player, draw_module.ctx);
   }
-  if(player.facing == DOWN){
+  if(player.facing === DOWN){
     draw_module.drawSprite(player_sprite_down, player, draw_module.ctx);
   }
-  if(player.facing == UP){
+  if(player.facing === UP){
     draw_module.drawSprite(player_sprite_up, player, draw_module.ctx);
   }
   if (window.drawHitboxes) {
@@ -134,10 +134,10 @@ function facePlayer(rightKey, leftKey, upKey, downKey) {
 }
 
 function movePlayer(rightKey, leftKey, upKey, downKey) {
-  if(player.state == ATTACKING){
+  if(player.state === ATTACKING){
     attack();
   } else {
-    if(player.state == WINDING_DOWN){
+    if(player.state === WINDING_DOWN){
       attack();
     }
     if (rightKey && (player.x + player.w) < 600) {
