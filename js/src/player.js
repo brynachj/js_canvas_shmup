@@ -71,16 +71,6 @@ function addExperience(value) {
   experience += value;
 }
 
-function moveOnScreenPebbles() {
-  for (var i = 0; i < pebbles.length; i++) {
-    if (pebbles[i].x < 600 + pebble_sprite.width) {
-      pebbles[i].x += 10;
-    } else {
-      pebbles.splice(i, 1);
-    }
-  }
-}
-
 function updateHealth(value) {
   health += value;
   if (health > 0) {
@@ -199,7 +189,6 @@ function windingDown() {
 module.exports = {
   getPlayer : getPlayer,
   resetPlayer : resetPlayer,
-  moveOnScreenPebbles : moveOnScreenPebbles,
   updateHealth : updateHealth,
   getHealth : getHealth,
   getAlive : getAlive,
