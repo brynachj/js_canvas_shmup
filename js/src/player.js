@@ -9,29 +9,11 @@ var player, health, alive = true, experience = 0;
 
 hitEnemyList = [];
 
-attack_sprite_left = new Image();
-attack_sprite_left.src = 'images/enemy_sword_left.png';
-attack_sprite_right = new Image();
-attack_sprite_right.src = 'images/enemy_sword_right.png';
-attack_sprite_up = new Image();
-attack_sprite_up.src = 'images/enemy_sword_up.png';
-attack_sprite_down = new Image();
-attack_sprite_down.src = 'images/enemy_sword_down.png';
-
 // player directions
 const UP = 'up', DOWN = 'down', LEFT = 'left', RIGHT = 'right';
 
 // player states
 const IDLE = 'idle', ATTACKING = 'attacking', WINDING_DOWN = 'winding_down';
-
-player_sprite_right = new Image();
-player_sprite_right.src = 'images/player_sprite_right.png';
-player_sprite_left = new Image();
-player_sprite_left.src = 'images/player_sprite_left.png';
-player_sprite_up = new Image();
-player_sprite_up.src = 'images/player_sprite_up.png';
-player_sprite_down = new Image();
-player_sprite_down.src = 'images/player_sprite_down.png';
 
 function createPlayer(x1, y1) {
   return {x : x1, y : y1, w : WIDTH, h : HEIGHT, hitBoxColor : '#7cfc00',

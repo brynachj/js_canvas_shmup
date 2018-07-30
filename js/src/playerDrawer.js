@@ -2,6 +2,24 @@ var draw_module = require('./draw.js');
 
 const UP = "up", DOWN = "down", LEFT = "left", RIGHT = "right";
 
+player_sprite_right = new Image();
+player_sprite_right.src = 'images/player_sprite_right.png';
+player_sprite_left = new Image();
+player_sprite_left.src = 'images/player_sprite_left.png';
+player_sprite_up = new Image();
+player_sprite_up.src = 'images/player_sprite_up.png';
+player_sprite_down = new Image();
+player_sprite_down.src = 'images/player_sprite_down.png';
+
+attack_sprite_left = new Image();
+attack_sprite_left.src = 'images/enemy_sword_left.png';
+attack_sprite_right = new Image();
+attack_sprite_right.src = 'images/enemy_sword_right.png';
+attack_sprite_up = new Image();
+attack_sprite_up.src = 'images/enemy_sword_up.png';
+attack_sprite_down = new Image();
+attack_sprite_down.src = 'images/enemy_sword_down.png';
+
 function drawAttacking(player) {
     if(player.facing === RIGHT){draw_module.drawSprite(attack_sprite_right, {x: player.x+30, y: player.y+player.h/2}, draw_module.ctx);}
     if(player.facing === LEFT){draw_module.drawSprite(attack_sprite_left, {x: player.x-30, y: player.y+player.h/2}, draw_module.ctx);}
