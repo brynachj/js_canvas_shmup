@@ -198,7 +198,6 @@ function windingDown() {
 
 module.exports = {
   getPlayer : getPlayer,
-  createPlayer : createPlayer,
   resetPlayer : resetPlayer,
   moveOnScreenPebbles : moveOnScreenPebbles,
   updateHealth : updateHealth,
