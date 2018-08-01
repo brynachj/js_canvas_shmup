@@ -4,7 +4,7 @@
 
 Based on: http://atomicrobotdesign.com/blog/htmlcss/build-a-vertical-scrolling-shooter-game-with-html5-canvas-part-1/
 
-
+[![js-standard-style](https://cdn.rawgit.com/standard/standard/master/badge.svg)](http://standardjs.com)
 
 In order to modify, build and run - need to have browserify installed (node/npm dependency):
 http://browserify.org/index.html
