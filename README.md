@@ -12,7 +12,7 @@ http://browserify.org/index.html
 Note: running `npm install` from the project root will install browserify
 
 To build after making changes:
-browserify js/src/main.js -o js/src/bundle.js
+`browserify js/src/main.js -o js/src/bundle.js` or `npm run bundle`
 
 The trello board for this project can be found here:
 https://trello.com/b/xdZXT0VP/js-canvas-shmup
