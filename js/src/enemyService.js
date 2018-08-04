@@ -1,24 +1,23 @@
-var enemy_manager = require('./enemyManager.js');
-var debug_module = require('./debugControls.js')
-var player_module = require('./player.js');
-var enemy_drawer = require('./enemyDrawer.js');
-var collision_detection_module = require('./collisionDetection.js');
+var enemyManager = require('./enemyManager.js')
+var playerModule = require('./player.js')
+var enemyDrawer = require('./enemyDrawer.js')
+var collisionDetectionModule = require('./collisionDetection.js')
 
 function updateEnemies() {
   playerEnemyDetectionBoxCollision();
   playerEnemyAttackBoxCollision();
   playerEnemyDeaggroBoxCollision();
   moveEnemies();
-  enemy_manager.enemies.filter(e => !e.attacking).map(enemy => enemy_drawer.drawIdle(enemy));
-  enemy_manager.enemies.filter(e => e.attacking).map(enemy => attack(enemy, player_module.getPlayer()));
+  enemyManager.enemies.filter(e => !e.attacking).map(enemy => enemyDrawer.drawIdle(enemy));
+  enemyManager.enemies.filter(e => e.attacking).map(enemy => attack(enemy, playerModule.getPlayer()));
 }
 
 function addEnemy (x, y) {
-  enemy_manager.addEnemy(x, y)
+  enemyManager.addEnemy(x, y)
 }
 
 function hitEnemy(enemy, damage) {
-  enemy_manager.hitEnemy(enemy, damage);
+  enemyManager.hitEnemy(enemy, damage);
 }
 
 function attack(enemy, player) {
@@ -44,36 +43,36 @@ function attack(enemy, player) {
 }
 
 function windingUp(enemy) {
-  enemy_drawer.drawWindUpAttack(enemy);
+  enemyDrawer.drawWindUpAttack(enemy);
 }
 
 function windingDown(enemy) {
-  enemy_drawer.drawWindDownAttack(enemy);
+  enemyDrawer.drawWindDownAttack(enemy);
 }
 
 function attacking(enemy) {
-  enemy_drawer.drawAttacking(enemy);
-  if (collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_attack_box) && !enemy.hitPlayer){
-    player_module.updateHealth(-40);
+  enemyDrawer.drawAttacking(enemy);
+  if (collisionDetectionModule.collisionDetection(playerModule.getPlayer(), enemy.player_attack_box) && !enemy.hitPlayer){
+    playerModule.updateHealth(-40);
     enemy.hitPlayer = true;
   }
 }
 
 function moveEnemies() {
-  let aggroEnemies = enemy_manager.enemies.filter(e => e.aggro);
-  aggroEnemies.filter(e => !e.attacking).map(enemy => enemy_manager.moveEnemyToward(enemy, player_module.getPlayer()));
+  let aggroEnemies = enemyManager.enemies.filter(e => e.aggro);
+  aggroEnemies.filter(e => !e.attacking).map(enemy => enemyManager.moveEnemyToward(enemy, playerModule.getPlayer()));
 }
 
 function playerEnemyDetectionBoxCollision() {
-  enemy_manager.enemies.filter(enemy => collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_detection_box)).map(enemy => enemy.aggro = true);
+  enemyManager.enemies.filter(enemy => collisionDetectionModule.collisionDetection(playerModule.getPlayer(), enemy.player_detection_box)).map(enemy => enemy.aggro = true);
 }
 
 function playerEnemyDeaggroBoxCollision() {
-  enemy_manager.enemies.filter(enemy => !collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_aggro_box)).map(enemy => enemy.aggro = false);
+  enemyManager.enemies.filter(enemy => !collisionDetectionModule.collisionDetection(playerModule.getPlayer(), enemy.player_aggro_box)).map(enemy => enemy.aggro = false);
 }
 
 function playerEnemyAttackBoxCollision() {
-  enemy_manager.enemies.filter(enemy => collision_detection_module.collisionDetection(player_module.getPlayer(), enemy.player_attack_box)).map(enemy => enemy.attacking = true);
+  enemyManager.enemies.filter(enemy => collisionDetectionModule.collisionDetection(playerModule.getPlayer(), enemy.player_attack_box)).map(enemy => enemy.attacking = true);
 }
 
 module.exports = {
