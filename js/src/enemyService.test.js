@@ -20,3 +20,8 @@ test('damageEnemy calls the enemyManager hitEnemy function', () => {
   underTest.damageEnemy(obj1, obj2)
   expect(enemyManager.hitEnemy).toHaveBeenCalledWith(obj1, obj2)
 })
+
+test('getEnemies calls enemyManager getEnemies function', () => {
+  underTest.getEnemies()
+  expect(enemyManager.getEnemies).toHaveBeenCalled()
+})
