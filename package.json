@@ -13,5 +13,9 @@
     "prebundle": "eslint .",
     "bundleNoLint": "browserify js/src/main.js -o js/src/bundle.js",
     "test": "jest"
+  },
+  "jest":{
+    "verbose": true,
+    "testURL": "http://localhost/"
   }
 }
