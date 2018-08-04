@@ -7,7 +7,7 @@ function addEnemy (x, y) {
   enemyManager.addEnemy(x, y)
 }
 
-function hitEnemy (enemy, damage) {
+function damageEnemy (enemy, damage) {
   enemyManager.hitEnemy(enemy, damage)
 }
 
@@ -78,5 +78,5 @@ function playerEnemyAttackBoxCollision() {
 module.exports = {
   addEnemy,
   updateEnemies,
-  hitEnemy
+  damageEnemy
 }

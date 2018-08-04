@@ -9,8 +9,8 @@ jest.mock('./player.js')
 jest.mock('./enemyDrawer.js')
 jest.mock('./collisionDetection.js')
 
-test('addEnemy calls the enemyManager addEnemy function', () => {
-  underTest.addEnemy(1, 2)
+test('damageEnemy calls the enemyManager addEnemy function', () => {
+  underTest.damageEnemy(1, 2)
   expect(enemyManager.addEnemy).toHaveBeenCalledWith(1, 2)
 })
 
