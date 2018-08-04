@@ -12,7 +12,7 @@ function damageEnemy (enemy, damage) {
   enemyManager.hitEnemy(enemy, damage)
 }
 
-function getEnemies() {
+function getEnemies () {
   return enemyManager.getEnemies()
 }
 
