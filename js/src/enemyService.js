@@ -3,21 +3,21 @@ var playerModule = require('./player.js')
 var enemyDrawer = require('./enemyDrawer.js')
 var collisionDetectionModule = require('./collisionDetection.js')
 
-function updateEnemies() {
-  playerEnemyDetectionBoxCollision();
-  playerEnemyAttackBoxCollision();
-  playerEnemyDeaggroBoxCollision();
-  moveEnemies();
-  enemyManager.enemies.filter(e => !e.attacking).map(enemy => enemyDrawer.drawIdle(enemy));
-  enemyManager.enemies.filter(e => e.attacking).map(enemy => attack(enemy, playerModule.getPlayer()));
-}
-
 function addEnemy (x, y) {
   enemyManager.addEnemy(x, y)
 }
 
 function hitEnemy (enemy, damage) {
   enemyManager.hitEnemy(enemy, damage)
+}
+
+function updateEnemies () {
+  playerEnemyDetectionBoxCollision()
+  playerEnemyAttackBoxCollision()
+  playerEnemyDeaggroBoxCollision()
+  moveEnemies()
+  enemyManager.enemies.filter(e => !e.attacking).map(enemy => enemyDrawer.drawIdle(enemy))
+  enemyManager.enemies.filter(e => e.attacking).map(enemy => attack(enemy, playerModule.getPlayer()))
 }
 
 function attack(enemy, player) {
