@@ -16,8 +16,8 @@ function addEnemy (x, y) {
   enemyManager.addEnemy(x, y)
 }
 
-function hitEnemy(enemy, damage) {
-  enemyManager.hitEnemy(enemy, damage);
+function hitEnemy (enemy, damage) {
+  enemyManager.hitEnemy(enemy, damage)
 }
 
 function attack(enemy, player) {

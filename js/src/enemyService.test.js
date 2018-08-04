@@ -13,3 +13,10 @@ test('addEnemy calls the enemyManager addEnemy function', () => {
   underTest.addEnemy(1, 2)
   expect(enemyManager.addEnemy).toHaveBeenCalledWith(1, 2)
 })
+
+test('hitEnemy calls the enemyManager hitEnemy function', () => {
+  let obj1 = {mockProperty: 1}
+  let obj2 = {otherMockProperty: 'a'}
+  underTest.hitEnemy(obj1, obj2)
+  expect(enemyManager.hitEnemy).toHaveBeenCalledWith(obj1, obj2)
+})
