@@ -4,16 +4,16 @@ var enemyDrawer = require('./enemyDrawer.js')
 var collisionDetectionModule = require('./collisionDetection.js')
 var enemyAttack = require('./enemyAttack.js')
 
+function getEnemies () {
+  return enemyManager.getEnemies()
+}
+
 function addEnemy (x, y) {
   enemyManager.addEnemy(x, y)
 }
 
 function damageEnemy (enemy, damage) {
   enemyManager.hitEnemy(enemy, damage)
-}
-
-function getEnemies () {
-  return enemyManager.getEnemies()
 }
 
 function updateEnemies () {
@@ -43,8 +43,8 @@ function playerEnemyAttackBoxCollision() {
 }
 
 module.exports = {
-  addEnemy,
   getEnemies,
-  updateEnemies,
-  damageEnemy
+  addEnemy,
+  damageEnemy,
+  updateEnemies
 }
