@@ -11,6 +11,10 @@ function addEnemy(x,y){
   enemies.push(createEnemy(x,y));
 }
 
+function getEnemies () {
+  return enemies
+}
+
 function createEnemy(x1, y1) {
   return {id: utility_module.newId(enemies), x:x1, y:y1, w:WIDTH, h:HEIGHT, speed:SPEED, hitBoxColor: '#ff0000', health: 100,
         player_detection_box : {x:x1-60, y:y1-60, w:WIDTH+120, h:HEIGHT+120, hitBoxColor: '#ff8c00'},
@@ -86,10 +90,11 @@ function hitEnemy(enemy, damage) {
 }
 
 module.exports = {
-  enemies : enemies,
-  addEnemy : addEnemy,
-  removeAndReplaceEnemy : removeAndReplaceEnemy,
-  updateEnemyDirection : updateEnemyDirection,
-  moveEnemyToward : moveEnemyToward,
-  hitEnemy : hitEnemy
+  enemies,
+  getEnemies,
+  addEnemy,
+  removeAndReplaceEnemy,
+  updateEnemyDirection,
+  moveEnemyToward,
+  hitEnemy
 }
