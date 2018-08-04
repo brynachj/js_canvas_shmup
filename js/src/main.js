@@ -68,7 +68,7 @@ var canvas,
     }
 
     // Initialisations
-    enemy_manager.addEnemy(Math.random() * 600, Math.random() * 600);
+    enemy_service.addEnemy(Math.random() * 600, Math.random() * 600);
 
     function clearCanvas() {
       draw_module.ctx.clearRect(0,0,width,height);

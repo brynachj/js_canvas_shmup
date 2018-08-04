@@ -13,6 +13,10 @@ function updateEnemies() {
   enemy_manager.enemies.filter(e => e.attacking).map(enemy => attack(enemy, player_module.getPlayer()));
 }
 
+function addEnemy (x, y) {
+  enemy_manager.addEnemy(x, y)
+}
+
 function hitEnemy(enemy, damage) {
   enemy_manager.hitEnemy(enemy, damage);
 }
@@ -73,6 +77,7 @@ function playerEnemyAttackBoxCollision() {
 }
 
 module.exports = {
-  updateEnemies : updateEnemies,
-  hitEnemy : hitEnemy
+  addEnemy,
+  updateEnemies,
+  hitEnemy
 }
