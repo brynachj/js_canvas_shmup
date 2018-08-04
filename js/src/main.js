@@ -35,7 +35,7 @@ var canvas,
       var remove = false;
       pebble_module.pebbles.map(pebble => {
         enemy_manager.enemies.filter(enemy => collision_detection_module.collisionDetection(pebble, enemy)).map(enemy => {
-            enemy_service.hitEnemy(enemy, 15);
+            enemy_service.damageEnemy(enemy, 15);
             pebble_module.removeFromPebbles(pebble); 
             player_module.addExperience(10); // Should be tied to damaging the enemy - 1/5 of damage done
             return;
