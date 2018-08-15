@@ -13,18 +13,22 @@ jest.mock('./enemyAttack')
 
 test('addEnemy calls the enemyManager addEnemy function', () => {
   underTest.addEnemy(1, 2)
+
   expect(enemyManager.addEnemy).toHaveBeenCalledWith(1, 2)
 })
 
 test('damageEnemy calls the enemyManager hitEnemy function', () => {
   let obj1 = {mockProperty: 1}
   let obj2 = {otherMockProperty: 'a'}
+
   underTest.damageEnemy(obj1, obj2)
+
   expect(enemyManager.hitEnemy).toHaveBeenCalledWith(obj1, obj2)
 })
 
 test('getEnemies calls enemyManager getEnemies function', () => {
   underTest.getEnemies()
+
   expect(enemyManager.getEnemies).toHaveBeenCalled()
 })
 
@@ -32,6 +36,7 @@ test('updateEnemies calls the external methods expected when enemy is idle', () 
   let mockEnemy = createMockEnemy()
   let mockEnemies = [mockEnemy]
   enemyManager.getEnemies.mockReturnValue(mockEnemies)
+
   underTest.updateEnemies()
 
   expect(enemyManager.getEnemies).toHaveBeenCalledTimes(7)
@@ -44,6 +49,15 @@ test('updateEnemies sets the enemy to be aggrod and calls the external methods e
   let mockEnemies = [mockEnemy]
   enemyManager.getEnemies.mockReturnValue(mockEnemies)
   playerModule.getPlayer.mockReturnValue(mockPlayer)
+  newFunction(mockEnemy)
+
+  underTest.updateEnemies()
+
+  expect(enemyManager.getEnemies).toHaveBeenCalled()
+  expect(enemyManager.moveEnemyToward).toHaveBeenCalledWith(mockEnemy, mockPlayer)
+})
+
+function newFunction (mockEnemy) {
   collisionDetectionModule.collisionDetection.mockImplementation((a, b) => {
     if (a === playerModule.getPlayer() && (b === mockEnemy.player_detection_box || b === mockEnemy.player_aggro_box)) {
       return true
@@ -51,11 +65,7 @@ test('updateEnemies sets the enemy to be aggrod and calls the external methods e
       return false
     }
   })
-  underTest.updateEnemies()
-
-  expect(enemyManager.getEnemies).toHaveBeenCalled()
-  expect(enemyManager.moveEnemyToward).toHaveBeenCalledWith(mockEnemy, mockPlayer)
-})
+}
 
 function createMockEnemy () {
   return {
