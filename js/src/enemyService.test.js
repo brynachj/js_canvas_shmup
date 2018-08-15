@@ -49,18 +49,44 @@ test('updateEnemies sets the enemy to be aggrod and calls the external methods e
   let mockEnemies = [mockEnemy]
   enemyManager.getEnemies.mockReturnValue(mockEnemies)
   playerModule.getPlayer.mockReturnValue(mockPlayer)
-  newFunction(mockEnemy)
+  collisionDetectionAggroMockSetup(mockEnemy)
 
   underTest.updateEnemies()
 
   expect(mockEnemy.aggro).toBe(true)
   expect(enemyManager.getEnemies).toHaveBeenCalled()
   expect(enemyManager.moveEnemyToward).toHaveBeenCalledWith(mockEnemy, mockPlayer)
+  expect(enemyDrawer.drawIdle).toHaveBeenCalledWith(mockEnemy)
 })
 
-function newFunction (mockEnemy) {
+test('updateEnemies sets the enemy to be attacking and calls the external methods expected when enemy is within attacking range of player', () => {
+  let mockEnemy = createMockEnemy()
+  let mockPlayer = createMockPlayer()
+  let mockEnemies = [mockEnemy]
+  enemyManager.getEnemies.mockReturnValue(mockEnemies)
+  playerModule.getPlayer.mockReturnValue(mockPlayer)
+  collisionDetectionAttackMockSetup(mockEnemy)
+
+  underTest.updateEnemies()
+
+  expect(mockEnemy.attacking).toBe(true)
+  expect(enemyManager.getEnemies).toHaveBeenCalled()
+  expect(enemyAttack.attack).toHaveBeenCalledWith(mockEnemy, mockPlayer)
+})
+
+function collisionDetectionAggroMockSetup (mockEnemy) {
   collisionDetectionModule.collisionDetection.mockImplementation((a, b) => {
     if (a === playerModule.getPlayer() && (b === mockEnemy.player_detection_box || b === mockEnemy.player_aggro_box)) {
+      return true
+    } else {
+      return false
+    }
+  })
+}
+
+function collisionDetectionAttackMockSetup (mockEnemy) {
+  collisionDetectionModule.collisionDetection.mockImplementation((a, b) => {
+    if (a === playerModule.getPlayer() && b === mockEnemy.player_attack_box) {
       return true
     } else {
       return false
