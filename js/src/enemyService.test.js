@@ -28,15 +28,33 @@ test('getEnemies calls enemyManager getEnemies function', () => {
   expect(enemyManager.getEnemies).toHaveBeenCalled()
 })
 
-test('updateEnemies calls the external methods expected when idle', () => {
+test('updateEnemies calls the external methods expected when enemy is idle', () => {
   let mockEnemy = createMockEnemy()
-  let mockPlayer = createMockPlayer()
   let mockEnemies = [mockEnemy]
   enemyManager.getEnemies.mockReturnValue(mockEnemies)
   underTest.updateEnemies()
 
   expect(enemyManager.getEnemies).toHaveBeenCalledTimes(7)
   expect(enemyDrawer.drawIdle).toHaveBeenCalledWith(mockEnemy)
+})
+
+test('updateEnemies sets the enemy to be aggrod and calls the external methods expected when enemy is within aggro range of player', () => {
+  let mockEnemy = createMockEnemy()
+  let mockPlayer = createMockPlayer()
+  let mockEnemies = [mockEnemy]
+  enemyManager.getEnemies.mockReturnValue(mockEnemies)
+  playerModule.getPlayer.mockReturnValue(mockPlayer)
+  collisionDetectionModule.collisionDetection.mockImplementation((a, b) => {
+    if (a === playerModule.getPlayer() && (b === mockEnemy.player_detection_box || b === mockEnemy.player_aggro_box)) {
+      return true
+    } else {
+      return false
+    }
+  })
+  underTest.updateEnemies()
+
+  expect(enemyManager.getEnemies).toHaveBeenCalled()
+  expect(enemyManager.moveEnemyToward).toHaveBeenCalledWith(mockEnemy, mockPlayer)
 })
 
 function createMockEnemy () {
