@@ -53,6 +53,7 @@ test('updateEnemies sets the enemy to be aggrod and calls the external methods e
 
   underTest.updateEnemies()
 
+  expect(mockEnemy.aggro).toBe(true)
   expect(enemyManager.getEnemies).toHaveBeenCalled()
   expect(enemyManager.moveEnemyToward).toHaveBeenCalledWith(mockEnemy, mockPlayer)
 })
