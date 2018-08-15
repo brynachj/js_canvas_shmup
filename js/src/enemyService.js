@@ -25,21 +25,21 @@ function updateEnemies () {
   getEnemies().filter(e => e.attacking).map(enemy => enemyAttack.attack(enemy, playerModule.getPlayer()))
 }
 
-function moveEnemies () {
-  let aggroEnemies = getEnemies().filter(e => e.aggro)
-  aggroEnemies.filter(e => !e.attacking).map(enemy => enemyManager.moveEnemyToward(enemy, playerModule.getPlayer()))
-}
-
 function playerEnemyDetectionBoxCollision () {
   getEnemies().filter(enemy => collisionDetectionModule.collisionDetection(playerModule.getPlayer(), enemy.player_detection_box)).map(enemy => (enemy.aggro = true))
+}
+
+function playerEnemyAttackBoxCollision () {
+  getEnemies().filter(enemy => collisionDetectionModule.collisionDetection(playerModule.getPlayer(), enemy.player_attack_box)).map(enemy => (enemy.attacking = true))
 }
 
 function playerEnemyDeaggroBoxCollision () {
   getEnemies().filter(enemy => !collisionDetectionModule.collisionDetection(playerModule.getPlayer(), enemy.player_aggro_box)).map(enemy => (enemy.aggro = false))
 }
 
-function playerEnemyAttackBoxCollision () {
-  getEnemies().filter(enemy => collisionDetectionModule.collisionDetection(playerModule.getPlayer(), enemy.player_attack_box)).map(enemy => (enemy.attacking = true))
+function moveEnemies () {
+  let aggroEnemies = getEnemies().filter(e => e.aggro)
+  aggroEnemies.filter(e => !e.attacking).map(enemy => enemyManager.moveEnemyToward(enemy, playerModule.getPlayer()))
 }
 
 module.exports = {
