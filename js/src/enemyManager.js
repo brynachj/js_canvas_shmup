@@ -1,22 +1,27 @@
-var utility_module = require('./utility.js');
-var pebble_pickup_module = require('./pebblePickup.js');
+var utilityModule = require('./utility.js')
+var pebblePickupModule = require('./pebblePickup.js')
 
-const WIDTH = 34, HEIGHT = 36, SPEED = 3;
+const WIDTH = 34
+const HEIGHT = 36
+const SPEED = 3
 
-const UP = "up", DOWN = "down", LEFT = "left", RIGHT = "right";
+const UP = 'up'
+const DOWN = 'down'
+const LEFT = 'left'
+const RIGHT = 'right'
 
-let enemies = [];
+let enemies = []
 
-function addEnemy(x,y){
-  enemies.push(createEnemy(x,y));
+function addEnemy (x, y) {
+  enemies.push(createEnemy(x, y))
 }
 
 function getEnemies () {
   return enemies
 }
 
-function createEnemy(x1, y1) {
-  return {id: utility_module.newId(enemies), x:x1, y:y1, w:WIDTH, h:HEIGHT, speed:SPEED, hitBoxColor: '#ff0000', health: 100,
+function createEnemy (x1, y1) {
+  return {id: utilityModule.newId(enemies), x:x1, y:y1, w:WIDTH, h:HEIGHT, speed:SPEED, hitBoxColor: '#ff0000', health: 100,
         player_detection_box : {x:x1-60, y:y1-60, w:WIDTH+120, h:HEIGHT+120, hitBoxColor: '#ff8c00'},
         player_aggro_box : {x:x1-80, y:y1-80, w:WIDTH+160, h:HEIGHT+160, hitBoxColor: '#ffff00'},
         player_attack_box: {x:x1-10, y:y1-5, w:10, h:HEIGHT+10, hitBoxColor: '#ff6961'},
@@ -24,10 +29,14 @@ function createEnemy(x1, y1) {
       };
 }
 
-function removeAndReplaceEnemy(enemyToRemove){
-  var index = enemies.map(enemy => enemy.id).indexOf(enemyToRemove.id);
-  enemies.splice(index, 1);
-  addEnemy(Math.random() * 600, Math.random() * 600);
+function removeEnemy (enemyToRemove) {
+  var index = enemies.map(enemy => enemy.id).indexOf(enemyToRemove.id)
+  enemies.splice(index, 1)
+}
+
+function removeAndReplaceEnemy (enemyToRemove) {
+  removeEnemy(enemyToRemove)
+  addEnemy(Math.random() * 600, Math.random() * 600)
 }
 
 function updateEnemyDirection(enemy, target) {
@@ -84,7 +93,7 @@ function hitEnemy(enemy, damage) {
   if(enemy.health <= 0) {
     removeAndReplaceEnemy(enemy);
     if(Math.random() < 0.2){
-      pebble_pickup_module.addToPebblePickups(enemy.x, enemy.y);
+      pebblePickupModule.addToPebblePickups(enemy.x, enemy.y);
     }
   }
 }
@@ -93,6 +102,7 @@ module.exports = {
   enemies,
   getEnemies,
   addEnemy,
+  removeEnemy,
   removeAndReplaceEnemy,
   updateEnemyDirection,
   moveEnemyToward,
