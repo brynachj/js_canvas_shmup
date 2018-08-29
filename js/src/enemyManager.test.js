@@ -51,3 +51,26 @@ test('addEnemy pushes a new enemy to the enemy array with all the expected prope
   expect(enemies[0].attackAnimationFrame).toBe(0)
   expect(enemies[0].hitPlayer).toBe(false)
 })
+
+test('removeEnemy removes an enemy', () => {
+  underTest.addEnemy(0, 1)
+
+  expect(underTest.getEnemies().length).toBe(1)
+
+  underTest.removeEnemy(underTest.getEnemies()[0])
+
+  expect(underTest.getEnemies().length).toBe(0)
+})
+
+test('removeEnemy removes the specified enemy', () => {
+  underTest.addEnemy(0, 1)
+  underTest.addEnemy(2, 3)
+
+  expect(underTest.getEnemies().length).toBe(2)
+
+  underTest.removeEnemy(underTest.getEnemies()[0])
+
+  expect(underTest.getEnemies().length).toBe(1)
+  expect(underTest.getEnemies()[0].x).toBe(2)
+  expect(underTest.getEnemies()[0].y).toBe(3)
+})
