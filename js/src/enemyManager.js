@@ -34,11 +34,6 @@ function removeEnemy (enemyToRemove) {
   enemies.splice(index, 1)
 }
 
-function removeAndReplaceEnemy (enemyToRemove) {
-  removeEnemy(enemyToRemove)
-  addEnemy(Math.random() * 600, Math.random() * 600)
-}
-
 function updateEnemyDirection(enemy, target) {
   x_difference = (enemy.x + enemy.w/2) - (target.x + target.w/2);
   y_difference = (enemy.y + enemy.h/2) - (target.y + target.h/2);
@@ -88,12 +83,13 @@ function move(enemy, move_x, move_y) {
   enemy.player_attack_box.y += move_y;
 }
 
-function hitEnemy(enemy, damage) {
-  enemy.health -= damage;
-  if(enemy.health <= 0) {
-    removeAndReplaceEnemy(enemy);
-    if(Math.random() < 0.2){
-      pebblePickupModule.addToPebblePickups(enemy.x, enemy.y);
+function hitEnemy (enemy, damage) {
+  enemy.health -= damage
+  if (enemy.health <= 0) {
+    removeEnemy(enemy)
+    addEnemy(Math.random() * 600, Math.random() * 600)
+    if (Math.random() < 0.2) {
+      pebblePickupModule.addToPebblePickups(enemy.x, enemy.y)
     }
   }
 }
@@ -103,7 +99,6 @@ module.exports = {
   getEnemies,
   addEnemy,
   removeEnemy,
-  removeAndReplaceEnemy,
   updateEnemyDirection,
   moveEnemyToward,
   hitEnemy

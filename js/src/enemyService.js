@@ -16,6 +16,11 @@ function damageEnemy (enemy, damage) {
   enemyManager.hitEnemy(enemy, damage)
 }
 
+function removeAndReplaceEnemy (enemyToRemove) {
+  enemyManager.removeEnemy(enemyToRemove)
+  addEnemy(Math.random() * 600, Math.random() * 600)
+}
+
 function updateEnemies () {
   playerEnemyDetectionBoxCollision()
   playerEnemyAttackBoxCollision()
@@ -46,5 +51,6 @@ module.exports = {
   getEnemies,
   addEnemy,
   damageEnemy,
-  updateEnemies
+  updateEnemies,
+  removeAndReplaceEnemy
 }

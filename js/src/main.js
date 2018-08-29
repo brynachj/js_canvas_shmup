@@ -28,7 +28,7 @@ var canvas,
     function reset() {
       pebble_module.resetPebbleAmmo();
       player_module.resetPlayer();
-      enemy_manager.enemies.map(enemy => enemy_manager.removeAndReplaceEnemy(enemy));
+      enemy_manager.enemies.map(enemy => enemy_service.removeAndReplaceEnemy(enemy));
     }
 
     function enemyHitTest() { // should be in enemy classes
