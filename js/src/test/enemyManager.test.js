@@ -1,10 +1,10 @@
-const underTest = require('./enemyManager.js')
-var utilityModule = require('./utility.js')
-var pebble_pickup_module = require('./pebblePickup.js')
+const underTest = require('../enemyManager.js')
+var utilityModule = require('../utility.js')
+var pebble_pickup_module = require('../pebblePickup.js')
 
-jest.mock('./utility.js')
-jest.mock('./pebblePickup.js')
-const mockMath = Object.create(global.Math);
+jest.mock('../utility.js')
+jest.mock('../pebblePickup.js')
+const mockMath = Object.create(global.Math)
 
 const WIDTH = 34
 const HEIGHT = 36
