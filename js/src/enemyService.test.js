@@ -33,7 +33,7 @@ test('getEnemies calls enemyManager getEnemies function', () => {
 })
 
 test('updateEnemies calls the external methods expected when enemy is idle', () => {
-  let mockEnemy = createMockEnemy()
+  let mockEnemy = createEnemy()
   let mockEnemies = [mockEnemy]
   enemyManager.getEnemies.mockReturnValue(mockEnemies)
 
@@ -44,7 +44,7 @@ test('updateEnemies calls the external methods expected when enemy is idle', () 
 })
 
 test('updateEnemies sets the enemy to be aggrod and calls the external methods expected when enemy is within aggro range of player', () => {
-  let mockEnemy = createMockEnemy()
+  let mockEnemy = createEnemy()
   let mockPlayer = createMockPlayer()
   let mockEnemies = [mockEnemy]
   enemyManager.getEnemies.mockReturnValue(mockEnemies)
@@ -60,7 +60,7 @@ test('updateEnemies sets the enemy to be aggrod and calls the external methods e
 })
 
 test('updateEnemies sets the enemy to be attacking and calls the external methods expected when enemy is within attacking range of player', () => {
-  let mockEnemy = createMockEnemy()
+  let mockEnemy = createEnemy()
   let mockPlayer = createMockPlayer()
   let mockEnemies = [mockEnemy]
   enemyManager.getEnemies.mockReturnValue(mockEnemies)
@@ -72,6 +72,28 @@ test('updateEnemies sets the enemy to be attacking and calls the external method
   expect(mockEnemy.attacking).toBe(true)
   expect(enemyManager.getEnemies).toHaveBeenCalled()
   expect(enemyAttack.attack).toHaveBeenCalledWith(mockEnemy, mockPlayer)
+})
+
+test('removeAndReplaceEnemies calls removeEnemy from enemyManager', () => {
+  let mockEnemy = createEnemy()
+
+  underTest.removeAndReplaceEnemy(mockEnemy)
+
+  expect(enemyManager.removeEnemy).toHaveBeenCalledWith(mockEnemy)
+})
+
+test('removeAndReplaceEnemies calls addEnemy', () => {
+  let mockEnemy = createEnemy()
+  underTest.removeAndReplaceEnemy(mockEnemy)
+
+  expect(enemyManager.addEnemy).toHaveBeenCalled()
+})
+
+test('removeAndReplaceEnemies calls enemyManager removeEnemy', () => {
+  let mockEnemy = createEnemy()
+  underTest.removeAndReplaceEnemy(mockEnemy)
+
+  expect(enemyManager.removeEnemy).toHaveBeenCalledWith(mockEnemy)
 })
 
 function collisionDetectionAggroMockSetup (mockEnemy) {
@@ -94,7 +116,7 @@ function collisionDetectionAttackMockSetup (mockEnemy) {
   })
 }
 
-function createMockEnemy () {
+function createEnemy () {
   return {
     id: 1,
     x: 1,
