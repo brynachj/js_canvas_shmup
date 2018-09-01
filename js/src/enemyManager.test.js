@@ -11,6 +11,24 @@ beforeEach(() => {
   }
 })
 
+test('addEnemy pushes a new enemy to the enemy array with all the expected properties', () => {
+  underTest.addEnemy(90, 91)
+
+  let enemies = underTest.getEnemies()
+
+  expect(enemies[0].x).toBe(90)
+  expect(enemies[0].y).toBe(91)
+  expect(enemies[0].w).toBe(34)
+  expect(enemies[0].h).toBe(36)
+  expect(enemies[0].speed).toBe(3)
+  expect(enemies[0].health).toBe(100)
+  expect(enemies[0].aggro).toBe(false)
+  expect(enemies[0].attacking).toBe(false)
+  expect(enemies[0].facing).toBe('left')
+  expect(enemies[0].attackAnimationFrame).toBe(0)
+  expect(enemies[0].hitPlayer).toBe(false)
+})
+
 test('getEnemies should be empty initially ', () => {
   let enemies = underTest.getEnemies()
 
@@ -32,24 +50,6 @@ test('getEnemies should return two enemies when addEnemy is called twice', () =>
   let enemies = underTest.getEnemies()
 
   expect(enemies.length).toEqual(2)
-})
-
-test('addEnemy pushes a new enemy to the enemy array with all the expected properties', () => {
-  underTest.addEnemy(90, 91)
-
-  let enemies = underTest.getEnemies()
-
-  expect(enemies[0].x).toBe(90)
-  expect(enemies[0].y).toBe(91)
-  expect(enemies[0].w).toBe(34)
-  expect(enemies[0].h).toBe(36)
-  expect(enemies[0].speed).toBe(3)
-  expect(enemies[0].health).toBe(100)
-  expect(enemies[0].aggro).toBe(false)
-  expect(enemies[0].attacking).toBe(false)
-  expect(enemies[0].facing).toBe('left')
-  expect(enemies[0].attackAnimationFrame).toBe(0)
-  expect(enemies[0].hitPlayer).toBe(false)
 })
 
 test('removeEnemy removes an enemy', () => {
