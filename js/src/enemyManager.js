@@ -21,7 +21,7 @@ function getEnemies () {
 }
 
 function createEnemy (x1, y1) {
-  return {id: utilityModule.newId(enemies), 
+  return {id: utilityModule.newId(enemies),
     x: x1,
     y: y1,
     w: WIDTH,
@@ -45,24 +45,24 @@ function removeEnemy (enemyToRemove) {
   enemies.splice(index, 1)
 }
 
-function updateEnemyDirection(enemy, target) {
-  x_difference = (enemy.x + enemy.w/2) - (target.x + target.w/2);
-  y_difference = (enemy.y + enemy.h/2) - (target.y + target.h/2);
-  if(x_difference*x_difference > y_difference*y_difference) {
-    if(x_difference > 0){
-      enemy.facing = LEFT;
-      enemy.player_attack_box = {x:enemy.x-10, y:enemy.y-5, w:10, h:HEIGHT+10, hitBoxColor: '#ff6961'};
+function updateEnemyDirection (enemy, target) {
+  let xDifference = (enemy.x + enemy.w / 2) - (target.x + target.w / 2)
+  let yDifference = (enemy.y + enemy.h / 2) - (target.y + target.h / 2)
+  if (xDifference * xDifference > yDifference * yDifference) {
+    if (xDifference > 0) {
+      enemy.facing = LEFT
+      enemy.player_attack_box = {x: enemy.x - 10, y: enemy.y - 5, w: 10, h: HEIGHT + 10, hitBoxColor: '#ff6961'}
     } else {
-      enemy.facing = RIGHT;
-      enemy.player_attack_box = {x:enemy.x+enemy.w, y:enemy.y-5, w:10, h:HEIGHT+10, hitBoxColor: '#ff6961'};
+      enemy.facing = RIGHT
+      enemy.player_attack_box = {x: enemy.x + enemy.w, y: enemy.y - 5, w: 10, h: HEIGHT + 10, hitBoxColor: '#ff6961'}
     }
   } else {
-    if(y_difference > 0){
-      enemy.facing = UP;
-      enemy.player_attack_box = {x:enemy.x-5, y:enemy.y-10, w:WIDTH+10, h:10, hitBoxColor: '#ff6961'};
+    if (yDifference > 0) {
+      enemy.facing = UP
+      enemy.player_attack_box = {x: enemy.x - 5, y: enemy.y - 10, w: WIDTH + 10, h: 10, hitBoxColor: '#ff6961'}
     } else {
-      enemy.facing = DOWN;
-      enemy.player_attack_box = {x:enemy.x-5, y:enemy.y+enemy.h, w:WIDTH+10, h:10, hitBoxColor: '#ff6961'};
+      enemy.facing = DOWN
+      enemy.player_attack_box = {x: enemy.x - 5, y: enemy.y + enemy.h, w: WIDTH + 10, h: 10, hitBoxColor: '#ff6961'}
     }
   }
 }
