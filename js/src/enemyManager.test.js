@@ -167,3 +167,102 @@ test('updateEnemyDirection faces the given enemy DOWN if the y axis of the given
 
   expect(underTest.getEnemies()[0].facing).toBe('up')
 })
+
+test('moveEnemyToward keeps the enemy in place if they are in the same place as their target', () => {
+  underTest.addEnemy(50, 50)
+  let enemy = underTest.getEnemies()[0]
+  let target = {x: 50, y: 50, w: WIDTH, h: HEIGHT}
+
+  underTest.moveEnemyToward(enemy, target)
+
+  expect(underTest.getEnemies()[0].x).toBe(50)
+  expect(underTest.getEnemies()[0].y).toBe(50)
+})
+
+test('moveEnemyToward moves the enemy left 3 if the x axis of the given target is left of the enemy x coordinate but the y coordinates match', () => {
+  underTest.addEnemy(50, 50)
+  let enemy = underTest.getEnemies()[0]
+  let target = {x: 30, y: 50, w: WIDTH, h: HEIGHT}
+
+  underTest.moveEnemyToward(enemy, target)
+
+  expect(underTest.getEnemies()[0].x).toBe(47)
+  expect(underTest.getEnemies()[0].y).toBe(50)
+})
+
+test('moveEnemyToward moves the enemy right 3 if the x axis of the given target is right of the enemy x coordinate but the y coordinates match', () => {
+  underTest.addEnemy(50, 50)
+  let enemy = underTest.getEnemies()[0]
+  let target = {x: 60, y: 50, w: WIDTH, h: HEIGHT}
+
+  underTest.moveEnemyToward(enemy, target)
+
+  expect(underTest.getEnemies()[0].x).toBe(53)
+  expect(underTest.getEnemies()[0].y).toBe(50)
+})
+
+test('moveEnemyToward moves the enemy up 3 if the y axis of the given target is above of the enemy y coordinate but the x coordinates match', () => {
+  underTest.addEnemy(50, 50)
+  let enemy = underTest.getEnemies()[0]
+  let target = {x: 50, y: 40, w: WIDTH, h: HEIGHT}
+
+  underTest.moveEnemyToward(enemy, target)
+
+  expect(underTest.getEnemies()[0].x).toBe(50)
+  expect(underTest.getEnemies()[0].y).toBe(47)
+})
+
+test('moveEnemyToward moves the enemy down 3 if the y axis of the given target is below of the enemy y coordinate but the x coordinates match', () => {
+  underTest.addEnemy(50, 50)
+  let enemy = underTest.getEnemies()[0]
+  let target = {x: 50, y: 60, w: WIDTH, h: HEIGHT}
+
+  underTest.moveEnemyToward(enemy, target)
+
+  expect(underTest.getEnemies()[0].x).toBe(50)
+  expect(underTest.getEnemies()[0].y).toBe(53)
+})
+
+test('moveEnemyToward moves the enemy left 3 if the x axis of the given target is 3 or more left of the enemy x coordinate and the difference in y coordinates is less than 3', () => {
+  underTest.addEnemy(50, 50)
+  let enemy = underTest.getEnemies()[0]
+  let target = {x: 30, y: 52, w: WIDTH, h: HEIGHT}
+
+  underTest.moveEnemyToward(enemy, target)
+
+  expect(underTest.getEnemies()[0].x).toBe(47)
+  expect(underTest.getEnemies()[0].y).toBe(50)
+})
+
+test('moveEnemyToward moves the enemy right 3 and up 3 if the x axis of the given target is 3 or more right of the enemy x coordinate and the difference in y coordinates is more than 3', () => {
+  underTest.addEnemy(50, 50)
+  let enemy = underTest.getEnemies()[0]
+  let target = {x: 60, y: 44, w: WIDTH, h: HEIGHT}
+
+  underTest.moveEnemyToward(enemy, target)
+
+  expect(underTest.getEnemies()[0].x).toBe(53)
+  expect(underTest.getEnemies()[0].y).toBe(47)
+})
+
+test('moveEnemyToward moves the enemy up 3 if the y axis of the given target is 3 or more above of the enemy y coordinate and the difference in x coordinates is less than 3', () => {
+  underTest.addEnemy(50, 50)
+  let enemy = underTest.getEnemies()[0]
+  let target = {x: 51, y: 40, w: WIDTH, h: HEIGHT}
+
+  underTest.moveEnemyToward(enemy, target)
+
+  expect(underTest.getEnemies()[0].x).toBe(50)
+  expect(underTest.getEnemies()[0].y).toBe(47)
+})
+
+test('moveEnemyToward moves the enemy down 3 and left 3 if the y axis of the given target is 3 or more below of the enemy y coordinate and the difference in x coordinates is more than 3', () => {
+  underTest.addEnemy(50, 50)
+  let enemy = underTest.getEnemies()[0]
+  let target = {x: 46, y: 60, w: WIDTH, h: HEIGHT}
+
+  underTest.moveEnemyToward(enemy, target)
+
+  expect(underTest.getEnemies()[0].x).toBe(47)
+  expect(underTest.getEnemies()[0].y).toBe(53)
+})
