@@ -29,13 +29,13 @@ test('addEnemy pushes a new enemy to the enemy array with all the expected prope
   expect(enemies[0].hitPlayer).toBe(false)
 })
 
-test('getEnemies should be empty initially ', () => {
+test('getEnemies is empty initially ', () => {
   let enemies = underTest.getEnemies()
 
   expect(enemies).toEqual([])
 })
 
-test('getEnemies should return one enemy when addEnemy has been called once', () => {
+test('getEnemies returns one enemy when addEnemy has been called once', () => {
   underTest.addEnemy(0, 1)
 
   let enemies = underTest.getEnemies()
@@ -43,7 +43,7 @@ test('getEnemies should return one enemy when addEnemy has been called once', ()
   expect(enemies.length).toEqual(1)
 })
 
-test('getEnemies should return two enemies when addEnemy is called twice', () => {
+test('getEnemies returns two enemies when addEnemy is called twice', () => {
   underTest.addEnemy(0, 1)
   underTest.addEnemy(2, 3)
 
