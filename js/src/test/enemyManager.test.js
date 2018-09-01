@@ -1,6 +1,6 @@
 const underTest = require('../main/enemyManager.js')
 var utilityModule = require('../main/utility.js')
-var pebble_pickup_module = require('../main/pebblePickup.js')
+var pebblePickupModule = require('../main/pebblePickup.js')
 
 jest.mock('../main/utility.js')
 jest.mock('../main/pebblePickup.js')
@@ -310,5 +310,5 @@ test('hitEnemy calls pebblePickupModule addToPebblePickups with the enemy coordi
 
   underTest.hitEnemy(enemy, 120)
 
-  expect(pebble_pickup_module.addToPebblePickups).toBeCalledWith(enemy.x, enemy.y)
+  expect(pebblePickupModule.addToPebblePickups).toBeCalledWith(enemy.x, enemy.y)
 })
