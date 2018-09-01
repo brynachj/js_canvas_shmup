@@ -4,6 +4,7 @@ var pebble_pickup_module = require('./pebblePickup.js')
 
 jest.mock('./utility.js')
 jest.mock('./pebblePickup.js')
+const mockMath = Object.create(global.Math);
 
 const WIDTH = 34
 const HEIGHT = 36
@@ -30,6 +31,12 @@ test('addEnemy pushes a new enemy to the enemy array with all the expected prope
   expect(enemies[0].facing).toBe('left')
   expect(enemies[0].attackAnimationFrame).toBe(0)
   expect(enemies[0].hitPlayer).toBe(false)
+})
+
+test('addEnemy calls the utitlity function for giving the enemy a new Id', () => {
+  underTest.addEnemy(10, 20)
+
+  expect(utilityModule.newId).toBeCalledWith(underTest.getEnemies())
 })
 
 test('getEnemies is empty initially ', () => {
@@ -265,4 +272,43 @@ test('moveEnemyToward moves the enemy down 3 and left 3 if the y axis of the giv
 
   expect(underTest.getEnemies()[0].x).toBe(47)
   expect(underTest.getEnemies()[0].y).toBe(53)
+})
+
+test('hitEnemy takes the given amount of health from the given enemy', () => {
+  underTest.addEnemy(50, 50)
+  let enemy = underTest.getEnemies()[0]
+
+  underTest.hitEnemy(enemy, 20)
+
+  expect(underTest.getEnemies()[0].health).toBe(80)
+})
+
+test('hitEnemy does not replace the enemy if the damage taken does not take it under 0 health', () => {
+  underTest.addEnemy(50, 50)
+  let enemy = underTest.getEnemies()[0]
+
+  underTest.hitEnemy(enemy, 20)
+
+  expect(underTest.getEnemies()[0]).toBe(enemy)
+})
+
+test('hitEnemy does replace the enemy if the damage taken takes it under 0 health', () => {
+  underTest.addEnemy(50, 50)
+  let enemy = underTest.getEnemies()[0]
+
+  underTest.hitEnemy(enemy, 120)
+
+  expect(underTest.getEnemies().length).toBe(1)
+  expect(underTest.getEnemies()[0]).not.toBe(enemy)
+})
+
+test('hitEnemy calls pebblePickupModule addToPebblePickups with the enemy coordinates when the enemy is removed and the random fucntion is less than 0.2', () => {
+  underTest.addEnemy(50, 50)
+  let enemy = underTest.getEnemies()[0]
+  mockMath.random = () => 0.1
+  global.Math = mockMath
+
+  underTest.hitEnemy(enemy, 120)
+
+  expect(pebble_pickup_module.addToPebblePickups).toBeCalledWith(enemy.x, enemy.y)
 })
