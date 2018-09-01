@@ -71,7 +71,7 @@ test('updateEnemies sets the enemy to be attacking and calls the external method
 
   expect(mockEnemy.attacking).toBe(true)
   expect(enemyManager.getEnemies).toHaveBeenCalled()
-  expect(enemyAttack.attack).toHaveBeenCalledWith(mockEnemy, mockPlayer)
+  expect(enemyAttack.attack).toHaveBeenCalledWith(mockEnemy)
 })
 
 test('removeAndReplaceEnemies calls removeEnemy from enemyManager', () => {

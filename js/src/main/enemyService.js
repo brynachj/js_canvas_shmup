@@ -27,7 +27,7 @@ function updateEnemies () {
   playerEnemyDeaggroBoxCollision()
   moveEnemies()
   getEnemies().filter(e => !e.attacking).map(enemy => enemyDrawer.drawIdle(enemy))
-  getEnemies().filter(e => e.attacking).map(enemy => enemyAttack.attack(enemy, playerModule.getPlayer()))
+  getEnemies().filter(e => e.attacking).map(enemy => enemyAttack.attack(enemy))
 }
 
 function playerEnemyDetectionBoxCollision () {

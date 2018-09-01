@@ -2,7 +2,7 @@ var playerModule = require('./player.js')
 var enemyDrawer = require('./enemyDrawer.js')
 var collisionDetectionModule = require('./collisionDetection.js')
 
-function attack (enemy, player) {
+function attack (enemy) {
   let animationFrame = enemy.attackAnimationFrame
   switch (true) {
     case animationFrame < 10:
