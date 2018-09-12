@@ -1,3 +1,4 @@
 .DS_Store
-js/src/bundle.js
+js/src/target/
 node_modules
+coverage

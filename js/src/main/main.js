@@ -1,7 +1,6 @@
 var debug_module = require('./debugControls.js');
 var player_module = require('./player.js');
 var enemy_service = require('./enemyService.js');
-var enemy_manager = require('./enemyManager.js');
 var draw_module = require('./draw.js');
 var pebble_module = require('./pebble.js');
 var pebble_pickup_module = require('./pebblePickup.js');
@@ -28,14 +27,14 @@ var canvas,
     function reset() {
       pebble_module.resetPebbleAmmo();
       player_module.resetPlayer();
-      enemy_manager.enemies.map(enemy => enemy_manager.removeAndReplaceEnemy(enemy));
+      enemy_service.getEnemies().map(enemy => enemy_service.removeAndReplaceEnemy(enemy));
     }
 
     function enemyHitTest() { // should be in enemy classes
       var remove = false;
       pebble_module.pebbles.map(pebble => {
-        enemy_manager.enemies.filter(enemy => collision_detection_module.collisionDetection(pebble, enemy)).map(enemy => {
-            enemy_service.hitEnemy(enemy, 15);
+        enemy_service.getEnemies().filter(enemy => collision_detection_module.collisionDetection(pebble, enemy)).map(enemy => {
+            enemy_service.damageEnemy(enemy, 15);
             pebble_module.removeFromPebbles(pebble); 
             player_module.addExperience(10); // Should be tied to damaging the enemy - 1/5 of damage done
             return;
@@ -68,7 +67,7 @@ var canvas,
     }
 
     // Initialisations
-    enemy_manager.addEnemy(Math.random() * 600, Math.random() * 600);
+    enemy_service.addEnemy(Math.random() * 600, Math.random() * 600);
 
     function clearCanvas() {
       draw_module.ctx.clearRect(0,0,width,height);
