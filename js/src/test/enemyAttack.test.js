@@ -38,7 +38,7 @@ it('attack calls enemyDrawer drawWindUpAttack when attackAnimationFrame is less 
   expect(enemyDrawer.drawWindUpAttack).toBeCalledWith(enemyFurtherAlongAnimation)
 })
 
-it('attack calls enemyDrawer drawWindDownAttack when attackAnimationFrame is between than 20 and 29', () => {
+it('attack calls enemyDrawer drawWindDownAttack when attackAnimationFrame is between 20 and 29', () => {
   let enemy = {attackAnimationFrame: 20, attacking: false, hitPlayer: false}
   let enemyFurtherAlongAnimation = {attackAnimationFrame: 28, attacking: false, hitPlayer: false}
 
@@ -49,7 +49,7 @@ it('attack calls enemyDrawer drawWindDownAttack when attackAnimationFrame is bet
   expect(enemyDrawer.drawWindDownAttack).toBeCalledWith(enemyFurtherAlongAnimation)
 })
 
-it('attack calls enemyDrawer drawAttacking when attackAnimationFrame is between than 10 and 19', () => {
+it('attack calls enemyDrawer drawAttacking when attackAnimationFrame is between 10 and 19', () => {
   let enemy = {attackAnimationFrame: 10, attacking: false, hitPlayer: false}
   let enemyFurtherAlongAnimation = {attackAnimationFrame: 18, attacking: false, hitPlayer: false}
 
@@ -60,18 +60,7 @@ it('attack calls enemyDrawer drawAttacking when attackAnimationFrame is between 
   expect(enemyDrawer.drawAttacking).toBeCalledWith(enemyFurtherAlongAnimation)
 })
 
-it('attack calls enemyDrawer drawAttacking when attackAnimationFrame is between than 10 and 19', () => {
-  let enemy = {attackAnimationFrame: 10, attacking: false, hitPlayer: false}
-  let enemyFurtherAlongAnimation = {attackAnimationFrame: 18, attacking: false, hitPlayer: false}
-
-  underTest.attack(enemy)
-  underTest.attack(enemyFurtherAlongAnimation)
-
-  expect(enemyDrawer.drawAttacking).toBeCalledWith(enemy)
-  expect(enemyDrawer.drawAttacking).toBeCalledWith(enemyFurtherAlongAnimation)
-})
-
-it('attack calls collisionDetectionModule collisionDetection with the playerModule and given enemy attack box when attackAnimationFrame is between than 10 and 19', () => {
+it('attack calls collisionDetectionModule collisionDetection with the playerModule and given enemy attack box when attackAnimationFrame is between 10 and 19', () => {
   let playerAttackBox = {x: 10, y: 5, w: 10, h: 10}
   let playerAttackBox2 = {x: 12, y: 6, w: 20, h: 30}
   let enemy = {attackAnimationFrame: 10, attacking: false, hitPlayer: false, player_attack_box: playerAttackBox}
@@ -84,8 +73,31 @@ it('attack calls collisionDetectionModule collisionDetection with the playerModu
   underTest.attack(enemyFurtherAlongAnimation)
 
   expect(playerModule.getPlayer).toHaveBeenCalled()
-  expect(enemyDrawer.drawAttacking).toBeCalledWith(enemy)
-  expect(enemyDrawer.drawAttacking).toBeCalledWith(enemyFurtherAlongAnimation)
   expect(collisionDetectionModule.collisionDetection).toBeCalledWith(mockPlayer, enemy.player_attack_box)
   expect(collisionDetectionModule.collisionDetection).toBeCalledWith(mockPlayer, enemyFurtherAlongAnimation.player_attack_box)
+})
+
+it('attack calls playerModule updateHealth and enemy hitPlayer to be true when attackAnimationFrame is between 10 and 19 and collision with player is true', () => {
+  let playerAttackBox = {x: 10, y: 5, w: 10, h: 10}
+  let enemy = {attackAnimationFrame: 10, attacking: false, hitPlayer: false, player_attack_box: playerAttackBox}
+  let mockPlayer = {key: 'value'}
+
+  playerModule.getPlayer.mockImplementation(() => { return mockPlayer })
+  collisionDetectionModule.collisionDetection.mockImplementation(() => { return true })
+
+  underTest.attack(enemy)
+
+  expect(playerModule.updateHealth).toBeCalledWith(-40)
+  expect(enemy.hitPlayer).toBe(true)
+})
+
+it('attack calls enemyDrawer drawWindDownAttack when attackAnimationFrame is between 20 and 29', () => {
+  let enemy = {attackAnimationFrame: 20, attacking: false, hitPlayer: false}
+  let enemyFurtherAlongAnimation = {attackAnimationFrame: 28, attacking: false, hitPlayer: false}
+
+  underTest.attack(enemy)
+  underTest.attack(enemyFurtherAlongAnimation)
+
+  expect(enemyDrawer.drawWindDownAttack).toBeCalledWith(enemy)
+  expect(enemyDrawer.drawWindDownAttack).toBeCalledWith(enemyFurtherAlongAnimation)
 })
