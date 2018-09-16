@@ -8,28 +8,11 @@ var hud_module = require('./hud.js');
 var collision_detection_module = require('./collisionDetection.js');
 var eventListener = require('./eventListener.js')
 
-const CANVAS = 'canvas', KEY_DOWN_EVENT = 'keydown', KEY_UP_EVENT = 'keyup',
-RANGED_ATTACK_KEY_CODE = 88, MELEE_ATTACK_KEY_CODE = 67,
-LEFT_KEY_CODE = 37, UP_KEY_CODE = 38, RIGHT_KEY_CODE = 39, DOWN_KEY_CODE = 40;
+const CANVAS = 'canvas'
 
 var canvas,
     width = 600,
-    height = 600,
-
-    gameStarted = false,
-
-    rightKey = false,
-    leftKey = false,
-    upKey = false,
-    downKey = false;
-
-    // Utility functions
-
-    function reset() {
-      pebble_module.resetPebbleAmmo();
-      player_module.resetPlayer();
-      enemy_service.getEnemies().map(enemy => enemy_service.removeAndReplaceEnemy(enemy));
-    }
+    height = 600;
 
     function enemyHitTest() { // should be in enemy classes
       pebble_module.pebbles.map(pebble => {
@@ -57,7 +40,7 @@ var canvas,
     }
 
     function updateText() {
-      if (!gameStarted) {
+      if (!eventListener.getGameStarted()) {
         hud_module.startScreen(draw_module.ctx);
       }
         hud_module.updateHud(draw_module.ctx);
@@ -77,8 +60,6 @@ var canvas,
       canvas = document.getElementById(CANVAS);
       draw_module.ctx = canvas.getContext('2d');
       eventListener.initialiseEventListeners()
-      document.addEventListener(KEY_DOWN_EVENT, keyDown, false);
-      document.addEventListener(KEY_UP_EVENT, keyUp, false);
       if(debug_module.debug) {
         debug_module.addDebugControls();
         debug_module.addCheckBoxEventListeners();
@@ -86,44 +67,12 @@ var canvas,
       gameLoop();
     }
 
-    // Event Listeners/Input handling
-
-    function keyDown(e) {
-      if (e.keyCode === RIGHT_KEY_CODE) rightKey = true;
-      else if (e.keyCode === LEFT_KEY_CODE) leftKey = true;
-      if (e.keyCode === UP_KEY_CODE) upKey = true;
-      else if (e.keyCode === DOWN_KEY_CODE) downKey = true;
-      if (e.keyCode === MELEE_ATTACK_KEY_CODE & player_module.getPlayer().state === 'idle') {
-        player_module.attack();
-      }
-      if (e.keyCode === RANGED_ATTACK_KEY_CODE && pebble_module.getAmmo() > 0){
-        pebble_module.addToPebbles(player_module.getPlayer().x + 2, player_module.getPlayer().y + 13);
-        pebble_module.takeOneFromAmmo();
-      }
-      if(e.keyCode === 32){
-        if(!gameStarted){
-          gameStarted = true;
-        }
-        if(!player_module.getAlive()) {
-          player_module.setAlive(true);
-          reset();
-        }
-      }
-    }
-
-    function keyUp(e) {
-      if (e.keyCode === 39) rightKey = false;
-      else if (e.keyCode === 37) leftKey = false;
-      if (e.keyCode === 38) upKey = false;
-      else if (e.keyCode === 40) downKey = false;
-    }
-
     function gameLoop() {
       clearCanvas();
-      if(player_module.getAlive() && gameStarted){
+      if(player_module.getAlive() && eventListener.getGameStarted()){
         updateEnemies();
         pebblePickupCollision();
-        player_module.updatePlayer(rightKey, leftKey, upKey, downKey);
+        eventListener.updateGameWorld()
         pebble_module.moveOnScreenPebbles();
         pebble_pickup_module.drawPebblePickup(draw_module.ctx);
         pebble_module.drawOnScreenPebble(draw_module.ctx);
