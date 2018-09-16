@@ -6,6 +6,7 @@ var pebble_module = require('./pebble.js');
 var pebble_pickup_module = require('./pebblePickup.js');
 var hud_module = require('./hud.js');
 var collision_detection_module = require('./collisionDetection.js');
+var eventListener = require('./eventListener.js')
 
 const CANVAS = 'canvas', KEY_DOWN_EVENT = 'keydown', KEY_UP_EVENT = 'keyup',
 RANGED_ATTACK_KEY_CODE = 88, MELEE_ATTACK_KEY_CODE = 67,
@@ -31,7 +32,6 @@ var canvas,
     }
 
     function enemyHitTest() { // should be in enemy classes
-      var remove = false;
       pebble_module.pebbles.map(pebble => {
         enemy_service.getEnemies().filter(enemy => collision_detection_module.collisionDetection(pebble, enemy)).map(enemy => {
             enemy_service.damageEnemy(enemy, 15);
@@ -76,6 +76,7 @@ var canvas,
     function init() {
       canvas = document.getElementById(CANVAS);
       draw_module.ctx = canvas.getContext('2d');
+      eventListener.initialiseEventListeners()
       document.addEventListener(KEY_DOWN_EVENT, keyDown, false);
       document.addEventListener(KEY_UP_EVENT, keyUp, false);
       if(debug_module.debug) {
