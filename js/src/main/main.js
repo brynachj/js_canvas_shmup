@@ -1,6 +1,6 @@
 var debug_module = require('./debugControls.js');
 var player_module = require('./player.js');
-var enemy_service = require('./enemyService.js');
+var enemy_service = require('./enemy/enemyService.js');
 var draw_module = require('./draw.js');
 var pebble_module = require('./pebble.js');
 var pebble_pickup_module = require('./pebblePickup.js');

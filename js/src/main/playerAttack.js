@@ -1,5 +1,5 @@
 var player_drawer = require('./playerDrawer.js');
-var enemy_manager = require('./enemyManager.js');
+var enemy_manager = require('./enemy/enemyManager.js');
 var collision_detection_module = require('./collisionDetection.js');
 
 const IDLE = 'idle', ATTACKING = 'attacking', WINDING_DOWN = 'winding_down';

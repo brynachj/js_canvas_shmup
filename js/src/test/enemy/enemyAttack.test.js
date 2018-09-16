@@ -1,11 +1,11 @@
-const underTest = require('../main/enemyAttack.js')
-var playerModule = require('../main/player.js')
-var enemyDrawer = require('../main/enemyDrawer.js')
-var collisionDetectionModule = require('../main/collisionDetection.js')
+const underTest = require('../../main/enemy/enemyAttack.js')
+var playerModule = require('../../main/player.js')
+var enemyDrawer = require('../../main/enemy/enemyDrawer.js')
+var collisionDetectionModule = require('../../main/collisionDetection.js')
 
-jest.mock('../main/player.js')
-jest.mock('../main/enemyDrawer.js')
-jest.mock('../main/collisionDetection.js')
+jest.mock('../../main/player.js')
+jest.mock('../../main/enemy/enemyDrawer.js')
+jest.mock('../../main/collisionDetection.js')
 
 it('attack moves the given enemy animationFrame forward by 1 when it is less than 30', () => {
   let enemy = {attackAnimationFrame: 0, attacking: false, hitPlayer: false}

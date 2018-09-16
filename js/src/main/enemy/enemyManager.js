@@ -1,5 +1,5 @@
-var utilityModule = require('./utility.js')
-var pebblePickupModule = require('./pebblePickup.js')
+var utilityModule = require('../utility.js')
+var pebblePickupModule = require('../pebblePickup.js')
 
 const WIDTH = 34
 const HEIGHT = 36

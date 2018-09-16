@@ -1,4 +1,4 @@
-var drawModule = require('./draw.js')
+var drawModule = require('../draw.js')
 
 const UP = 'up'
 const DOWN = 'down'

@@ -1,7 +1,7 @@
 var enemyManager = require('./enemyManager.js')
-var playerModule = require('./player.js')
+var playerModule = require('../player.js')
 var enemyDrawer = require('./enemyDrawer.js')
-var collisionDetectionModule = require('./collisionDetection.js')
+var collisionDetectionModule = require('../collisionDetection.js')
 var enemyAttack = require('./enemyAttack.js')
 
 function getEnemies () {
