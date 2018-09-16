@@ -56,7 +56,7 @@ function attackKeyHandler (e) {
     playerModule.attack()
   }
   if (e.keyCode === RANGED_ATTACK_KEY_CODE && pebbleModule.getAmmo() > 0) {
-    pebbleModule.addToPebbles(playerModule.getPlayer().x + 2, playerModule.getPlayer().y + 13);
+    pebbleModule.addToPebbles(playerModule.getPlayer().x + 2, playerModule.getPlayer().y + 13)
     pebbleModule.takeOneFromAmmo()
   }
 }
