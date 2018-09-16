@@ -24,60 +24,60 @@ function enemyHitTest () { // should be in enemy classes
   })
 }
 
-    function updateEnemies() {
-      enemyHitTest();
-      enemy_service.updateEnemies();
-    }
+function updateEnemies() {
+  enemyHitTest();
+  enemy_service.updateEnemies();
+}
 
-    function pebblePickupCollision() {
-      pebble_pickup_module.pebblePickups.filter(p => collision_detection_module.collisionDetection(player_module.getPlayer(), p)).map(p => pickUpPebbles(p));
-    }
+function pebblePickupCollision() {
+  pebble_pickup_module.pebblePickups.filter(p => collision_detection_module.collisionDetection(player_module.getPlayer(), p)).map(p => pickUpPebbles(p));
+}
 
-    function pickUpPebbles(pebble) {
-      pebble_module.addToAmmo(3);
-      pebble_pickup_module.removeFromPebblePickups(pebble);
-    }
+function pickUpPebbles(pebble) {
+  pebble_module.addToAmmo(3);
+  pebble_pickup_module.removeFromPebblePickups(pebble);
+}
 
-    function updateText() {
-      if (!eventListener.getGameStarted()) {
-        hud_module.startScreen(draw_module.ctx);
-      }
-        hud_module.updateHud(draw_module.ctx);
-      if (!player_module.getAlive()) {
-        hud_module.deathScreen(draw_module.ctx);
-      }
-    }
+function updateText() {
+  if (!eventListener.getGameStarted()) {
+    hud_module.startScreen(draw_module.ctx);
+  }
+    hud_module.updateHud(draw_module.ctx);
+  if (!player_module.getAlive()) {
+    hud_module.deathScreen(draw_module.ctx);
+  }
+}
 
-    // Initialisations
-    enemy_service.addEnemy(Math.random() * 600, Math.random() * 600);
+// Initialisations
+enemy_service.addEnemy(Math.random() * 600, Math.random() * 600);
 
-    function clearCanvas() {
-      draw_module.ctx.clearRect(0,0,width,height);
-    }
+function clearCanvas() {
+  draw_module.ctx.clearRect(0,0,width,height);
+}
 
-    function init() {
-      canvas = document.getElementById(CANVAS);
-      draw_module.ctx = canvas.getContext('2d');
-      eventListener.initialiseEventListeners()
-      if(debug_module.debug) {
-        debug_module.addDebugControls();
-        debug_module.addCheckBoxEventListeners();
-      }
-      gameLoop();
-    }
+function init() {
+  canvas = document.getElementById(CANVAS);
+  draw_module.ctx = canvas.getContext('2d');
+  eventListener.initialiseEventListeners()
+  if(debug_module.debug) {
+    debug_module.addDebugControls();
+    debug_module.addCheckBoxEventListeners();
+  }
+  gameLoop();
+}
 
-    function gameLoop() {
-      clearCanvas();
-      if(player_module.getAlive() && eventListener.getGameStarted()){
-        updateEnemies();
-        pebblePickupCollision();
-        eventListener.updateGameWorld()
-        pebble_module.moveOnScreenPebbles();
-        pebble_pickup_module.drawPebblePickup(draw_module.ctx);
-        pebble_module.drawOnScreenPebble(draw_module.ctx);
-      }
-      updateText();
-      game = setTimeout(gameLoop, 1000 / 40);
-    }
+function gameLoop() {
+  clearCanvas();
+  if(player_module.getAlive() && eventListener.getGameStarted()){
+    updateEnemies();
+    pebblePickupCollision();
+    eventListener.updateGameWorld()
+    pebble_module.moveOnScreenPebbles();
+    pebble_pickup_module.drawPebblePickup(draw_module.ctx);
+    pebble_module.drawOnScreenPebble(draw_module.ctx);
+  }
+  updateText();
+  game = setTimeout(gameLoop, 1000 / 40);
+}
 
-    window.onload = init;
+window.onload = init;
