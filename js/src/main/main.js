@@ -10,20 +10,19 @@ var eventListener = require('./eventListener.js')
 
 const CANVAS = 'canvas'
 
-var canvas,
-    width = 600,
-    height = 600;
+var canvas
+var width = 600
+var height = 600
 
-    function enemyHitTest() { // should be in enemy classes
-      pebble_module.pebbles.map(pebble => {
-        enemy_service.getEnemies().filter(enemy => collision_detection_module.collisionDetection(pebble, enemy)).map(enemy => {
-            enemy_service.damageEnemy(enemy, 15);
-            pebble_module.removeFromPebbles(pebble); 
-            player_module.addExperience(10); // Should be tied to damaging the enemy - 1/5 of damage done
-            return;
-        });
-      });
-    }
+function enemyHitTest () { // should be in enemy classes
+  pebble_module.pebbles.map(pebble => {
+    enemy_service.getEnemies().filter(enemy => collision_detection_module.collisionDetection(pebble, enemy)).map(enemy => {
+      enemy_service.damageEnemy(enemy, 15)
+      pebble_module.removeFromPebbles(pebble)
+      player_module.addExperience(10) // Should be tied to damaging the enemy - 1/5 of damage done
+    })
+  })
+}
 
     function updateEnemies() {
       enemyHitTest();
