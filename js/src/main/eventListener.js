@@ -10,6 +10,7 @@ const LEFT_KEY_CODE = 37
 const UP_KEY_CODE = 38
 const RIGHT_KEY_CODE = 39
 const DOWN_KEY_CODE = 40
+const DASH_KEY_CODE = 32 // spacebar
 
 var rightKey = false
 var leftKey = false
@@ -17,6 +18,10 @@ var upKey = false
 var downKey = false
 
 var gameStarted = false
+
+function getGameStarted () {
+  return gameStarted
+}
 
 function initialiseEventListeners () {
   document.addEventListener(KEY_DOWN_EVENT, keyDown, false)
@@ -28,18 +33,14 @@ function updateGameWorld () {
 }
 
 function keyDown (e) {
-  if (e.keyCode === RIGHT_KEY_CODE) rightKey = true
-  else if (e.keyCode === LEFT_KEY_CODE) leftKey = true
-  if (e.keyCode === UP_KEY_CODE) upKey = true
-  else if (e.keyCode === DOWN_KEY_CODE) downKey = true
-  if (e.keyCode === MELEE_ATTACK_KEY_CODE & playerModule.getPlayer().state === 'idle') {
-    playerModule.attack()
-  }
-  if (e.keyCode === RANGED_ATTACK_KEY_CODE && pebbleModule.getAmmo() > 0) {
-    pebbleModule.addToPebbles(playerModule.getPlayer().x + 2, playerModule.getPlayer().y + 13)
-    pebbleModule.takeOneFromAmmo()
-  }
-  if (e.keyCode === 32) {
+  directionKeyHandler(e)
+  attackKeyHandler(e)
+  dashKeyHandler(e)
+  newGameKeyHandler(e)
+}
+
+function newGameKeyHandler (e) {
+  if (e.keyCode === DASH_KEY_CODE) {
     if (!gameStarted) {
       gameStarted = true
     }
@@ -48,6 +49,29 @@ function keyDown (e) {
       reset()
     }
   }
+}
+
+function attackKeyHandler (e) {
+  if (e.keyCode === MELEE_ATTACK_KEY_CODE & playerModule.getPlayer().state === 'idle') {
+    playerModule.attack()
+  }
+  if (e.keyCode === RANGED_ATTACK_KEY_CODE && pebbleModule.getAmmo() > 0) {
+    pebbleModule.addToPebbles(playerModule.getPlayer().x + 2, playerModule.getPlayer().y + 13);
+    pebbleModule.takeOneFromAmmo()
+  }
+}
+
+function dashKeyHandler (e) {
+  if (e.keyCode === DASH_KEY_CODE && gameStarted) {
+    console.log('dash')
+  }
+}
+
+function directionKeyHandler (e) {
+  if (e.keyCode === RIGHT_KEY_CODE) rightKey = true
+  else if (e.keyCode === LEFT_KEY_CODE) leftKey = true
+  if (e.keyCode === UP_KEY_CODE) upKey = true
+  else if (e.keyCode === DOWN_KEY_CODE) downKey = true
 }
 
 function reset () {
@@ -63,9 +87,6 @@ function keyUp (e) {
   else if (e.keyCode === 40) downKey = false
 }
 
-function getGameStarted () {
-  return gameStarted
-}
 module.exports = {
   initialiseEventListeners,
   updateGameWorld,
