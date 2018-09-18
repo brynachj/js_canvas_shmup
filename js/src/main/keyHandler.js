@@ -2,8 +2,6 @@ var playerModule = require('./player/player.js')
 var pebbleModule = require('./pebble.js')
 var enemyService = require('./enemy/enemyService.js')
 
-const KEY_DOWN_EVENT = 'keydown'
-const KEY_UP_EVENT = 'keyup'
 const RANGED_ATTACK_KEY_CODE = 88
 const MELEE_ATTACK_KEY_CODE = 67
 const LEFT_KEY_CODE = 37
@@ -21,11 +19,6 @@ var gameStarted = false
 
 function getGameStarted () {
   return gameStarted
-}
-
-function initialiseEventListeners () {
-  document.addEventListener(KEY_DOWN_EVENT, keyDown, false)
-  document.addEventListener(KEY_UP_EVENT, keyUp, false)
 }
 
 function updateGameWorld () {
@@ -88,7 +81,8 @@ function keyUp (e) {
 }
 
 module.exports = {
-  initialiseEventListeners,
+  keyDown,
+  keyUp,
   updateGameWorld,
   getGameStarted
 }

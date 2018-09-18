@@ -6,13 +6,16 @@ var pebbleModule = require('./pebble.js')
 var pebblePickupModule = require('./pebblePickup.js')
 var hudModule = require('./hud.js')
 var collisionDetectionModule = require('./collisionDetection.js')
-var eventListener = require('./eventListener.js')
+var keyHandler = require('./keyHandler.js')
 
 const CANVAS = 'canvas'
 
 var canvas
 var width = 600
 var height = 600
+
+const KEY_DOWN_EVENT = 'keydown'
+const KEY_UP_EVENT = 'keyup'
 
 function enemyHitTest () { // should be in enemy classes
   pebbleModule.pebbles.map(pebble => {
@@ -39,7 +42,7 @@ function pickUpPebbles (pebble) {
 }
 
 function updateText () {
-  if (!eventListener.getGameStarted()) {
+  if (!keyHandler.getGameStarted()) {
     hudModule.startScreen(drawModule.ctx)
   }
   hudModule.updateHud(drawModule.ctx)
@@ -58,7 +61,8 @@ function clearCanvas () {
 function init () {
   canvas = document.getElementById(CANVAS)
   drawModule.ctx = canvas.getContext('2d')
-  eventListener.initialiseEventListeners()
+  document.addEventListener(KEY_DOWN_EVENT, keyHandler.keyDown, false)
+  document.addEventListener(KEY_UP_EVENT, keyHandler.keyUp, false)
   if (debugModule.debug) {
     debugModule.addDebugControls()
     debugModule.addCheckBoxEventListeners()
@@ -68,10 +72,10 @@ function init () {
 
 function gameLoop () {
   clearCanvas()
-  if (playerModule.getAlive() && eventListener.getGameStarted()) {
+  if (playerModule.getAlive() && keyHandler.getGameStarted()) {
     updateEnemies()
     pebblePickupCollision()
-    eventListener.updateGameWorld()
+    keyHandler.updateGameWorld()
     pebbleModule.moveOnScreenPebbles()
     pebblePickupModule.drawPebblePickup(drawModule.ctx)
     pebbleModule.drawOnScreenPebble(drawModule.ctx)
