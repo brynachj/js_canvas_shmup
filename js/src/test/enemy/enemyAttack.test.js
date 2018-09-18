@@ -1,9 +1,9 @@
 const underTest = require('../../main/enemy/enemyAttack.js')
-var playerModule = require('../../main/player.js')
+var playerModule = require('../../main/player/player.js')
 var enemyDrawer = require('../../main/enemy/enemyDrawer.js')
 var collisionDetectionModule = require('../../main/collisionDetection.js')
 
-jest.mock('../../main/player.js')
+jest.mock('../../main/player/player.js')
 jest.mock('../../main/enemy/enemyDrawer.js')
 jest.mock('../../main/collisionDetection.js')
 

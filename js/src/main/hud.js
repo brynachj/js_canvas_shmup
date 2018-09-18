@@ -1,4 +1,4 @@
-var player_module = require('./player.js');
+var player_module = require('./player/player.js');
 var pebble_module = require('./pebble.js');
 
 const WIDTH = 600, HEIGHT = 600;

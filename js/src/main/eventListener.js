@@ -1,4 +1,4 @@
-var playerModule = require('./player.js')
+var playerModule = require('./player/player.js')
 var pebbleModule = require('./pebble.js')
 var enemyService = require('./enemy/enemyService.js')
 

@@ -1,4 +1,4 @@
-var draw_module = require('./draw.js');
+var draw_module = require('../draw.js');
 
 const UP = "up", DOWN = "down", LEFT = "left", RIGHT = "right";
 
