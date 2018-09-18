@@ -8,7 +8,7 @@ const LEFT_KEY_CODE = 37
 const UP_KEY_CODE = 38
 const RIGHT_KEY_CODE = 39
 const DOWN_KEY_CODE = 40
-const DASH_KEY_CODE = 32 // spacebar
+const DASH_KEY_CODE = 32
 
 var rightKey = false
 var leftKey = false
@@ -45,7 +45,7 @@ function newGameKeyHandler (e) {
 }
 
 function attackKeyHandler (e) {
-  if (e.keyCode === MELEE_ATTACK_KEY_CODE & playerModule.getPlayer().state === 'idle') {
+  if (e.keyCode === MELEE_ATTACK_KEY_CODE && playerModule.getPlayer().state === 'idle') {
     playerModule.attack()
   }
   if (e.keyCode === RANGED_ATTACK_KEY_CODE && pebbleModule.getAmmo() > 0) {
@@ -55,7 +55,7 @@ function attackKeyHandler (e) {
 }
 
 function dashKeyHandler (e) {
-  if (e.keyCode === DASH_KEY_CODE && gameStarted) {
+  if (e.keyCode === DASH_KEY_CODE && gameStarted && playerModule.getAlive()) {
     playerModule.dash()
   }
 }
@@ -74,10 +74,10 @@ function reset () {
 }
 
 function keyUp (e) {
-  if (e.keyCode === 39) rightKey = false
-  else if (e.keyCode === 37) leftKey = false
-  if (e.keyCode === 38) upKey = false
-  else if (e.keyCode === 40) downKey = false
+  if (e.keyCode === RIGHT_KEY_CODE) rightKey = false
+  else if (e.keyCode === LEFT_KEY_CODE) leftKey = false
+  if (e.keyCode === UP_KEY_CODE) upKey = false
+  else if (e.keyCode === DOWN_KEY_CODE) downKey = false
 }
 
 module.exports = {
