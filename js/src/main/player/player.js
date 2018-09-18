@@ -76,15 +76,20 @@ function attack() {
   player.state = ATTACKING;
 }
 
+function dash () {
+  console.log('dash')
+}
+
 module.exports = {
-  getPlayer : getPlayer,
-  resetPlayer : resetPlayer,
-  updateHealth : updateHealth,
-  getHealth : getHealth,
-  getAlive : getAlive,
-  setAlive : setAlive,
-  getExperience : getExperience,
-  addExperience : addExperience,
-  updatePlayer : updatePlayer,
-  attack : attack
+  getPlayer,
+  resetPlayer,
+  updateHealth,
+  getHealth,
+  getAlive,
+  setAlive,
+  getExperience,
+  addExperience,
+  updatePlayer,
+  attack,
+  dash
 }

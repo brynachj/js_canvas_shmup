@@ -63,7 +63,7 @@ function attackKeyHandler (e) {
 
 function dashKeyHandler (e) {
   if (e.keyCode === DASH_KEY_CODE && gameStarted) {
-    console.log('dash')
+    playerModule.dash()
   }
 }
 
