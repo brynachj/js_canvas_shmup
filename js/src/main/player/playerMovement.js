@@ -59,7 +59,13 @@ function movePlayer(player, rightKey, leftKey, upKey, downKey) {
   }
 }
 
+function dash (player, rightKey, leftKey, upKey, downKey) {
+  console.log('dashing')
+  player.state = IDLE
+}
+
 module.exports = {
     facePlayer,
-    movePlayer
+    movePlayer,
+    dash
 }

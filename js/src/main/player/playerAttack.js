@@ -4,6 +4,8 @@ var collision_detection_module = require('../collisionDetection.js');
 
 const IDLE = 'idle', ATTACKING = 'attacking', WINDING_DOWN = 'winding_down';
 
+let hitEnemyList = []
+
 function attack(player) {
     let animationFrame = player.attackAnimationFrame;
     switch(true) {

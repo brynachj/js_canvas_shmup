@@ -18,6 +18,7 @@ const RIGHT = 'right'
 const IDLE = 'idle'
 const ATTACKING = 'attacking'
 const WINDING_DOWN = 'winding_down'
+const DASHING = 'dashing'
 
 function createPlayer (x1, y1) {
   return {x: x1,
@@ -74,6 +75,9 @@ function updateHealth (value) {
 }
 
 function updatePlayer (rightKey, leftKey, upKey, downKey) {
+  if (player.state === DASHING) {
+    playerMovement.dash(player, rightKey, leftKey, upKey, downKey)
+  }
   if (player.state === ATTACKING || player.state === WINDING_DOWN) {
     playerAttack.attack(player)
   }
@@ -83,11 +87,15 @@ function updatePlayer (rightKey, leftKey, upKey, downKey) {
 }
 
 function attack () {
-  player.state = ATTACKING
+  if (player.state === IDLE) {
+    player.state = ATTACKING
+  }
 }
 
 function dash () {
-  console.log('dash')
+  if (player.state === IDLE) {
+    player.state = DASHING
+  }
 }
 
 module.exports = {
