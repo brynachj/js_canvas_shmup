@@ -7,6 +7,8 @@ const UP = 'up', DOWN = 'down', LEFT = 'left', RIGHT = 'right';
 // player states
 const IDLE = 'idle', ATTACKING = 'attacking', WINDING_DOWN = 'winding_down', ATTACK_WIDTH = 15;
 
+const DASH_LENGTH = 70
+
 function facePlayer(player, rightKey, leftKey, upKey, downKey) {
   if(upKey) {
     player.facing =  UP;
@@ -60,12 +62,25 @@ function movePlayer(player, rightKey, leftKey, upKey, downKey) {
 }
 
 function dash (player, rightKey, leftKey, upKey, downKey) {
-  console.log('dashing')
+  if (rightKey && (player.x + player.w) < (600 - DASH_LENGTH)) {
+    player.x += DASH_LENGTH
+    player.attack_box.x += DASH_LENGTH
+  } else if (leftKey && player.x > DASH_LENGTH) {
+    player.x -= DASH_LENGTH
+    player.attack_box.x -= DASH_LENGTH
+  }
+  if (upKey && player.y > DASH_LENGTH) {
+    player.y -= DASH_LENGTH
+    player.attack_box.y -= DASH_LENGTH
+  } else if (downKey && (player.y + player.h) < (500 - DASH_LENGTH)) {
+    player.y += DASH_LENGTH
+    player.attack_box.y += DASH_LENGTH
+  }
   player.state = IDLE
 }
 
 module.exports = {
-    facePlayer,
-    movePlayer,
-    dash
+  facePlayer,
+  movePlayer,
+  dash
 }
