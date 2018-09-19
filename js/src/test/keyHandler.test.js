@@ -16,7 +16,8 @@ jest.mock('../main/player/player.js', () => ({
   getAlive: jest.fn(),
   setAlive: jest.fn(),
   resetPlayer: jest.fn(),
-  dash: jest.fn()
+  dash: jest.fn(),
+  updatePlayer: jest.fn()
 }))
 
 afterEach(() => {
@@ -103,4 +104,66 @@ test('keyUp function exists', () => {
   let event = {keyCode: 100}
 
   underTest.keyUp(event)
+})
+
+test('updateGameWorld calls playerModule.updatePlayer with all arguments false by default', () => {
+  underTest.updateGameWorld()
+
+  expect(playerModule.updatePlayer).toBeCalledWith(false, false, false, false)
+})
+
+test('updateGameWorld calls playerModule.updatePlayer with first argument true if right key event has been pressed and then all false one right key is unpressed', () => {
+  let event = {keyCode: 39}
+
+  underTest.keyDown(event)
+  underTest.updateGameWorld()
+
+  expect(playerModule.updatePlayer).toBeCalledWith(true, false, false, false)
+
+  underTest.keyUp(event)
+  underTest.updateGameWorld()
+
+  expect(playerModule.updatePlayer).toBeCalledWith(false, false, false, false)
+})
+
+test('updateGameWorld calls playerModule.updatePlayer with second argument true if left key event has been pressed and then all false one right key is unpressed', () => {
+  let event = {keyCode: 37}
+
+  underTest.keyDown(event)
+  underTest.updateGameWorld()
+
+  expect(playerModule.updatePlayer).toBeCalledWith(false, true, false, false)
+
+  underTest.keyUp(event)
+  underTest.updateGameWorld()
+
+  expect(playerModule.updatePlayer).toBeCalledWith(false, false, false, false)
+})
+
+test('updateGameWorld calls playerModule.updatePlayer with third argument true if up key event has been pressed and then all false one right key is unpressed', () => {
+  let event = {keyCode: 38}
+
+  underTest.keyDown(event)
+  underTest.updateGameWorld()
+
+  expect(playerModule.updatePlayer).toBeCalledWith(false, false, true, false)
+
+  underTest.keyUp(event)
+  underTest.updateGameWorld()
+
+  expect(playerModule.updatePlayer).toBeCalledWith(false, false, false, false)
+})
+
+test('updateGameWorld calls playerModule.updatePlayer with final argument true if down key event has been pressed and then all false one right key is unpressed', () => {
+  let event = {keyCode: 40}
+
+  underTest.keyDown(event)
+  underTest.updateGameWorld()
+
+  expect(playerModule.updatePlayer).toBeCalledWith(false, false, false, true)
+
+  underTest.keyUp(event)
+  underTest.updateGameWorld()
+
+  expect(playerModule.updatePlayer).toBeCalledWith(false, false, false, false)
 })
