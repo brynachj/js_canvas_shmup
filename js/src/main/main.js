@@ -7,15 +7,11 @@ var pebblePickupModule = require('./pebblePickup.js')
 var hudModule = require('./hud.js')
 var collisionDetectionModule = require('./collisionDetection.js')
 var keyHandler = require('./keyHandler.js')
-
-const CANVAS = 'canvas'
+var constants = require('./constants.js')
 
 var canvas
 var width = 600
 var height = 600
-
-const KEY_DOWN_EVENT = 'keydown'
-const KEY_UP_EVENT = 'keyup'
 
 function enemyHitTest () { // should be in enemy classes
   pebbleModule.pebbles.map(pebble => {
@@ -59,10 +55,10 @@ function clearCanvas () {
 }
 
 function init () {
-  canvas = document.getElementById(CANVAS)
+  canvas = document.getElementById(constants.CANVAS)
   drawModule.ctx = canvas.getContext('2d')
-  document.addEventListener(KEY_DOWN_EVENT, keyHandler.keyDown, false)
-  document.addEventListener(KEY_UP_EVENT, keyHandler.keyUp, false)
+  document.addEventListener(constants.KEY_DOWN_EVENT, keyHandler.keyDown, false)
+  document.addEventListener(constants.KEY_UP_EVENT, keyHandler.keyUp, false)
   if (debugModule.debug) {
     debugModule.addDebugControls()
     debugModule.addCheckBoxEventListeners()

@@ -1,6 +1,7 @@
 var playerDrawer = require('./playerDrawer.js')
 var playerMovement = require('./playerMovement.js')
 var playerAttack = require('./playerAttack.js')
+var constants = require('../constants.js')
 
 const WIDTH = 20
 const HEIGHT = 26
@@ -11,26 +12,17 @@ let health
 let alive = true
 let experience = 0
 
-// player direction
-const RIGHT = 'right'
-
-// player states
-const IDLE = 'idle'
-const ATTACKING = 'attacking'
-const WINDING_DOWN = 'winding_down'
-const DASHING = 'dashing'
-
 function createPlayer (x1, y1) {
   return {x: x1,
     y: y1,
     w: WIDTH,
     h: HEIGHT,
     hitBoxColor: '#7cfc00',
-    state: IDLE,
+    state: constants.IDLE,
     attackAnimationFrame: 0,
     dashAnimationFrame: 0,
     attack_box: {x: x1 + WIDTH, y: y1 - 5, w: ATTACK_WIDTH, h: HEIGHT + 10, hitBoxColor: '#ff6961'},
-    facing: RIGHT}
+    facing: constants.RIGHT}
 }
 
 function getPlayer () {
@@ -76,10 +68,10 @@ function updateHealth (value) {
 }
 
 function updatePlayer (rightKey, leftKey, upKey, downKey) {
-  if (player.state === DASHING) {
+  if (player.state === constants.DASHING) {
     playerMovement.dash(player, rightKey, leftKey, upKey, downKey)
   }
-  if (player.state === ATTACKING || player.state === WINDING_DOWN) {
+  if (player.state === constants.ATTACKING || player.state === constants.WINDING_DOWN) {
     playerAttack.attack(player)
   }
   playerMovement.movePlayer(player, rightKey, leftKey, upKey, downKey)
@@ -88,14 +80,14 @@ function updatePlayer (rightKey, leftKey, upKey, downKey) {
 }
 
 function attack () {
-  if (player.state === IDLE) {
-    player.state = ATTACKING
+  if (player.state === constants.IDLE) {
+    player.state = constants.ATTACKING
   }
 }
 
 function dash () {
-  if (player.state === IDLE) {
-    player.state = DASHING
+  if (player.state === constants.IDLE) {
+    player.state = constants.DASHING
   }
 }
 

@@ -1,42 +1,30 @@
 var enemyManager = require('../enemy/enemyManager.js')
 var collisionDetectionModule = require('../collisionDetection.js')
-
-// player directions
-const UP = 'up'
-const DOWN = 'down'
-const LEFT = 'left'
-const RIGHT = 'right'
-
-// player states
-const IDLE = 'idle'
-const ATTACKING = 'attacking'
-const ATTACK_WIDTH = 15
-const MOVEMENT_SPEED = 5
-const DASH_PER_FRAME_LENGTH = 17
+var constants = require('../constants.js')
 
 function facePlayer (player, rightKey, leftKey, upKey, downKey) {
   if (upKey) {
-    player.facing = UP
-    player.attack_box = {x: player.x - 5, y: player.y - 10, w: player.w + 10, h: ATTACK_WIDTH, hitBoxColor: '#ff6961'}
+    player.facing = constants.UP
+    player.attack_box = {x: player.x - 5, y: player.y - 10, w: player.w + 10, h: constants.ATTACK_WIDTH, hitBoxColor: '#ff6961'}
   }
   if (downKey) {
-    player.facing = DOWN
-    player.attack_box = {x: player.x - 5, y: player.y + player.h, w: player.w + 10, h: ATTACK_WIDTH, hitBoxColor: '#ff6961'}
+    player.facing = constants.DOWN
+    player.attack_box = {x: player.x - 5, y: player.y + player.h, w: player.w + 10, h: constants.ATTACK_WIDTH, hitBoxColor: '#ff6961'}
   }
   if (rightKey) {
-    player.facing = RIGHT
-    player.attack_box = {x: player.x + player.w, y: player.y - 5, w: ATTACK_WIDTH, h: player.h + 10, hitBoxColor: '#ff6961'}
+    player.facing = constants.RIGHT
+    player.attack_box = {x: player.x + player.w, y: player.y - 5, w: constants.ATTACK_WIDTH, h: player.h + 10, hitBoxColor: '#ff6961'}
   }
   if (leftKey) {
-    player.facing = LEFT
-    player.attack_box = {x: player.x - 10, y: player.y - 5, w: ATTACK_WIDTH, h: player.h + 10, hitBoxColor: '#ff6961'}
+    player.facing = constants.LEFT
+    player.attack_box = {x: player.x - 10, y: player.y - 5, w: constants.ATTACK_WIDTH, h: player.h + 10, hitBoxColor: '#ff6961'}
   }
 }
 
 function movePlayer (player, rightKey, leftKey, upKey, downKey) {
   let colliding = enemyManager.enemies.filter(e => collisionDetectionModule.collisionDetection({x: player.x - 5, y: player.y - 5, w: player.w + 5, h: player.h + 5}, e))
-  let movementSpeed = (colliding.length > 0) ? 1 : MOVEMENT_SPEED
-  if (player.state !== ATTACKING) {
+  let movementSpeed = (colliding.length > 0) ? 1 : constants.MOVEMENT_SPEED
+  if (player.state !== constants.ATTACKING) {
     if (rightKey && (player.x + player.w) < 600) {
       player.x += movementSpeed
       player.attack_box.x += movementSpeed
@@ -55,22 +43,22 @@ function movePlayer (player, rightKey, leftKey, upKey, downKey) {
 
 function dash (player, rightKey, leftKey, upKey, downKey) {
   let animationFrame = player.dashAnimationFrame
-  if (rightKey && (player.x + player.w) < (600 - DASH_PER_FRAME_LENGTH)) {
-    player.x += DASH_PER_FRAME_LENGTH
-    player.attack_box.x += DASH_PER_FRAME_LENGTH
-  } else if (leftKey && player.x > DASH_PER_FRAME_LENGTH) {
-    player.x -= DASH_PER_FRAME_LENGTH
-    player.attack_box.x -= DASH_PER_FRAME_LENGTH
+  if (rightKey && (player.x + player.w) < (600 - constants.DASH_PER_FRAME_LENGTH)) {
+    player.x += constants.DASH_PER_FRAME_LENGTH
+    player.attack_box.x += constants.DASH_PER_FRAME_LENGTH
+  } else if (leftKey && player.x > constants.DASH_PER_FRAME_LENGTH) {
+    player.x -= constants.DASH_PER_FRAME_LENGTH
+    player.attack_box.x -= constants.DASH_PER_FRAME_LENGTH
   }
-  if (upKey && player.y > DASH_PER_FRAME_LENGTH) {
-    player.y -= DASH_PER_FRAME_LENGTH
-    player.attack_box.y -= DASH_PER_FRAME_LENGTH
-  } else if (downKey && (player.y + player.h) < (500 - DASH_PER_FRAME_LENGTH)) {
-    player.y += DASH_PER_FRAME_LENGTH
-    player.attack_box.y += DASH_PER_FRAME_LENGTH
+  if (upKey && player.y > constants.DASH_PER_FRAME_LENGTH) {
+    player.y -= constants.DASH_PER_FRAME_LENGTH
+    player.attack_box.y -= constants.DASH_PER_FRAME_LENGTH
+  } else if (downKey && (player.y + player.h) < (500 - constants.DASH_PER_FRAME_LENGTH)) {
+    player.y += constants.DASH_PER_FRAME_LENGTH
+    player.attack_box.y += constants.DASH_PER_FRAME_LENGTH
   }
   if (animationFrame === 3) {
-    player.state = IDLE
+    player.state = constants.IDLE
     player.dashAnimationFrame = 0
   }
   animationFrame += 1
