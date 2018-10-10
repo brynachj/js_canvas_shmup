@@ -28,6 +28,7 @@ function createPlayer (x1, y1) {
     hitBoxColor: '#7cfc00',
     state: IDLE,
     attackAnimationFrame: 0,
+    dashAnimationFrame: 0,
     attack_box: {x: x1 + WIDTH, y: y1 - 5, w: ATTACK_WIDTH, h: HEIGHT + 10, hitBoxColor: '#ff6961'},
     facing: RIGHT}
 }
