@@ -18,6 +18,11 @@ const ATTACK_WIDTH = 15
 const MOVEMENT_SPEED = 5
 const DASH_PER_FRAME_LENGTH = 17
 
+// enemy properties
+const ENEMY_WIDTH = 34
+const ENEMY_HEIGHT = 36
+const ENEMY_SPEED = 3
+
 module.exports = {
   CANVAS,
   KEY_DOWN_EVENT,
@@ -32,5 +37,8 @@ module.exports = {
   DASHING,
   ATTACK_WIDTH,
   MOVEMENT_SPEED,
-  DASH_PER_FRAME_LENGTH
+  DASH_PER_FRAME_LENGTH,
+  ENEMY_WIDTH,
+  ENEMY_HEIGHT,
+  ENEMY_SPEED
 }

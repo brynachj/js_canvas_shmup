@@ -1,9 +1,5 @@
 var drawModule = require('../draw.js')
-
-const UP = 'up'
-const DOWN = 'down'
-const LEFT = 'left'
-const RIGHT = 'right'
+var constants = require('../constants.js')
 
 /* global Image */
 
@@ -26,16 +22,16 @@ let attackSpriteDown = new Image()
 attackSpriteDown.src = 'images/enemy_sword_down.png'
 
 function drawIdle (enemy) {
-  if (enemy.facing === LEFT) {
+  if (enemy.facing === constants.LEFT) {
     drawModule.drawSprite(enemySpriteLeft, enemy, drawModule.ctx)
   }
-  if (enemy.facing === RIGHT) {
+  if (enemy.facing === constants.RIGHT) {
     drawModule.drawSprite(enemySpriteRight, enemy, drawModule.ctx)
   }
-  if (enemy.facing === UP) {
+  if (enemy.facing === constants.UP) {
     drawModule.drawSprite(enemySpriteUp, enemy, drawModule.ctx)
   }
-  if (enemy.facing === DOWN) {
+  if (enemy.facing === constants.DOWN) {
     drawModule.drawSprite(enemySpriteDown, enemy, drawModule.ctx)
   }
   if (window.drawHitboxes) {
@@ -47,32 +43,32 @@ function drawIdle (enemy) {
 
 function drawWindUpAttack (enemy) {
   drawIdle(enemy)
-  if (enemy.facing === LEFT) {
+  if (enemy.facing === constants.LEFT) {
     drawModule.drawSprite(attackSpriteLeft, {x: enemy.x, y: enemy.y + enemy.h / 2}, drawModule.ctx)
   }
-  if (enemy.facing === RIGHT) {
+  if (enemy.facing === constants.RIGHT) {
     drawModule.drawSprite(attackSpriteRight, {x: enemy.x, y: enemy.y + enemy.h / 2}, drawModule.ctx)
   }
-  if (enemy.facing === UP) {
+  if (enemy.facing === constants.UP) {
     drawModule.drawSprite(attackSpriteUp, {x: enemy.x + enemy.w / 2, y: enemy.y}, drawModule.ctx)
   }
-  if (enemy.facing === DOWN) {
+  if (enemy.facing === constants.DOWN) {
     drawModule.drawSprite(attackSpriteDown, {x: enemy.x + enemy.w / 2, y: enemy.y}, drawModule.ctx)
   }
 }
 
 function drawAttacking (enemy) {
   drawIdle(enemy)
-  if (enemy.facing === LEFT) {
+  if (enemy.facing === constants.LEFT) {
     drawModule.drawSprite(attackSpriteLeft, {x: enemy.x - 30, y: enemy.y + enemy.h / 2}, drawModule.ctx)
   }
-  if (enemy.facing === RIGHT) {
+  if (enemy.facing === constants.RIGHT) {
     drawModule.drawSprite(attackSpriteRight, {x: enemy.x + 30, y: enemy.y + enemy.h / 2}, drawModule.ctx)
   }
-  if (enemy.facing === UP) {
+  if (enemy.facing === constants.UP) {
     drawModule.drawSprite(attackSpriteUp, {x: enemy.x + enemy.w / 2, y: enemy.y - 30}, drawModule.ctx)
   }
-  if (enemy.facing === DOWN) {
+  if (enemy.facing === constants.DOWN) {
     drawModule.drawSprite(attackSpriteDown, {x: enemy.x + enemy.w / 2, y: enemy.y + 30}, drawModule.ctx)
   }
 }

@@ -1,14 +1,6 @@
 var utilityModule = require('../utility.js')
 var pebblePickupModule = require('../pebblePickup.js')
-
-const WIDTH = 34
-const HEIGHT = 36
-const SPEED = 3
-
-const UP = 'up'
-const DOWN = 'down'
-const LEFT = 'left'
-const RIGHT = 'right'
+var constants = require('../constants.js')
 
 let enemies = []
 
@@ -24,17 +16,17 @@ function createEnemy (x1, y1) {
   return {id: utilityModule.newId(enemies),
     x: x1,
     y: y1,
-    w: WIDTH,
-    h: HEIGHT,
-    speed: SPEED,
+    w: constants.ENEMY_WIDTH,
+    h: constants.ENEMY_HEIGHT,
+    speed: constants.ENEMY_SPEED,
     hitBoxColor: '#ff0000',
     health: 100,
-    player_detection_box: {x: x1 - 60, y: y1 - 60, w: WIDTH + 120, h: HEIGHT + 120, hitBoxColor: '#ff8c00'},
-    player_aggro_box: {x: x1 - 80, y: y1 - 80, w: WIDTH + 160, h: HEIGHT + 160, hitBoxColor: '#ffff00'},
-    player_attack_box: {x: x1 - 10, y: y1 - 5, w: 10, h: HEIGHT + 10, hitBoxColor: '#ff6961'},
+    player_detection_box: {x: x1 - 60, y: y1 - 60, w: constants.ENEMY_WIDTH + 120, h: constants.ENEMY_HEIGHT + 120, hitBoxColor: '#ff8c00'},
+    player_aggro_box: {x: x1 - 80, y: y1 - 80, w: constants.ENEMY_WIDTH + 160, h: constants.ENEMY_HEIGHT + 160, hitBoxColor: '#ffff00'},
+    player_attack_box: {x: x1 - 10, y: y1 - 5, w: 10, h: constants.ENEMY_HEIGHT + 10, hitBoxColor: '#ff6961'},
     aggro: false,
     attacking: false,
-    facing: LEFT,
+    facing: constants.LEFT,
     attackAnimationFrame: 0,
     hitPlayer: false
   }
@@ -50,19 +42,19 @@ function updateEnemyDirection (enemy, target) {
   let yDifference = (enemy.y + enemy.h / 2) - (target.y + target.h / 2)
   if (xDifference * xDifference > yDifference * yDifference) {
     if (xDifference > 0) {
-      enemy.facing = LEFT
-      enemy.player_attack_box = {x: enemy.x - 10, y: enemy.y - 5, w: 10, h: HEIGHT + 10, hitBoxColor: '#ff6961'}
+      enemy.facing = constants.LEFT
+      enemy.player_attack_box = {x: enemy.x - 10, y: enemy.y - 5, w: 10, h: constants.ENEMY_HEIGHT + 10, hitBoxColor: '#ff6961'}
     } else {
-      enemy.facing = RIGHT
-      enemy.player_attack_box = {x: enemy.x + enemy.w, y: enemy.y - 5, w: 10, h: HEIGHT + 10, hitBoxColor: '#ff6961'}
+      enemy.facing = constants.RIGHT
+      enemy.player_attack_box = {x: enemy.x + enemy.w, y: enemy.y - 5, w: 10, h: constants.ENEMY_HEIGHT + 10, hitBoxColor: '#ff6961'}
     }
   } else {
     if (yDifference > 0) {
-      enemy.facing = UP
-      enemy.player_attack_box = {x: enemy.x - 5, y: enemy.y - 10, w: WIDTH + 10, h: 10, hitBoxColor: '#ff6961'}
+      enemy.facing = constants.UP
+      enemy.player_attack_box = {x: enemy.x - 5, y: enemy.y - 10, w: constants.ENEMY_WIDTH + 10, h: 10, hitBoxColor: '#ff6961'}
     } else {
-      enemy.facing = DOWN
-      enemy.player_attack_box = {x: enemy.x - 5, y: enemy.y + enemy.h, w: WIDTH + 10, h: 10, hitBoxColor: '#ff6961'}
+      enemy.facing = constants.DOWN
+      enemy.player_attack_box = {x: enemy.x - 5, y: enemy.y + enemy.h, w: constants.ENEMY_WIDTH + 10, h: 10, hitBoxColor: '#ff6961'}
     }
   }
 }
