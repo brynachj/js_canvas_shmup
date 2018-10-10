@@ -14,6 +14,10 @@ const IDLE = 'idle'
 const ATTACKING = 'attacking'
 const WINDING_DOWN = 'winding_down'
 const DASHING = 'dashing'
+
+// player properties
+const PLAYER_WIDTH = 20
+const PLAYER_HEIGHT = 26
 const ATTACK_WIDTH = 15
 const MOVEMENT_SPEED = 5
 const DASH_PER_FRAME_LENGTH = 17
@@ -35,6 +39,8 @@ module.exports = {
   ATTACKING,
   WINDING_DOWN,
   DASHING,
+  PLAYER_WIDTH,
+  PLAYER_HEIGHT,
   ATTACK_WIDTH,
   MOVEMENT_SPEED,
   DASH_PER_FRAME_LENGTH,

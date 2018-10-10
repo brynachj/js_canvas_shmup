@@ -3,10 +3,6 @@ var playerMovement = require('./playerMovement.js')
 var playerAttack = require('./playerAttack.js')
 var constants = require('../constants.js')
 
-const WIDTH = 20
-const HEIGHT = 26
-const ATTACK_WIDTH = 15
-
 let player
 let health
 let alive = true
@@ -15,13 +11,13 @@ let experience = 0
 function createPlayer (x1, y1) {
   return {x: x1,
     y: y1,
-    w: WIDTH,
-    h: HEIGHT,
+    w: constants.PLAYER_WIDTH,
+    h: constants.PLAYER_HEIGHT,
     hitBoxColor: '#7cfc00',
     state: constants.IDLE,
     attackAnimationFrame: 0,
     dashAnimationFrame: 0,
-    attack_box: {x: x1 + WIDTH, y: y1 - 5, w: ATTACK_WIDTH, h: HEIGHT + 10, hitBoxColor: '#ff6961'},
+    attack_box: {x: x1 + constants.PLAYER_WIDTH, y: y1 - 5, w: constants.ATTACK_WIDTH, h: constants.PLAYER_HEIGHT + 10, hitBoxColor: '#ff6961'},
     facing: constants.RIGHT}
 }
 

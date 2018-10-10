@@ -1,8 +1,7 @@
 var player_drawer = require('./playerDrawer.js');
 var enemy_manager = require('../enemy/enemyManager.js');
 var collision_detection_module = require('../collisionDetection.js');
-
-const IDLE = 'idle', ATTACKING = 'attacking', WINDING_DOWN = 'winding_down';
+var constants = require('../constants.js')
 
 let hitEnemyList = []
 
@@ -21,7 +20,7 @@ function attack(player) {
       case animationFrame === 19:
         windingDown(player);
         hitEnemyList = [];
-        player.state = IDLE;
+        player.state = constants.IDLE;
         break;
     }
     animationFrame += 1;
@@ -30,12 +29,12 @@ function attack(player) {
   
   function windingUp(player){
     player_drawer.drawWindUpAttack(player);
-    player.state = ATTACKING;
+    player.state = constants.ATTACKING;
   }
   
   function attacking(player) {
     player_drawer.drawAttacking(player);
-    player.state = ATTACKING;
+    player.state = constants.ATTACKING;
     enemy_manager.enemies.filter(e => collision_detection_module.collisionDetection(player.attack_box, e))
                           .filter(e => hitEnemyList.indexOf(e) < 0).map(e => hitEnemy(e));
   }
@@ -46,7 +45,7 @@ function attack(player) {
   }
   
   function windingDown(player) {
-    player.state = WINDING_DOWN;
+    player.state = constants.WINDING_DOWN;
   }
 
   module.exports = {
