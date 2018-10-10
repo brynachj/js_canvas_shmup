@@ -1,5 +1,8 @@
 const CANVAS = 'canvas'
 
+const CANVAS_WIDTH = 600
+const CANVAS_HEIGHT = 600
+
 const KEY_DOWN_EVENT = 'keydown'
 const KEY_UP_EVENT = 'keyup'
 
@@ -29,6 +32,8 @@ const ENEMY_SPEED = 3
 
 module.exports = {
   CANVAS,
+  CANVAS_WIDTH,
+  CANVAS_HEIGHT,
   KEY_DOWN_EVENT,
   KEY_UP_EVENT,
   UP,
