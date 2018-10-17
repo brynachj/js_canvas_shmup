@@ -1,5 +1,6 @@
 var drawModule = require('./draw.js')
 var utilityModule = require('./utility.js')
+var constants = require('./constants.js')
 
 const WIDTH = 4
 const HEIGHT = 5
@@ -28,8 +29,8 @@ function addToAmmo (i) {
   ammo += i
 }
 
-function addToPebbles (x, y) {
-  pebbles.push(createPebble(x, y))
+function addToPebbles (character) {
+  pebbles.push(createPebble(character))
 }
 
 function removeFromPebbles (pebble) {
@@ -37,8 +38,8 @@ function removeFromPebbles (pebble) {
   pebbles.splice(index, 1)
 }
 
-function createPebble (x1, y1) {
-  return {id: utilityModule.newId(pebbles), x: x1, y: y1, w: WIDTH, h: HEIGHT, hitBoxColor: '#00bfff'}
+function createPebble (character) {
+  return {id: utilityModule.newId(pebbles), x: character.x, y: character.y, w: WIDTH, h: HEIGHT, direction: character.facing, hitBoxColor: '#00bfff'}
 }
 
 function moveOnScreenPebbles () {
@@ -46,9 +47,21 @@ function moveOnScreenPebbles () {
 }
 
 function movePebble (pebble) {
-  if (pebble.x < 600 + pebbleSprite.width) {
-    pebble.x += 10
-  } else {
+  switch (pebble.direction) {
+    case constants.RIGHT:
+      pebble.x += 10
+      break
+    case constants.LEFT:
+      pebble.x -= 10
+      break
+    case constants.DOWN:
+      pebble.y += 10
+      break
+    case constants.UP:
+      pebble.y -= 10
+      break
+  }
+  if (pebble.x > constants.CANVAS_WIDTH + pebbleSprite.width || pebble.x < 0 || pebble.y > constants.CANVAS_HEIGHT || pebble.y < 0) {
     removeFromPebbles(pebble)
   }
 }

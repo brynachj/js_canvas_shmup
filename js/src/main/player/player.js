@@ -2,6 +2,7 @@ var playerDrawer = require('./playerDrawer.js')
 var playerMovement = require('./playerMovement.js')
 var playerAttack = require('./playerAttack.js')
 var constants = require('../constants.js')
+var pebbleModule = require('../pebble.js')
 
 let player
 let health
@@ -81,6 +82,10 @@ function attack () {
   }
 }
 
+function rangedAttack () {
+  pebbleModule.addToPebbles(player)
+}
+
 function dash () {
   if (player.state === constants.IDLE) {
     player.state = constants.DASHING
@@ -98,5 +103,6 @@ module.exports = {
   addExperience,
   updatePlayer,
   attack,
+  rangedAttack,
   dash
 }
