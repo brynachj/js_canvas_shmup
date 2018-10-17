@@ -16,12 +16,12 @@ function getAmmo () {
   return ammo
 }
 
-function resetPebbleAmmo () {
-  ammo = 10
-}
-
 function takeOneFromAmmo () {
   ammo--
+}
+
+function resetPebbleAmmo () {
+  ammo = 10
 }
 
 function addToAmmo (i) {
