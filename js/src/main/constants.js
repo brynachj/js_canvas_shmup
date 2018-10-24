@@ -30,6 +30,9 @@ const ENEMY_WIDTH = 34
 const ENEMY_HEIGHT = 36
 const ENEMY_SPEED = 3
 
+const WALL_WIDTH = 50
+const WALL_HEIGHT = 50
+
 module.exports = {
   CANVAS,
   CANVAS_WIDTH,
@@ -51,5 +54,7 @@ module.exports = {
   DASH_PER_FRAME_LENGTH,
   ENEMY_WIDTH,
   ENEMY_HEIGHT,
-  ENEMY_SPEED
+  ENEMY_SPEED,
+  WALL_WIDTH,
+  WALL_HEIGHT
 }
