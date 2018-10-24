@@ -13,6 +13,11 @@ function addWall (xArg, yArg) {
   })
 }
 
+function getWalls () {
+  return walls
+}
+
 module.exports = {
-  addWall
+  addWall,
+  getWalls
 }
