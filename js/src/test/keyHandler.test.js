@@ -13,6 +13,7 @@ jest.mock('../main/enemy/enemyService.js', () => ({
 jest.mock('../main/player/player.js', () => ({
   getPlayer: jest.fn(),
   attack: jest.fn(),
+  rangedAttack: jest.fn(),
   getAlive: jest.fn(),
   setAlive: jest.fn(),
   resetPlayer: jest.fn(),
@@ -96,7 +97,7 @@ test('keyDown calls pebbleModule functions when the event passed in is the range
   expect(underTest.getGameStarted()).toBe(true)
   underTest.keyDown(event)
 
-  expect(pebbleModule.addToPebbles).toBeCalled()
+  expect(playerModule.rangedAttack).toBeCalled()
   expect(pebbleModule.takeOneFromAmmo).toBeCalled()
 })
 

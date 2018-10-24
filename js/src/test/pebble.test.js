@@ -38,3 +38,13 @@ test('addToAmmo adds the number parameterised into the function to ammo', () => 
 
   expect(underTest.getAmmo()).toBe(31)
 })
+
+test('addToPebbles pushes a new item onto the pebbles array', () => {
+  expect(underTest.pebbles.length).toBe(0)
+
+  let character = {x: 0, y: 0, facing: 'RIGHT'}
+
+  underTest.addToPebbles(character)
+
+  expect(underTest.pebbles.length).toBe(1)
+})
