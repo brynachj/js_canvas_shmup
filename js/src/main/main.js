@@ -8,6 +8,7 @@ var hudModule = require('./hud.js')
 var collisionDetectionModule = require('./collisionDetection.js')
 var keyHandler = require('./keyHandler.js')
 var constants = require('./constants.js')
+var wallService = require('./wallService.js')
 
 var canvas
 var width = 600
@@ -49,6 +50,8 @@ function updateText () {
 
 // Initialisations
 enemyService.addEnemy(Math.random() * 600, Math.random() * 600)
+
+wallService.addWall(Math.random() * 600, Math.random() * 600)
 
 function clearCanvas () {
   drawModule.ctx.clearRect(0, 0, width, height)
