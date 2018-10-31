@@ -30,8 +30,8 @@ const ENEMY_WIDTH = 34
 const ENEMY_HEIGHT = 36
 const ENEMY_SPEED = 3
 
-const WALL_WIDTH = 50
-const WALL_HEIGHT = 50
+const WALL_WIDTH = 20
+const WALL_HEIGHT = 20
 
 module.exports = {
   CANVAS,
