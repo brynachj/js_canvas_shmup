@@ -1,4 +1,5 @@
 var enemyManager = require('../enemy/enemyManager.js')
+var wallService = require('../wallService.js')
 var collisionDetectionModule = require('../collisionDetection.js')
 var constants = require('../constants.js')
 
@@ -25,20 +26,24 @@ function movePlayer (player, rightKey, leftKey, upKey, downKey) {
   let collidingWithEnemy = enemyManager.enemies.filter(e => collisionDetectionModule.collisionDetection({x: player.x - 5, y: player.y - 5, w: player.w + 5, h: player.h + 5}, e))
   let movementSpeed = (collidingWithEnemy.length > 0) ? 1 : constants.MOVEMENT_SPEED
   if (player.state !== constants.ATTACKING) {
-    if (rightKey && (player.x + player.w) < 600) {
+    if (rightKey && (player.x + player.w) < 600 && detectWallCollision({ x: player.x + 5, y: player.y, w: player.w, h: player.h }).length === 0) {
       player.x += movementSpeed
       player.attack_box.x += movementSpeed
-    } else if (leftKey && player.x > 0) {
+    } else if (leftKey && player.x > 0 && detectWallCollision({x: player.x - 15, y: player.y, w: player.w, h: player.h}).length === 0) {
       player.x -= movementSpeed
       player.attack_box.x -= movementSpeed
-    } if (upKey && player.y > 0) {
+    } if (upKey && player.y > 0 && detectWallCollision({x: player.x, y: player.y - 15, w: player.w, h: player.h}).length === 0) {
       player.y -= movementSpeed
       player.attack_box.y -= movementSpeed
-    } else if (downKey && (player.y + player.h) < 600) {
+    } else if (downKey && (player.y + player.h) < 600 && detectWallCollision({x: player.x, y: player.y + 5, w: player.w, h: player.h}).length === 0) {
       player.y += movementSpeed
       player.attack_box.y += movementSpeed
     }
   }
+}
+
+function detectWallCollision (hitBox) {
+  return wallService.getWalls().filter(w => collisionDetectionModule.collisionDetection(hitBox, w))
 }
 
 function dash (player, rightKey, leftKey, upKey, downKey) {
