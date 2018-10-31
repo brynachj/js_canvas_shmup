@@ -22,8 +22,8 @@ function facePlayer (player, rightKey, leftKey, upKey, downKey) {
 }
 
 function movePlayer (player, rightKey, leftKey, upKey, downKey) {
-  let colliding = enemyManager.enemies.filter(e => collisionDetectionModule.collisionDetection({x: player.x - 5, y: player.y - 5, w: player.w + 5, h: player.h + 5}, e))
-  let movementSpeed = (colliding.length > 0) ? 1 : constants.MOVEMENT_SPEED
+  let collidingWithEnemy = enemyManager.enemies.filter(e => collisionDetectionModule.collisionDetection({x: player.x - 5, y: player.y - 5, w: player.w + 5, h: player.h + 5}, e))
+  let movementSpeed = (collidingWithEnemy.length > 0) ? 1 : constants.MOVEMENT_SPEED
   if (player.state !== constants.ATTACKING) {
     if (rightKey && (player.x + player.w) < 600) {
       player.x += movementSpeed
