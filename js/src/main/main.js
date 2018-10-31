@@ -78,6 +78,7 @@ function gameLoop () {
     pebbleModule.moveOnScreenPebbles()
     pebblePickupModule.drawPebblePickup(drawModule.ctx)
     pebbleModule.drawOnScreenPebble(drawModule.ctx)
+    wallService.updateWalls()
   }
   updateText()
   setTimeout(gameLoop, 1000 / 40)
