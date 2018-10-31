@@ -2,6 +2,8 @@ var utilityModule = require('./utility.js')
 var constants = require('./constants.js')
 var drawService = require('./draw.js')
 
+/* global Image */
+
 let walls = []
 let wallSprite = new Image()
 wallSprite.src = 'images/wall.png'
