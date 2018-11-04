@@ -29,10 +29,10 @@ function movePlayer (player, rightKey, leftKey, upKey, downKey) {
     if (rightKey && (player.x + player.w) < 600 && detectWallCollision({ x: player.x + 5, y: player.y, w: player.w, h: player.h }).length === 0) {
       player.x += movementSpeed
       player.attack_box.x += movementSpeed
-    } else if (leftKey && player.x > 0 && detectWallCollision({x: player.x - 15, y: player.y, w: player.w, h: player.h}).length === 0) {
+    } else if (leftKey && player.x > 0 && detectWallCollision({x: player.x - 5, y: player.y, w: player.w, h: player.h}).length === 0) {
       player.x -= movementSpeed
       player.attack_box.x -= movementSpeed
-    } if (upKey && player.y > 0 && detectWallCollision({x: player.x, y: player.y - 15, w: player.w, h: player.h}).length === 0) {
+    } if (upKey && player.y > 0 && detectWallCollision({x: player.x, y: player.y - 5, w: player.w, h: player.h}).length === 0) {
       player.y -= movementSpeed
       player.attack_box.y -= movementSpeed
     } else if (downKey && (player.y + player.h) < 600 && detectWallCollision({x: player.x, y: player.y + 5, w: player.w, h: player.h}).length === 0) {
@@ -49,17 +49,21 @@ function detectWallCollision (hitBox) {
 function dash (player, rightKey, leftKey, upKey, downKey) {
   let animationFrame = player.dashAnimationFrame
   if (rightKey && (player.x + player.w) < (600 - constants.DASH_PER_FRAME_LENGTH)) {
-    player.x += constants.DASH_PER_FRAME_LENGTH
+    let dashLength = detectWallCollision({ x: player.x + constants.DASH_PER_FRAME_LENGTH, y: player.y, w: player.w, h: player.h }).length === 0 ? constants.DASH_PER_FRAME_LENGTH : 0
+    player.x += dashLength
     player.attack_box.x += constants.DASH_PER_FRAME_LENGTH
   } else if (leftKey && player.x > constants.DASH_PER_FRAME_LENGTH) {
-    player.x -= constants.DASH_PER_FRAME_LENGTH
+    let dashLength = detectWallCollision({ x: player.x - constants.DASH_PER_FRAME_LENGTH, y: player.y, w: player.w, h: player.h }).length === 0 ? constants.DASH_PER_FRAME_LENGTH : 0
+    player.x -= dashLength
     player.attack_box.x -= constants.DASH_PER_FRAME_LENGTH
   }
   if (upKey && player.y > constants.DASH_PER_FRAME_LENGTH) {
-    player.y -= constants.DASH_PER_FRAME_LENGTH
+    let dashLength = detectWallCollision({ x: player.x, y: player.y - constants.DASH_PER_FRAME_LENGTH, w: player.w, h: player.h }).length === 0 ? constants.DASH_PER_FRAME_LENGTH : 0
+    player.y -= dashLength
     player.attack_box.y -= constants.DASH_PER_FRAME_LENGTH
   } else if (downKey && (player.y + player.h) < (500 - constants.DASH_PER_FRAME_LENGTH)) {
-    player.y += constants.DASH_PER_FRAME_LENGTH
+    let dashLength = detectWallCollision({ x: player.x, y: player.y + constants.DASH_PER_FRAME_LENGTH, w: player.w, h: player.h }).length === 0 ? constants.DASH_PER_FRAME_LENGTH : 0
+    player.y += dashLength
     player.attack_box.y += constants.DASH_PER_FRAME_LENGTH
   }
   if (animationFrame === 3) {
