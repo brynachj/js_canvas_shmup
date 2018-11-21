@@ -44,7 +44,7 @@ function playerEnemyDeaggroBoxCollision () {
 }
 
 function wallInFrontOfPlayer (enemy) {
-  return wallService.getWalls().filter(wall => collisionDetectionModule.isObjectBetweenTwoObjects(wall, enemy, playerModule.getPlayer())).length > 0
+  return (wallService.getWalls().filter(wall => collisionDetectionModule.isObjectBetweenTwoObjects(wall, enemy, playerModule.getPlayer())) > 0)
 }
 
 function moveEnemies () {
