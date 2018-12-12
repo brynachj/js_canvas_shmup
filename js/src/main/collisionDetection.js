@@ -4,10 +4,18 @@ function collisionDetection (firstThing, secondThing) {
 }
 
 function isObjectBetweenTwoObjects (objectBetween, firstObject, secondObject) {
-  return (objectBetween.y > firstObject.y && objectBetween.y < secondObject.y) ||
-  (objectBetween.y < firstObject.y && objectBetween.y > secondObject.y) ||
+  return topWallCollisionCheck(objectBetween, firstObject, secondObject) ||
   (objectBetween.x > firstObject.x && objectBetween.x < secondObject.x) ||
   (objectBetween.x < firstObject.x && objectBetween.x > secondObject.x)
+}
+
+function topWallCollisionCheck (objectBetween, firstObject, secondObject) {
+  let firstObjectCenterY = firstObject.y + (firstObject.h / 2)
+  let secondObjectCenterY = secondObject.y + (secondObject.h / 2)
+  let firstObjectCenterX = firstObject.x + (firstObject.w / 2)
+  let secondObjectCenterX = secondObject.x + (secondObject.w / 2)
+  return (objectBetween.y > firstObjectCenterY && objectBetween.y < secondObjectCenterY && firstObjectCenterX > objectBetween.x && firstObjectCenterX < (objectBetween.x + objectBetween.w) && secondObjectCenterX > objectBetween.x && secondObjectCenterX < (objectBetween.x + objectBetween.w)) ||
+    (objectBetween.y < firstObjectCenterY && objectBetween.y > secondObjectCenterY && firstObjectCenterX > objectBetween.x && firstObjectCenterX < (objectBetween.x + objectBetween.w) && secondObjectCenterX > objectBetween.x && secondObjectCenterX < (objectBetween.x + objectBetween.w))
 }
 
 // // The following methods are taken from:
