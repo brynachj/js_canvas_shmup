@@ -5,9 +5,7 @@ function collisionDetection (firstThing, secondThing) {
 
 function isObjectBetweenTwoObjects (objectBetween, firstObject, secondObject) {
   return (objectBetween.y > firstObject.y && objectBetween.y < secondObject.y) ||
-  (objectBetween.y < firstObject.y && objectBetween.y > secondObject.y) ||
-  (objectBetween.x > firstObject.x && objectBetween.x < secondObject.x) ||
-  (objectBetween.x < firstObject.x && objectBetween.x > secondObject.x)
+  (objectBetween.y < firstObject.y && objectBetween.y > secondObject.y)
 }
 
 // // The following methods are taken from:

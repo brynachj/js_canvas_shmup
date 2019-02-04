@@ -27,39 +27,19 @@ test('collisionDetection returns false when two objects dont collide', () => {
 // ----1--
 // -OOOOO-
 // ----2--
-test('isObjectBetweenTwoObjects returns true when object is vertically between other two objects\' center points', () => {
-  let objectBetween = {x: 2, y: 2, w: 5, h: 1}
-  let firstObject = {x: 5, y: 1, w: 1, h: 1}
-  let secondObject = {x: 5, y: 3, w: 1, h: 1}
-  expect(underTest.isObjectBetweenTwoObjects(objectBetween, firstObject, secondObject)).toBe(true)
-})
-
-// -1--2--
-// -OOOOO-
-// -------
-test('isObjectBetweenTwoObjects returns false when object is below other two objects\' center points', () => {
-  let objectBetween = {x: 2, y: 2, w: 5, h: 1}
-  let firstObject = {x: 2, y: 1, w: 1, h: 1}
-  let secondObject = {x: 5, y: 1, w: 1, h: 1}
-  expect(underTest.isObjectBetweenTwoObjects(objectBetween, firstObject, secondObject)).toBe(false)
-})
-
-// -------
-// -OOOOO-
-// -1--2--
-test('isObjectBetweenTwoObjects returns false when object is above other two objects\' center points', () => {
-  let objectBetween = {x: 2, y: 2, w: 5, h: 1}
-  let firstObject = {x: 2, y: 3, w: 1, h: 1}
-  let secondObject = {x: 5, y: 3, w: 1, h: 1}
-  expect(underTest.isObjectBetweenTwoObjects(objectBetween, firstObject, secondObject)).toBe(false)
-})
-
-// --O----
-// 1-O-2--
-// --O----
-test('isObjectBetweenTwoObjects returns true when object is horizontally between other two objects\' center points', () => {
-  let objectBetween = {x: 3, y: 1, w: 1, h: 3}
-  let firstObject = {x: 1, y: 2, w: 1, h: 1}
+test('isObjectBetweenTwoObjects returns true when object is between other two objects center points', () => {
+  let objectBetween = {x: 2, y: 1, w: 5, h: 1}
+  let firstObject = {x: 5, y: 0, w: 1, h: 1}
   let secondObject = {x: 5, y: 2, w: 1, h: 1}
   expect(underTest.isObjectBetweenTwoObjects(objectBetween, firstObject, secondObject)).toBe(true)
+})
+
+// -1--2--
+// -OOOOO-
+// ------
+test('isObjectBetweenTwoObjects returns false when object is below other two objects\' center points', () => {
+  let objectBetween = {x: 2, y: 1, w: 5, h: 1}
+  let firstObject = {x: 2, y: 0, w: 1, h: 1}
+  let secondObject = {x: 5, y: 0, w: 1, h: 1}
+  expect(underTest.isObjectBetweenTwoObjects(objectBetween, firstObject, secondObject)).toBe(false)
 })
