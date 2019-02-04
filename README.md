@@ -1,4 +1,4 @@
-**Shoot 'em up/Beat 'em up**
+**Maze game with enemies**
 
 **Using just HTML Canvas and plain JS**
 
