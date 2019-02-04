@@ -1,9 +1,11 @@
 const underTest = require('../../main/enemy/enemyManager.js')
 var utilityModule = require('../../main/utility.js')
 var pebblePickupModule = require('../../main/pebblePickup.js')
+var wallService = require('../../main/wallService.js')
 
 jest.mock('../../main/utility.js')
 jest.mock('../../main/pebblePickup.js')
+jest.mock('../../main/wallService.js')
 const mockMath = Object.create(global.Math)
 
 const WIDTH = 34
@@ -12,6 +14,7 @@ const HEIGHT = 36
 beforeEach(() => {
   while (underTest.getEnemies().length !== 0) {
     underTest.removeEnemy(underTest.getEnemies()[0])
+    wallService.getWalls.mockImplementation(() => { return [] })
   }
 })
 
@@ -272,6 +275,62 @@ test('moveEnemyToward moves the enemy down 3 and left 3 if the y axis of the giv
 
   expect(underTest.getEnemies()[0].x).toBe(47)
   expect(underTest.getEnemies()[0].y).toBe(53)
+})
+
+test('moveEnemyToward does not move the enemy left if the x axis of the given target is left of the enemy x coordinate but the y coordinates match but there is a wall to its left', () => {
+  underTest.addEnemy(50, 50)
+  let enemy = underTest.getEnemies()[0]
+  let target = {x: 0, y: 50, w: WIDTH, h: HEIGHT}
+  let wall = {id: 1, x: 20, y: 45, w: 30, h: 30}
+
+  wallService.getWalls.mockImplementation(() => { return [wall] })
+
+  underTest.moveEnemyToward(enemy, target)
+
+  expect(underTest.getEnemies()[0].x).toBe(50)
+  expect(underTest.getEnemies()[0].y).toBe(50)
+})
+
+test('moveEnemyToward does not move the enemy right if the x axis of the given target is right of the enemy x coordinate but the y coordinates match but there is a wall to its right', () => {
+  underTest.addEnemy(50, 50)
+  let enemy = underTest.getEnemies()[0]
+  let target = {x: 120, y: 50, w: WIDTH, h: HEIGHT}
+  let wall = {id: 1, x: 80, y: 45, w: 30, h: 30}
+
+  wallService.getWalls.mockImplementation(() => { return [wall] })
+
+  underTest.moveEnemyToward(enemy, target)
+
+  expect(underTest.getEnemies()[0].x).toBe(50)
+  expect(underTest.getEnemies()[0].y).toBe(50)
+})
+
+test('moveEnemyToward does not move the enemy down if the y axis of the given target is below the enemy y coordinate but the x coordinates match but there is a wall below it', () => {
+  underTest.addEnemy(50, 50)
+  let enemy = underTest.getEnemies()[0]
+  let target = {x: 50, y: 120, w: WIDTH, h: HEIGHT}
+  let wall = {id: 1, x: 45, y: 80, w: 30, h: 30}
+
+  wallService.getWalls.mockImplementation(() => { return [wall] })
+
+  underTest.moveEnemyToward(enemy, target)
+
+  expect(underTest.getEnemies()[0].x).toBe(50)
+  expect(underTest.getEnemies()[0].y).toBe(50)
+})
+
+test('moveEnemyToward does not move the enemy left if the y axis of the given target is above the enemy y coordinate but the x coordinates match but there is a wall above it', () => {
+  underTest.addEnemy(50, 50)
+  let enemy = underTest.getEnemies()[0]
+  let target = {x: 50, y: 0, w: WIDTH, h: HEIGHT}
+  let wall = {id: 1, x: 45, y: 20, w: 30, h: 30}
+
+  wallService.getWalls.mockImplementation(() => { return [wall] })
+
+  underTest.moveEnemyToward(enemy, target)
+
+  expect(underTest.getEnemies()[0].x).toBe(50)
+  expect(underTest.getEnemies()[0].y).toBe(50)
 })
 
 test('hitEnemy takes the given amount of health from the given enemy', () => {
