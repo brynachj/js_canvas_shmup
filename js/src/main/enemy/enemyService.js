@@ -3,7 +3,6 @@ var playerModule = require('../player/player.js')
 var enemyDrawer = require('./enemyDrawer.js')
 var collisionDetectionModule = require('../collisionDetection.js')
 var enemyAttack = require('./enemyAttack.js')
-var wallService = require('../wallService.js')
 
 function getEnemies () {
   return enemyManager.getEnemies()
@@ -23,7 +22,7 @@ function removeAndReplaceEnemy (enemyToRemove) {
 }
 
 function updateEnemies () {
-  playerEnemyDetectionBoxCollision().filter(enemy => !wallInFrontOfPlayer(enemy)).map(enemy => (enemy.aggro = true))
+  playerEnemyDetectionBoxCollision()
   playerEnemyAttackBoxCollision()
   playerEnemyDeaggroBoxCollision()
   moveEnemies()
@@ -32,7 +31,7 @@ function updateEnemies () {
 }
 
 function playerEnemyDetectionBoxCollision () {
-  return getEnemies().filter(enemy => collisionDetectionModule.collisionDetection(playerModule.getPlayer(), enemy.player_detection_box))
+  getEnemies().filter(enemy => collisionDetectionModule.collisionDetection(playerModule.getPlayer(), enemy.player_detection_box)).map(enemy => (enemy.aggro = true))
 }
 
 function playerEnemyAttackBoxCollision () {
@@ -41,10 +40,6 @@ function playerEnemyAttackBoxCollision () {
 
 function playerEnemyDeaggroBoxCollision () {
   getEnemies().filter(enemy => !collisionDetectionModule.collisionDetection(playerModule.getPlayer(), enemy.player_aggro_box)).map(enemy => (enemy.aggro = false))
-}
-
-function wallInFrontOfPlayer (enemy) {
-  return wallService.getWalls().filter(wall => collisionDetectionModule.isObjectBetweenTwoObjects(wall, enemy, playerModule.getPlayer())).length > 0
 }
 
 function moveEnemies () {

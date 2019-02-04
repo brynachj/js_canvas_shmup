@@ -3,11 +3,6 @@ function collisionDetection(firstThing, secondThing){
   firstThing.y < secondThing.y + secondThing.h && firstThing.h + firstThing.y > secondThing.y;
 }
 
-function isObjectBetweenTwoObjects (objectBetween, firstObject, secondObject) {
-  return true
-}
-
 module.exports = {
-  collisionDetection,
-  isObjectBetweenTwoObjects
+  collisionDetection : collisionDetection
 }
