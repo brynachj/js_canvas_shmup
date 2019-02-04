@@ -1,6 +1,8 @@
 var utilityModule = require('../utility.js')
 var pebblePickupModule = require('../pebblePickup.js')
 var constants = require('../constants.js')
+var wallService = require('../wallService.js')
+var collisionDetectionModule = require('../collisionDetection.js')
 
 let enemies = []
 
@@ -61,18 +63,22 @@ function updateEnemyDirection (enemy, target) {
 
 function moveEnemyToward (enemy, target) {
   updateEnemyDirection(enemy, target)
-  if (enemy.x < target.x) {
+  if (enemy.x < target.x && detectWallCollision({ x: enemy.x + 5, y: enemy.y, w: enemy.w, h: enemy.h }).length === 0) {
     move(enemy, enemy.speed, 0)
   }
-  if (enemy.x > target.x) {
+  if (enemy.x > target.x && detectWallCollision({x: enemy.x - 5, y: enemy.y, w: enemy.w, h: enemy.h}).length === 0) {
     move(enemy, -enemy.speed, 0)
   }
-  if (enemy.y < target.y) {
+  if (enemy.y < target.y && detectWallCollision({x: enemy.x, y: enemy.y + 5, w: enemy.w, h: enemy.h}).length === 0) {
     move(enemy, 0, enemy.speed)
   }
-  if (enemy.y > target.y) {
+  if (enemy.y > target.y && detectWallCollision({x: enemy.x, y: enemy.y - 5, w: enemy.w, h: enemy.h}).length === 0) {
     move(enemy, 0, -enemy.speed)
   }
+}
+
+function detectWallCollision (hitBox) {
+  return wallService.getWalls().filter(w => collisionDetectionModule.collisionDetection(hitBox, w))
 }
 
 function move (enemy, moveX, moveY) {
