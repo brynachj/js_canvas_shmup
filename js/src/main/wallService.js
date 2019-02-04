@@ -9,10 +9,12 @@ let wallSprite = new Image()
 wallSprite.src = 'images/wall.png'
 
 function addWall (xArg, yArg) {
+  let xCoord = Math.floor(xArg / 30) * 30
+  let yCoord = Math.floor(yArg / 30) * 30
   walls.push({
     id: utilityModule.newId(walls),
-    x: xArg,
-    y: yArg,
+    x: xCoord,
+    y: yCoord,
     w: constants.WALL_WIDTH,
     h: constants.WALL_HEIGHT
   })
