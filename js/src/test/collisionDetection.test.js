@@ -46,26 +46,6 @@ test('isObjectBetweenTwoObjects returns true when object is vertically between o
   expect(underTest.isObjectBetweenTwoObjects(objectBetween, firstObject, secondObject)).toBe(true)
 })
 
-// -1111---
-// --OOOOO-
-// -2222---
-test('isObjectBetweenTwoObjects returns true when object is vertically between other two objects\' center points and two objects are wide', () => {
-  let objectBetween = {x: 3, y: 2, w: 5, h: 1}
-  let firstObject = {x: 2, y: 1, w: 4, h: 1}
-  let secondObject = {x: 2, y: 5, w: 4, h: 1}
-  expect(underTest.isObjectBetweenTwoObjects(objectBetween, firstObject, secondObject)).toBe(true)
-})
-
-// -1111---
-// -----OO-
-// -2222---
-test('isObjectBetweenTwoObjects returns false when object is not vertically between other two objects\' center points and two objects are wide', () => {
-  let objectBetween = {x: 6, y: 2, w: 2, h: 1}
-  let firstObject = {x: 2, y: 1, w: 4, h: 1}
-  let secondObject = {x: 2, y: 5, w: 4, h: 1}
-  expect(underTest.isObjectBetweenTwoObjects(objectBetween, firstObject, secondObject)).toBe(false)
-})
-
 // -1--2--
 // -OOOOO-
 // -------
@@ -115,3 +95,4 @@ test('isObjectBetweenTwoObjects returns false when object is right of other two 
   let secondObject = {x: 1, y: 3, w: 1, h: 1}
   expect(underTest.isObjectBetweenTwoObjects(objectBetween, firstObject, secondObject)).toBe(false)
 })
+
