@@ -8,7 +8,7 @@ afterEach(() => {
 })
 
 test('addWall adds the a wall at the given coordinates to the global list of walls', () => {
-  let wall = {id: 1, x: 2, y: 3, w: 30, h: 30}
+  let wall = {id: 1, x: 2, y: 3, w: 20, h: 20}
 
   underTest.addWall(2, 3)
 
