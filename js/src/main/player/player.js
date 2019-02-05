@@ -32,7 +32,7 @@ function getPlayer () {
 function resetPlayer () {
   experience = 0
   health = 100
-  player = createPlayer(10, 287)
+  player = createPlayer(100, 287)
 }
 
 function getHealth () {

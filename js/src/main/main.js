@@ -9,6 +9,7 @@ var collisionDetectionModule = require('./shared/collisionDetection.js')
 var keyHandler = require('./keyHandler.js')
 var constants = require('./shared/constants.js')
 var wallService = require('./wallService.js')
+var levelOne = require('./levels/one.js')
 
 var canvas
 var width = 600
@@ -57,8 +58,24 @@ function init () {
   drawModule.ctx = canvas.getContext('2d')
   document.addEventListener(constants.KEY_DOWN_EVENT, keyHandler.keyDown, false)
   document.addEventListener(constants.KEY_UP_EVENT, keyHandler.keyUp, false)
-  enemyService.addEnemy(Math.random() * 600, Math.random() * 600)
-  wallService.addWall(Math.random() * 600, Math.random() * 600)
+  if (levelOne.level) {
+    let rowNumber = 0
+    levelOne.level.map(row => {
+      let columnNumber = 0
+      row.map(column => {
+        if (column === 1) {
+          wallService.addWall(columnNumber * 30, rowNumber * 30)
+        } else if (column === 2) {
+          enemyService.addEnemy(columnNumber * 30, rowNumber * 30)
+        }
+        columnNumber++
+      })
+      rowNumber++
+    })
+  } else {
+    enemyService.addEnemy(Math.random() * 600, Math.random() * 600)
+    wallService.addWall(Math.random() * 600, Math.random() * 600)
+  }
   if (debugModule.debug) {
     debugModule.addDebugControls()
     debugModule.addCheckBoxEventListeners()
