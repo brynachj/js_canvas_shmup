@@ -1,4 +1,4 @@
-const underTest = require('../main/pebble.js')
+const underTest = require('../main/pebble/pebble.js')
 
 afterEach(() => {
   underTest.resetPebbleAmmo()

@@ -1,10 +1,10 @@
 const underTest = require('../../main/enemy/enemyManager.js')
-var utilityModule = require('../../main/utility.js')
-var pebblePickupModule = require('../../main/pebblePickup.js')
+var utilityModule = require('../../main/shared/utility.js')
+var pebblePickupModule = require('../../main/pebble/pebblePickup.js')
 var wallService = require('../../main/wallService.js')
 
-jest.mock('../../main/utility.js')
-jest.mock('../../main/pebblePickup.js')
+jest.mock('../../main/shared/utility.js')
+jest.mock('../../main/pebble/pebblePickup.js')
 jest.mock('../../main/wallService.js')
 const mockMath = Object.create(global.Math)
 

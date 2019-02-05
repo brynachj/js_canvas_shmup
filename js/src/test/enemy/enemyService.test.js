@@ -2,13 +2,13 @@ const underTest = require('../../main/enemy/enemyService.js')
 var enemyManager = require('../../main/enemy/enemyManager.js')
 var playerModule = require('../../main/player/player.js')
 var enemyDrawer = require('../../main/enemy/enemyDrawer.js')
-var collisionDetectionModule = require('../../main/collisionDetection.js')
+var collisionDetectionModule = require('../../main/shared/collisionDetection.js')
 var enemyAttack = require('../../main/enemy/enemyAttack.js')
 
 jest.mock('../../main/enemy/enemyManager.js')
 jest.mock('../../main/player/player.js')
 jest.mock('../../main/enemy/enemyDrawer.js')
-jest.mock('../../main/collisionDetection.js')
+jest.mock('../../main/shared/collisionDetection.js')
 jest.mock('../../main/enemy/enemyAttack')
 
 test('addEnemy calls the enemyManager addEnemy function', () => {
