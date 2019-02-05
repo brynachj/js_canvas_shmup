@@ -1,2 +1,3 @@
 /js/src/target/*.js
 /coverage/*
+/js/src/main/levels/*.js
