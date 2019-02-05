@@ -48,11 +48,6 @@ function updateText () {
   }
 }
 
-// Initialisations
-enemyService.addEnemy(Math.random() * 600, Math.random() * 600)
-
-wallService.addWall(Math.random() * 600, Math.random() * 600)
-
 function clearCanvas () {
   drawModule.ctx.clearRect(0, 0, width, height)
 }
@@ -62,6 +57,8 @@ function init () {
   drawModule.ctx = canvas.getContext('2d')
   document.addEventListener(constants.KEY_DOWN_EVENT, keyHandler.keyDown, false)
   document.addEventListener(constants.KEY_UP_EVENT, keyHandler.keyUp, false)
+  enemyService.addEnemy(Math.random() * 600, Math.random() * 600)
+  wallService.addWall(Math.random() * 600, Math.random() * 600)
   if (debugModule.debug) {
     debugModule.addDebugControls()
     debugModule.addCheckBoxEventListeners()
