@@ -1,58 +1,60 @@
-var draw_module = require('../draw.js');
+var drawModule = require('../draw.js')
 var constants = require('../constants.js')
 
-player_sprite_right = new Image();
-player_sprite_right.src = 'images/player_sprite_right.png';
-player_sprite_left = new Image();
-player_sprite_left.src = 'images/player_sprite_left.png';
-player_sprite_up = new Image();
-player_sprite_up.src = 'images/player_sprite_up.png';
-player_sprite_down = new Image();
-player_sprite_down.src = 'images/player_sprite_down.png';
+/* global Image */
 
-attack_sprite_left = new Image();
-attack_sprite_left.src = 'images/enemy_sword_left.png';
-attack_sprite_right = new Image();
-attack_sprite_right.src = 'images/enemy_sword_right.png';
-attack_sprite_up = new Image();
-attack_sprite_up.src = 'images/enemy_sword_up.png';
-attack_sprite_down = new Image();
-attack_sprite_down.src = 'images/enemy_sword_down.png';
+let playerSpriteRight = new Image()
+playerSpriteRight.src = 'images/player_sprite_right.png'
+let playerSpriteLeft = new Image()
+playerSpriteLeft.src = 'images/player_sprite_left.png'
+let playerSpriteUp = new Image()
+playerSpriteUp.src = 'images/player_sprite_up.png'
+let playerSpriteDown = new Image()
+playerSpriteDown.src = 'images/player_sprite_down.png'
 
-function drawAttacking(player) {
-    if(player.facing === constants.RIGHT){draw_module.drawSprite(attack_sprite_right, {x: player.x+30, y: player.y+player.h/2}, draw_module.ctx);}
-    if(player.facing === constants.LEFT){draw_module.drawSprite(attack_sprite_left, {x: player.x-30, y: player.y+player.h/2}, draw_module.ctx);}
-    if(player.facing === constants.UP){draw_module.drawSprite(attack_sprite_up, {x: player.x + player.w/2, y: player.y-30}, draw_module.ctx);}
-    if(player.facing === constants.DOWN){draw_module.drawSprite(attack_sprite_down, {x: player.x + player.w/2, y: player.y+30}, draw_module.ctx);}
+let attackSpriteLeft = new Image()
+attackSpriteLeft.src = 'images/enemy_sword_left.png'
+let attackSpriteRight = new Image()
+attackSpriteRight.src = 'images/enemy_sword_right.png'
+let attackSpriteUp = new Image()
+attackSpriteUp.src = 'images/enemy_sword_up.png'
+let attackSpriteDown = new Image()
+attackSpriteDown.src = 'images/enemy_sword_down.png'
+
+function drawAttacking (player) {
+  if (player.facing === constants.RIGHT) { drawModule.drawSprite(attackSpriteRight, { x: player.x + 30, y: player.y + player.h / 2 }, drawModule.ctx) }
+  if (player.facing === constants.LEFT) { drawModule.drawSprite(attackSpriteLeft, { x: player.x - 30, y: player.y + player.h / 2 }, drawModule.ctx) }
+  if (player.facing === constants.UP) { drawModule.drawSprite(attackSpriteUp, { x: player.x + player.w / 2, y: player.y - 30 }, drawModule.ctx) }
+  if (player.facing === constants.DOWN) { drawModule.drawSprite(attackSpriteDown, { x: player.x + player.w / 2, y: player.y + 30 }, drawModule.ctx) }
+}
+
+function drawWindUpAttack (player) {
+  if (player.facing === constants.RIGHT) { drawModule.drawSprite(attackSpriteRight, { x: player.x, y: player.y + player.h / 2 }, drawModule.ctx) }
+  if (player.facing === constants.LEFT) { drawModule.drawSprite(attackSpriteLeft, { x: player.x, y: player.y + player.h / 2 }, drawModule.ctx) }
+  if (player.facing === constants.UP) { drawModule.drawSprite(attackSpriteUp, { x: player.x + player.w / 2, y: player.y }, drawModule.ctx) }
+  if (player.facing === constants.DOWN) { drawModule.drawSprite(attackSpriteDown, { x: player.x + player.w / 2, y: player.y }, drawModule.ctx) }
+}
+
+function drawPlayer (player) {
+  if (player.facing === constants.RIGHT) {
+    drawModule.drawSprite(playerSpriteRight, player, drawModule.ctx)
   }
-
-  function drawWindUpAttack(player) {
-    if(player.facing === constants.RIGHT){draw_module.drawSprite(attack_sprite_right, {x: player.x, y: player.y+player.h/2}, draw_module.ctx);}
-    if(player.facing === constants.LEFT){draw_module.drawSprite(attack_sprite_left, {x: player.x, y: player.y+player.h/2}, draw_module.ctx);}
-    if(player.facing === constants.UP){draw_module.drawSprite(attack_sprite_up, {x: player.x + player.w/2, y: player.y}, draw_module.ctx);}
-    if(player.facing === constants.DOWN){draw_module.drawSprite(attack_sprite_down, {x: player.x + player.w/2, y: player.y}, draw_module.ctx);}
+  if (player.facing === constants.LEFT) {
+    drawModule.drawSprite(playerSpriteLeft, player, drawModule.ctx)
   }
-
-  function drawPlayer(player) {
-    if(player.facing === constants.RIGHT){
-      draw_module.drawSprite(player_sprite_right, player, draw_module.ctx);
-    }
-    if(player.facing === constants.LEFT){
-      draw_module.drawSprite(player_sprite_left, player, draw_module.ctx);
-    }
-    if(player.facing === constants.DOWN){
-      draw_module.drawSprite(player_sprite_down, player, draw_module.ctx);
-    }
-    if(player.facing === constants.UP){
-      draw_module.drawSprite(player_sprite_up, player, draw_module.ctx);
-    }
-    if (window.drawHitboxes) {
-      draw_module.drawHitbox(player.attack_box, draw_module.ctx);
-    }
+  if (player.facing === constants.DOWN) {
+    drawModule.drawSprite(playerSpriteDown, player, drawModule.ctx)
   }
-
-  module.exports = {
-      drawPlayer,
-      drawAttacking,
-      drawWindUpAttack
+  if (player.facing === constants.UP) {
+    drawModule.drawSprite(playerSpriteUp, player, drawModule.ctx)
   }
+  if (window.drawHitboxes) {
+    drawModule.drawHitbox(player.attack_box, drawModule.ctx)
+  }
+}
+
+module.exports = {
+  drawPlayer,
+  drawAttacking,
+  drawWindUpAttack
+}
