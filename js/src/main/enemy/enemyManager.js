@@ -1,8 +1,8 @@
-var utilityModule = require('../utility.js')
-var pebblePickupModule = require('../pebblePickup.js')
-var constants = require('../constants.js')
+var utilityModule = require('../shared/utility.js')
+var pebblePickupModule = require('../pebble/pebblePickup.js')
+var constants = require('../shared/constants.js')
 var wallService = require('../wallService.js')
-var collisionDetectionModule = require('../collisionDetection.js')
+var collisionDetectionModule = require('../shared/collisionDetection.js')
 
 let enemies = []
 

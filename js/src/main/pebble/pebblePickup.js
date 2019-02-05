@@ -1,5 +1,5 @@
-var drawModule = require('./draw.js')
-var utilityModule = require('./utility.js')
+var drawModule = require('../draw.js')
+var utilityModule = require('../shared/utility.js')
 
 const WIDTH = 10
 const HEIGHT = 13

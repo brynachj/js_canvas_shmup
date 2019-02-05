@@ -1,6 +1,6 @@
-var drawModule = require('./draw.js')
-var utilityModule = require('./utility.js')
-var constants = require('./constants.js')
+var drawModule = require('../draw.js')
+var utilityModule = require('../shared/utility.js')
+var constants = require('../shared/constants.js')
 
 const WIDTH = 4
 const HEIGHT = 5

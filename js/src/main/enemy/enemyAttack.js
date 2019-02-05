@@ -1,6 +1,6 @@
 var playerModule = require('../player/player.js')
 var enemyDrawer = require('./enemyDrawer.js')
-var collisionDetectionModule = require('../collisionDetection.js')
+var collisionDetectionModule = require('../shared/collisionDetection.js')
 
 function attack (enemy) {
   let animationFrame = enemy.attackAnimationFrame

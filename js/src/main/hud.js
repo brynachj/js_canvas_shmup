@@ -1,6 +1,6 @@
 var playerModule = require('./player/player.js')
-var pebbleModule = require('./pebble.js')
-var constants = require('./constants')
+var pebbleModule = require('./pebble/pebble.js')
+var constants = require('./shared/constants')
 
 function updateHud (ctx) {
   ctx.font = 'bold 18px Arial'

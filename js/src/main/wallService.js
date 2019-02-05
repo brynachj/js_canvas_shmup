@@ -1,5 +1,5 @@
-var utilityModule = require('./utility.js')
-var constants = require('./constants.js')
+var utilityModule = require('./shared/utility.js')
+var constants = require('./shared/constants.js')
 var drawService = require('./draw.js')
 
 /* global Image */

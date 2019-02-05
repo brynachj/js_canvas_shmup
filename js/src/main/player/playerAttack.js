@@ -1,7 +1,7 @@
 var playerDrawer = require('./playerDrawer.js')
 var enemyManager = require('../enemy/enemyManager.js')
-var collisionDetection = require('../collisionDetection.js')
-var constants = require('../constants.js')
+var collisionDetection = require('../shared/collisionDetection.js')
+var constants = require('../shared/constants.js')
 
 let hitEnemyList = []
 

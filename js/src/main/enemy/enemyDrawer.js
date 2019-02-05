@@ -1,5 +1,5 @@
 var drawModule = require('../draw.js')
-var constants = require('../constants.js')
+var constants = require('../shared/constants.js')
 
 /* global Image */
 

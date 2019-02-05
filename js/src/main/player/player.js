@@ -1,8 +1,8 @@
 var playerDrawer = require('./playerDrawer.js')
 var playerMovement = require('./playerMovement.js')
 var playerAttack = require('./playerAttack.js')
-var constants = require('../constants.js')
-var pebbleModule = require('../pebble.js')
+var constants = require('../shared/constants.js')
+var pebbleModule = require('../pebble/pebble.js')
 
 let player
 let health

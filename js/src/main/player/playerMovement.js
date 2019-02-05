@@ -1,7 +1,7 @@
 var enemyManager = require('../enemy/enemyManager.js')
 var wallService = require('../wallService.js')
-var collisionDetectionModule = require('../collisionDetection.js')
-var constants = require('../constants.js')
+var collisionDetectionModule = require('../shared/collisionDetection.js')
+var constants = require('../shared/constants.js')
 
 function facePlayer (player, rightKey, leftKey, upKey, downKey) {
   if (upKey) {
