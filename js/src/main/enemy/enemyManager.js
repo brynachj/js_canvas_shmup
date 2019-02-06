@@ -102,6 +102,10 @@ function hitEnemy (enemy, damage) {
   }
 }
 
+function removeAllEnemies () {
+  enemies.splice(0, enemies.length)
+}
+
 module.exports = {
   enemies,
   getEnemies,
@@ -109,5 +113,6 @@ module.exports = {
   removeEnemy,
   updateEnemyDirection,
   moveEnemyToward,
-  hitEnemy
+  hitEnemy,
+  removeAllEnemies
 }
