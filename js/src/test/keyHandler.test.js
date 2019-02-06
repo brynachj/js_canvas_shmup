@@ -85,8 +85,6 @@ test('keyDown calls playerModule setAlive(true) and all the reset functions when
 
   expect(playerModule.setAlive).toBeCalledWith(true)
   expect(pebbleModule.resetPebbleAmmo).toBeCalled()
-  expect(enemyService.getEnemies).toBeCalled()
-  expect(enemyService.removeAndReplaceEnemy).toBeCalledWith(enemy)
 })
 
 test('keyDown calls pebbleModule functions when the event passed in is the ranged attack key and the player is not alive', () => {
