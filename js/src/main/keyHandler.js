@@ -1,6 +1,7 @@
 var playerModule = require('./player/player.js')
 var pebbleModule = require('./pebble/pebble.js')
 var enemyService = require('./enemy/enemyService.js')
+var levelService = require('./levels/levelService.js')
 
 const RANGED_ATTACK_KEY_CODE = 88
 const MELEE_ATTACK_KEY_CODE = 67
@@ -36,10 +37,11 @@ function newGameKeyHandler (e) {
   if (e.keyCode === DASH_KEY_CODE) {
     if (!gameStarted) {
       gameStarted = true
-    }
-    if (!playerModule.getAlive()) {
+    } else if (!playerModule.getAlive()) {
       playerModule.setAlive(true)
       reset()
+    } else if (enemyService.getEnemies().length === 0) {
+      levelService.initialiseNextLevel()
     }
   }
 }

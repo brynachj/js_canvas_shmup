@@ -62,7 +62,9 @@ test('keyDown does not call playerModule dash and sets gameStarted to true when 
 
 test('keyDown does call playerModule dash when the event passed in is the dash key and the game has started', () => {
   let event = {keyCode: 32}
+  let enemy = {}
   playerModule.getAlive.mockImplementation(() => true)
+  enemyService.getEnemies.mockImplementation(() => [enemy])
 
   underTest.keyDown(event)
   expect(underTest.getGameStarted()).toBe(true)
