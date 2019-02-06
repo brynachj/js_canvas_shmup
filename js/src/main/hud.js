@@ -27,8 +27,14 @@ function deathScreen (ctx) {
   ctx.fillText('Press SPACE to continue', 252, (constants.CANVAS_HEIGHT / 2) + 35)
 }
 
+function nextLevelScreen (ctx, levelNumber) {
+  ctx.fillText('Congratulations, you beat level ' + levelNumber, constants.CANVAS_WIDTH / 2 - 100, constants.CANVAS_HEIGHT / 2)
+  ctx.fillText('Press SPACE to continue', 252, (constants.CANVAS_HEIGHT / 2) + 35)
+}
+
 module.exports = {
   updateHud,
   startScreen,
-  deathScreen
+  deathScreen,
+  nextLevelScreen
 }
