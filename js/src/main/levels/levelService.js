@@ -10,6 +10,7 @@ var levelNumber = 0
 function initialiseNextLevel () {
   player.resetPlayer()
   wallService.removeAllWalls()
+  enemyService.removeAllEnemies()
   if (levels[levelNumber].level) {
     let rowNumber = 0
     levels[levelNumber].level.map(row => {
