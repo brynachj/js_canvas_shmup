@@ -9,7 +9,7 @@ var collisionDetectionModule = require('./shared/collisionDetection.js')
 var keyHandler = require('./keyHandler.js')
 var constants = require('./shared/constants.js')
 var wallService = require('./wallService.js')
-var levelOne = require('./levels/one.js')
+var levelService = require('./levels/levelService.js')
 
 var canvas
 var width = 600
@@ -42,11 +42,12 @@ function pickUpPebbles (pebble) {
 function updateText () {
   if (!keyHandler.getGameStarted()) {
     hudModule.startScreen(drawModule.ctx)
+  } else if (!playerModule.getAlive()) {
+    hudModule.deathScreen(drawModule.ctx)
+  } else if (enemyService.getEnemies().length === 0) {
+    hudModule.nextLevelScreen(drawModule.ctx, levelService.getLevelNumber())
   }
   hudModule.updateHud(drawModule.ctx)
-  if (!playerModule.getAlive()) {
-    hudModule.deathScreen(drawModule.ctx)
-  }
 }
 
 function clearCanvas () {
@@ -58,24 +59,7 @@ function init () {
   drawModule.ctx = canvas.getContext('2d')
   document.addEventListener(constants.KEY_DOWN_EVENT, keyHandler.keyDown, false)
   document.addEventListener(constants.KEY_UP_EVENT, keyHandler.keyUp, false)
-  if (levelOne.level) {
-    let rowNumber = 0
-    levelOne.level.map(row => {
-      let columnNumber = 0
-      row.map(column => {
-        if (column === 1) {
-          wallService.addWall(columnNumber * 30, rowNumber * 30)
-        } else if (column === 2) {
-          enemyService.addEnemy(columnNumber * 30, rowNumber * 30)
-        }
-        columnNumber++
-      })
-      rowNumber++
-    })
-  } else {
-    enemyService.addEnemy(Math.random() * 600, Math.random() * 600)
-    wallService.addWall(Math.random() * 600, Math.random() * 600)
-  }
+  levelService.initialiseNextLevel()
   if (debugModule.debug) {
     debugModule.addDebugControls()
     debugModule.addCheckBoxEventListeners()
@@ -85,7 +69,7 @@ function init () {
 
 function gameLoop () {
   clearCanvas()
-  if (playerModule.getAlive() && keyHandler.getGameStarted()) {
+  if (playerModule.getAlive() && keyHandler.getGameStarted() && enemyService.getEnemies().length !== 0) {
     updateEnemies()
     pebblePickupCollision()
     keyHandler.updateGameWorld()
