@@ -1,10 +1,11 @@
 var levelOne = require('./one.js')
 var levelTwo = require('./two.js')
+var levelThree = require('./three.js')
 var wallService = require('../wallService.js')
 var enemyService = require('../enemy/enemyService.js')
 var player = require('../player/player.js')
 
-var levels = [levelOne, levelTwo]
+var levels = [levelOne, levelTwo, levelThree]
 var levelNumber = 0
 
 function initialiseNextLevel () {
