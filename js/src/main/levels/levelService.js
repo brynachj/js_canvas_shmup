@@ -1,14 +1,15 @@
 var levelOne = require('./one.js')
+var levelTwo = require('./two.js')
 var wallService = require('../wallService.js')
 var enemyService = require('../enemy/enemyService.js')
 
-var levels = [levelOne, levelOne]
+var levels = [levelOne, levelTwo]
 var levelNumber = 0
 
 function initialiseNextLevel () {
   if (levels[levelNumber].level) {
     let rowNumber = 0
-    levelOne.level.map(row => {
+    levels[levelNumber].level.map(row => {
       let columnNumber = 0
       row.map(column => {
         if (column === 1) {
