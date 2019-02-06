@@ -47,10 +47,15 @@ function moveEnemies () {
   aggroEnemies.filter(e => !e.attacking).map(enemy => enemyManager.moveEnemyToward(enemy, playerModule.getPlayer()))
 }
 
+function removeAllEnemies () {
+  enemyManager.removeAllEnemies()
+}
+
 module.exports = {
   getEnemies,
   addEnemy,
   damageEnemy,
   updateEnemies,
-  removeAndReplaceEnemy
+  removeAndReplaceEnemy,
+  removeAllEnemies
 }
