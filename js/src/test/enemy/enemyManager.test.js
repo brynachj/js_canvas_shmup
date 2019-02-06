@@ -351,16 +351,6 @@ test('hitEnemy does not replace the enemy if the damage taken does not take it u
   expect(underTest.getEnemies()[0]).toBe(enemy)
 })
 
-test('hitEnemy does replace the enemy if the damage taken takes it under 0 health', () => {
-  underTest.addEnemy(50, 50)
-  let enemy = underTest.getEnemies()[0]
-
-  underTest.hitEnemy(enemy, 120)
-
-  expect(underTest.getEnemies().length).toBe(1)
-  expect(underTest.getEnemies()[0]).not.toBe(enemy)
-})
-
 test('hitEnemy calls pebblePickupModule addToPebblePickups with the enemy coordinates when the enemy is removed and the random fucntion is less than 0.2', () => {
   underTest.addEnemy(50, 50)
   let enemy = underTest.getEnemies()[0]

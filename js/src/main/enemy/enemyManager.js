@@ -96,7 +96,6 @@ function hitEnemy (enemy, damage) {
   enemy.health -= damage
   if (enemy.health <= 0) {
     removeEnemy(enemy)
-    addEnemy(Math.random() * 600, Math.random() * 600)
     if (Math.random() < 0.2) {
       pebblePickupModule.addToPebblePickups(enemy.x, enemy.y)
     }
