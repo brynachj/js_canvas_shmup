@@ -72,7 +72,7 @@ function directionKeyHandler (e) {
 function reset () {
   pebbleModule.resetPebbleAmmo()
   playerModule.resetPlayer()
-  enemyService.getEnemies().map(enemy => enemyService.removeAndReplaceEnemy(enemy))
+  // enemyService.getEnemies().map(enemy => enemyService.removeAndReplaceEnemy(enemy))
 }
 
 function keyUp (e) {
