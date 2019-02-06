@@ -2,11 +2,13 @@ var levelOne = require('./one.js')
 var levelTwo = require('./two.js')
 var wallService = require('../wallService.js')
 var enemyService = require('../enemy/enemyService.js')
+var player = require('../player/player.js')
 
 var levels = [levelOne, levelTwo]
 var levelNumber = 0
 
 function initialiseNextLevel () {
+  player.resetPlayer()
   if (levels[levelNumber].level) {
     let rowNumber = 0
     levels[levelNumber].level.map(row => {
