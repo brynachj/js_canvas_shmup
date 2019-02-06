@@ -9,6 +9,7 @@ var levelNumber = 0
 
 function initialiseNextLevel () {
   player.resetPlayer()
+  wallService.removeAllWalls()
   if (levels[levelNumber].level) {
     let rowNumber = 0
     levels[levelNumber].level.map(row => {
@@ -34,7 +35,12 @@ function getLevelNumber() {
   return levelNumber
 }
 
+function setLevelNumber(newLevelNumber) {
+  levelNumber = newLevelNumber
+}
+
 module.exports = {
   initialiseNextLevel,
-  getLevelNumber
+  getLevelNumber,
+  setLevelNumber
 }

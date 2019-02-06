@@ -28,9 +28,14 @@ function getWalls () {
   return walls
 }
 
+function removeAllWalls () {
+  walls = []
+}
+
 module.exports = {
   addWall,
   getWalls,
   updateWalls,
-  wallSprite
+  wallSprite,
+  removeAllWalls
 }

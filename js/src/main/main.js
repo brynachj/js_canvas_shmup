@@ -44,6 +44,8 @@ function updateText () {
     hudModule.startScreen(drawModule.ctx)
   } else if (!playerModule.getAlive()) {
     hudModule.deathScreen(drawModule.ctx)
+    levelService.setLevelNumber(0)
+    levelService.initialiseNextLevel()
   } else if (enemyService.getEnemies().length === 0) {
     hudModule.nextLevelScreen(drawModule.ctx, levelService.getLevelNumber())
   }
