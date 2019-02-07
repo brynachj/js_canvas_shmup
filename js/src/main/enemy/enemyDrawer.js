@@ -4,13 +4,13 @@ var constants = require('../shared/constants.js')
 /* global Image */
 
 let enemySpriteLeft = new Image()
-enemySpriteLeft.src = 'images/enemy_sprite_left.png'
+enemySpriteLeft.src = 'images/wall_and_enemy.png'
 let enemySpriteRight = new Image()
-enemySpriteRight.src = 'images/enemy_sprite_right.png'
+enemySpriteRight.src = 'images/wall_and_enemy.png'
 let enemySpriteUp = new Image()
-enemySpriteUp.src = 'images/enemy_sprite_up.png'
+enemySpriteUp.src = 'images/wall_and_enemy.png'
 let enemySpriteDown = new Image()
-enemySpriteDown.src = 'images/enemy_sprite_down.png'
+enemySpriteDown.src = 'images/wall_and_enemy.png'
 
 let attackSpriteLeft = new Image()
 attackSpriteLeft.src = 'images/enemy_sword_left.png'
