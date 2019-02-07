@@ -3,14 +3,8 @@ var constants = require('../shared/constants.js')
 
 /* global Image */
 
-let enemySpriteLeft = new Image()
-enemySpriteLeft.src = 'images/wall_and_enemy.png'
-let enemySpriteRight = new Image()
-enemySpriteRight.src = 'images/wall_and_enemy.png'
-let enemySpriteUp = new Image()
-enemySpriteUp.src = 'images/wall_and_enemy.png'
-let enemySpriteDown = new Image()
-enemySpriteDown.src = 'images/wall_and_enemy.png'
+let enemySprite = new Image()
+enemySprite.src = 'images/wall_and_enemy.png'
 
 let attackSpriteLeft = new Image()
 attackSpriteLeft.src = 'images/enemy_sword_left.png'
@@ -23,16 +17,7 @@ attackSpriteDown.src = 'images/enemy_sword_down.png'
 
 function drawIdle (enemy) {
   if (enemy.facing === constants.LEFT) {
-    drawModule.drawSprite(enemySpriteLeft, enemy, drawModule.ctx)
-  }
-  if (enemy.facing === constants.RIGHT) {
-    drawModule.drawSprite(enemySpriteRight, enemy, drawModule.ctx)
-  }
-  if (enemy.facing === constants.UP) {
-    drawModule.drawSprite(enemySpriteUp, enemy, drawModule.ctx)
-  }
-  if (enemy.facing === constants.DOWN) {
-    drawModule.drawSprite(enemySpriteDown, enemy, drawModule.ctx)
+    drawModule.drawSprite(enemySprite, enemy, drawModule.ctx)
   }
   if (window.drawHitboxes) {
     drawModule.drawHitbox(enemy.player_detection_box, drawModule.ctx)
