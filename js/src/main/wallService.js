@@ -6,7 +6,7 @@ var drawService = require('./draw.js')
 
 let walls = []
 let wallSprite = new Image()
-wallSprite.src = 'images/wall.png'
+wallSprite.src = 'images/wall_and_enemy.png'
 
 function addWall (xArg, yArg) {
   let xCoord = Math.floor(xArg / 30) * 30
