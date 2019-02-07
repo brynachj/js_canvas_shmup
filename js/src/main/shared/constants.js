@@ -26,8 +26,8 @@ const MOVEMENT_SPEED = 5
 const DASH_PER_FRAME_LENGTH = 17
 
 // enemy properties
-const ENEMY_WIDTH = 34
-const ENEMY_HEIGHT = 36
+const ENEMY_WIDTH = 30
+const ENEMY_HEIGHT = 30
 const ENEMY_SPEED = 3
 
 const WALL_WIDTH = 30
