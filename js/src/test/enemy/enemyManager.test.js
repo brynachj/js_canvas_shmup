@@ -25,8 +25,8 @@ test('addEnemy pushes a new enemy to the enemy array with all the expected prope
 
   expect(enemies[0].x).toBe(90)
   expect(enemies[0].y).toBe(91)
-  expect(enemies[0].w).toBe(34)
-  expect(enemies[0].h).toBe(36)
+  expect(enemies[0].w).toBe(30)
+  expect(enemies[0].h).toBe(30)
   expect(enemies[0].speed).toBe(3)
   expect(enemies[0].health).toBe(100)
   expect(enemies[0].aggro).toBe(false)
