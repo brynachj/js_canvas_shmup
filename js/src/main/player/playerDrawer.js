@@ -3,14 +3,8 @@ var constants = require('../shared/constants.js')
 
 /* global Image */
 
-let playerSpriteRight = new Image()
-playerSpriteRight.src = 'images/player_sprite_right.png'
-let playerSpriteLeft = new Image()
-playerSpriteLeft.src = 'images/player_sprite_left.png'
-let playerSpriteUp = new Image()
-playerSpriteUp.src = 'images/player_sprite_up.png'
-let playerSpriteDown = new Image()
-playerSpriteDown.src = 'images/player_sprite_down.png'
+let playerSprite = new Image()
+playerSprite.src = 'images/player.png'
 
 let attackSpriteLeft = new Image()
 attackSpriteLeft.src = 'images/enemy_sword_left.png'
@@ -36,18 +30,7 @@ function drawWindUpAttack (player) {
 }
 
 function drawPlayer (player) {
-  if (player.facing === constants.RIGHT) {
-    drawModule.drawSprite(playerSpriteRight, player, drawModule.ctx)
-  }
-  if (player.facing === constants.LEFT) {
-    drawModule.drawSprite(playerSpriteLeft, player, drawModule.ctx)
-  }
-  if (player.facing === constants.DOWN) {
-    drawModule.drawSprite(playerSpriteDown, player, drawModule.ctx)
-  }
-  if (player.facing === constants.UP) {
-    drawModule.drawSprite(playerSpriteUp, player, drawModule.ctx)
-  }
+  drawModule.drawSprite(playerSprite, player, drawModule.ctx)
   if (window.drawHitboxes) {
     drawModule.drawHitbox(player.attack_box, drawModule.ctx)
   }
