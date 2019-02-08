@@ -16,9 +16,7 @@ let attackSpriteDown = new Image()
 attackSpriteDown.src = 'images/enemy_sword_down.png'
 
 function drawIdle (enemy) {
-  if (enemy.facing === constants.LEFT) {
-    drawModule.drawSprite(enemySprite, enemy, drawModule.ctx)
-  }
+  drawModule.drawSprite(enemySprite, enemy, drawModule.ctx)
   if (window.drawHitboxes) {
     drawModule.drawHitbox(enemy.player_detection_box, drawModule.ctx)
     drawModule.drawHitbox(enemy.player_aggro_box, drawModule.ctx)
