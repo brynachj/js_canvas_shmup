@@ -19,8 +19,8 @@ const WINDING_DOWN = 'winding_down'
 const DASHING = 'dashing'
 
 // player properties
-const PLAYER_WIDTH = 20
-const PLAYER_HEIGHT = 26
+const PLAYER_WIDTH = 15
+const PLAYER_HEIGHT = 25
 const ATTACK_WIDTH = 15
 const MOVEMENT_SPEED = 5
 const DASH_PER_FRAME_LENGTH = 17
