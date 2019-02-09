@@ -9,9 +9,9 @@
     "standard": "^11.0.1"
   },
   "scripts": {
-    "bundle": "browserify js/src/main/main.js -o js/src/target/bundle.js",
+    "bundle": "mkdir -p js/src/target/ && browserify js/src/main/main.js -o js/src/target/bundle.js",
     "prebundle": "eslint .",
-    "bundleNoLint": "browserify js/src/main/main.js -o js/src/target/bundle.js",
+    "bundleNoLint": "mkdir -p js/src/target/ && browserify js/src/main/main.js -o js/src/target/bundle.js",
     "test": "jest"
   },
   "jest": {
