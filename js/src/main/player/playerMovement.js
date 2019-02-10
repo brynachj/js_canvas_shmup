@@ -6,11 +6,11 @@ var constants = require('../shared/constants.js')
 function facePlayer (player, rightKey, leftKey, upKey, downKey) {
   if (upKey) {
     player.facing = constants.UP
-    player.attack_box = {x: player.x - 5, y: player.y - constants.ATTACK_WIDTH, w: player.w + 10, h: constants.ATTACK_WIDTH, hitBoxColor: '#ff6961'}
+    player.attack_box = {x: player.x - 10, y: player.y - constants.ATTACK_WIDTH, w: player.w + 20, h: constants.ATTACK_WIDTH, hitBoxColor: '#ff6961'}
   }
   if (downKey) {
     player.facing = constants.DOWN
-    player.attack_box = {x: player.x - 5, y: player.y + player.h, w: player.w + 10, h: constants.ATTACK_WIDTH, hitBoxColor: '#ff6961'}
+    player.attack_box = {x: player.x - 10, y: player.y + player.h, w: player.w + 20, h: constants.ATTACK_WIDTH, hitBoxColor: '#ff6961'}
   }
   if (rightKey) {
     player.facing = constants.RIGHT
