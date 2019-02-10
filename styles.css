@@ -6,8 +6,11 @@ body {
 canvas {
   display:block;
   margin:30px auto 0;
-  border:2px solid #c405ff;
+  /* border:2px solid #c405ff; */
   background:#000000;
+  -webkit-box-shadow: 0px 0px 55px 35px rgba(196,5,255,1);
+  -moz-box-shadow: 0px 0px 55px 35px rgba(196,5,255,1);
+  box-shadow: 0px 0px 55px 35px rgba(196,5,255,1);
 }
 #debug-controls {
   position: fixed;

@@ -14,22 +14,23 @@ function updateHud (ctx) {
 }
 
 function startScreen (ctx) {
-  ctx.font = 'bold 50px VT323'
-  ctx.fillText('Canvas Shooter', constants.CANVAS_WIDTH / 2 - 150, constants.CANVAS_HEIGHT / 2)
-  ctx.font = 'bold 20px VT323'
-  ctx.fillText('Hit SPACE to Play', constants.CANVAS_WIDTH / 2 - 56, constants.CANVAS_HEIGHT / 2 + 30)
-  ctx.fillText('Use arrow keys to move', constants.CANVAS_WIDTH / 2 - 100, constants.CANVAS_HEIGHT / 2 + 60)
-  ctx.fillText('Use the x key to shoot', constants.CANVAS_WIDTH / 2 - 100, constants.CANVAS_HEIGHT / 2 + 90)
+  ctx.font = 'bold 50px Arial'
+  ctx.fillText('Enemy or Wall?', constants.CANVAS_WIDTH / 2 - 190, constants.CANVAS_HEIGHT / 2)
+  ctx.font = 'bold 20px Arial'
+  ctx.fillText('Hit SPACE to Play', constants.CANVAS_WIDTH / 2 - 90, constants.CANVAS_HEIGHT / 2 + 30)
+  ctx.fillText('Use arrow keys to move', constants.CANVAS_WIDTH / 2 - 120, constants.CANVAS_HEIGHT / 2 + 60)
+  ctx.fillText('Use the x key to shoot', constants.CANVAS_WIDTH / 2 - 110, constants.CANVAS_HEIGHT / 2 + 90)
 }
 
 function deathScreen (ctx) {
+  ctx.font = 'bold 20px Arial'
   ctx.fillText('Game Over!', constants.CANVAS_WIDTH / 2 - 50, constants.CANVAS_HEIGHT / 2)
   ctx.fillText('Press SPACE to continue', 252, (constants.CANVAS_HEIGHT / 2) + 35)
 }
 
 function nextLevelScreen (ctx, levelNumber) {
-  ctx.fillText('Congratulations, you beat level ' + levelNumber, constants.CANVAS_WIDTH / 2 - 100, constants.CANVAS_HEIGHT / 2)
-  ctx.fillText('Press SPACE to continue', 252, (constants.CANVAS_HEIGHT / 2) + 35)
+  ctx.fillText('Congratulations, you beat level ' + levelNumber, constants.CANVAS_WIDTH / 2 - 150, constants.CANVAS_HEIGHT / 2)
+  ctx.fillText('Press SPACE to continue', constants.CANVAS_WIDTH / 2 - 120, (constants.CANVAS_HEIGHT / 2) + 35)
 }
 
 module.exports = {
