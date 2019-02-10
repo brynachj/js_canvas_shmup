@@ -5,10 +5,8 @@ var constants = require('./shared/constants')
 function updateHud (ctx) {
   ctx.font = 'bold 18px Arial'
   ctx.fillStyle = '#fff'
-  ctx.fillText('Experience: ', 10, 30)
-  ctx.fillText(playerModule.getExperience(), 120, 30)
-  ctx.fillText('Bullets: ', 160, 30)
-  ctx.fillText(pebbleModule.getAmmo(), 260, 30)
+  ctx.fillText('Bullets: ', 10, 30)
+  ctx.fillText(pebbleModule.getAmmo(), 80, 30)
   ctx.fillText('Health:', 10, 60) // TODO: Replace with a health bar
   ctx.fillText(playerModule.getHealth(), 68, 60)
 }

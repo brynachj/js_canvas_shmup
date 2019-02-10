@@ -20,7 +20,6 @@ function enemyHitTest () { // should be in enemy classes
     enemyService.getEnemies().filter(enemy => collisionDetectionModule.collisionDetection(pebble, enemy)).map(enemy => {
       enemyService.damageEnemy(enemy, 15)
       pebbleModule.removeFromPebbles(pebble)
-      playerModule.addExperience(10) // Should be tied to damaging the enemy - 1/5 of damage done
     })
   })
 }

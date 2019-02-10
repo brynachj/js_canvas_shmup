@@ -7,7 +7,6 @@ var pebbleModule = require('../pebble/pebble.js')
 let player
 let health
 let alive = true
-let experience = 0
 
 function createPlayer (x1, y1) {
   return {x: x1,
@@ -30,7 +29,6 @@ function getPlayer () {
 }
 
 function resetPlayer () {
-  experience = 0
   health = 100
   player = createPlayer(100, 287)
 }
@@ -45,14 +43,6 @@ function getAlive () {
 
 function setAlive (isAlive) {
   alive = isAlive
-}
-
-function getExperience () {
-  return experience
-}
-
-function addExperience (value) {
-  experience += value
 }
 
 function updateHealth (value) {
@@ -99,8 +89,6 @@ module.exports = {
   getHealth,
   getAlive,
   setAlive,
-  getExperience,
-  addExperience,
   updatePlayer,
   attack,
   rangedAttack,
