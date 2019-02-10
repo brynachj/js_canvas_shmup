@@ -7,7 +7,7 @@ function updateHud (ctx) {
   ctx.fillStyle = '#fff'
   ctx.fillText('Experience: ', 10, 30)
   ctx.fillText(playerModule.getExperience(), 120, 30)
-  ctx.fillText('Pebbles: ', 160, 30)
+  ctx.fillText('Bullets: ', 160, 30)
   ctx.fillText(pebbleModule.getAmmo(), 260, 30)
   ctx.fillText('Health:', 10, 60) // TODO: Replace with a health bar
   ctx.fillText(playerModule.getHealth(), 68, 60)
