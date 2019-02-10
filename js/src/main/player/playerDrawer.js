@@ -7,7 +7,7 @@ let playerSprite = new Image()
 playerSprite.src = 'images/player.png'
 
 let attackSpriteLeft = new Image()
-attackSpriteLeft.src = 'images/enemy_sword_left.png'
+attackSpriteLeft.src = 'images/player_attack.png'
 let attackSpriteRight = new Image()
 attackSpriteRight.src = 'images/enemy_sword_right.png'
 let attackSpriteUp = new Image()
@@ -17,14 +17,14 @@ attackSpriteDown.src = 'images/enemy_sword_down.png'
 
 function drawAttacking (player) {
   if (player.facing === constants.RIGHT) { drawModule.drawSprite(attackSpriteRight, { x: player.x + 30, y: player.y + player.h / 2 }, drawModule.ctx) }
-  if (player.facing === constants.LEFT) { drawModule.drawSprite(attackSpriteLeft, { x: player.x - 30, y: player.y + player.h / 2 }, drawModule.ctx) }
+  if (player.facing === constants.LEFT) { drawModule.drawSprite(attackSpriteLeft, { x: player.x - 15, y: player.y - 5 }, drawModule.ctx) }
   if (player.facing === constants.UP) { drawModule.drawSprite(attackSpriteUp, { x: player.x + player.w / 2, y: player.y - 30 }, drawModule.ctx) }
   if (player.facing === constants.DOWN) { drawModule.drawSprite(attackSpriteDown, { x: player.x + player.w / 2, y: player.y + 30 }, drawModule.ctx) }
 }
 
 function drawWindUpAttack (player) {
   if (player.facing === constants.RIGHT) { drawModule.drawSprite(attackSpriteRight, { x: player.x, y: player.y + player.h / 2 }, drawModule.ctx) }
-  if (player.facing === constants.LEFT) { drawModule.drawSprite(attackSpriteLeft, { x: player.x, y: player.y + player.h / 2 }, drawModule.ctx) }
+  if (player.facing === constants.LEFT) { drawModule.drawSprite(attackSpriteLeft, { x: player.x, y: player.y - 5 }, drawModule.ctx) }
   if (player.facing === constants.UP) { drawModule.drawSprite(attackSpriteUp, { x: player.x + player.w / 2, y: player.y }, drawModule.ctx) }
   if (player.facing === constants.DOWN) { drawModule.drawSprite(attackSpriteDown, { x: player.x + player.w / 2, y: player.y }, drawModule.ctx) }
 }
