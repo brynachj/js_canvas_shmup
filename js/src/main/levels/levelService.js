@@ -48,8 +48,13 @@ function setLevelNumber(newLevelNumber) {
   levelNumber = newLevelNumber
 }
 
+function getLevels() {
+  return levels
+}
+
 module.exports = {
   initialiseNextLevel,
   getLevelNumber,
-  setLevelNumber
+  setLevelNumber,
+  getLevels
 }
