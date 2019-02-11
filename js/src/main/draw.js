@@ -13,8 +13,14 @@ function drawSprite (sprite, object, context) {
   }
 }
 
+function drawRectangle (player, color, context) {
+  context.fillStyle = color
+  context.fillRect(player.x, player.y, player.w, player.h)
+}
+
 module.exports = {
   drawSprite,
+  drawRectangle,
   drawHitbox,
   ctx
 }

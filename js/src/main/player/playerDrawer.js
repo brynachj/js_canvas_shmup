@@ -26,7 +26,8 @@ function drawWindUpAttack (player) {
 }
 
 function drawPlayer (player) {
-  drawModule.drawSprite(playerSprite, player, drawModule.ctx)
+  // drawModule.drawSprite(playerSprite, player, drawModule.ctx)
+  drawModule.drawRectangle(player, '#FFFFFF', drawModule.ctx)
   if (window.drawHitboxes) {
     drawModule.drawHitbox(player.attack_box, drawModule.ctx)
   }
