@@ -27,9 +27,16 @@ function nextLevelScreen (ctx, levelNumber) {
   ctx.fillText('Hit SPACE to continue', constants.CANVAS_WIDTH / 2 - 120, (constants.CANVAS_HEIGHT / 2) + 35)
 }
 
+function gameCompleteScreen (ctx) {
+  ctx.font = 'bold 40px Arial'
+  ctx.fillText('Congratulations!', constants.CANVAS_WIDTH / 2 - 170, constants.CANVAS_HEIGHT / 2)
+  ctx.fillText('You beat every single level!', constants.CANVAS_WIDTH / 2 - 250, constants.CANVAS_HEIGHT / 2 + 40)
+}
+
 module.exports = {
   updateHud,
   startScreen,
   deathScreen,
-  nextLevelScreen
+  nextLevelScreen,
+  gameCompleteScreen
 }

@@ -46,7 +46,11 @@ function updateText () {
     levelService.setLevelNumber(0)
     levelService.initialiseNextLevel()
   } else if (enemyService.getEnemies().length === 0) {
-    hudModule.nextLevelScreen(drawModule.ctx, levelService.getLevelNumber())
+    if (levelService.getLevelNumber < levelService.getLevels().length) {
+      hudModule.nextLevelScreen(drawModule.ctx, levelService.getLevelNumber())
+    } else {
+      hudModule.gameCompleteScreen(drawModule.ctx)
+    }
   }
   hudModule.updateHud(drawModule.ctx)
 }
