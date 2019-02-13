@@ -10,6 +10,7 @@ var keyHandler = require('./keyHandler.js')
 var constants = require('./shared/constants.js')
 var wallService = require('./wallService.js')
 var levelService = require('./levels/levelService.js')
+var audioModule = require('./audio.js')
 
 var canvas
 var width = 600
@@ -69,6 +70,8 @@ function init () {
     debugModule.addDebugControls()
     debugModule.addCheckBoxEventListeners()
   }
+  audioModule.initialiseAudio()
+  // audioModule.addAudioControls()
   gameLoop()
 }
 
