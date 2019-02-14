@@ -3,9 +3,6 @@ var constants = require('../shared/constants.js')
 
 /* global Image */
 
-let enemySprite = new Image()
-enemySprite.src = 'images/wall_and_enemy.png'
-
 let attackSpriteLeft = new Image()
 attackSpriteLeft.src = 'images/enemy_sword_left.png'
 let attackSpriteRight = new Image()
