@@ -21,7 +21,7 @@ function addWall (xArg, yArg) {
 }
 
 function updateWalls () {
-  walls.forEach(wall => drawService.drawSprite(wallSprite, wall, drawService.ctx))
+  walls.forEach(wall => drawService.drawRectangle(wall, '#708090', drawService.ctx))
 }
 
 function getWalls () {
