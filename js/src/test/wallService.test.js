@@ -18,7 +18,7 @@ test('addWall adds the a wall at the given coordinates to the global list of wal
 test('updateWalls calls the draw service to draw the sprite for all the walls in the global list of walls,', () => {
   underTest.updateWalls()
 
-  expect(drawService.drawSprite).toHaveBeenCalledWith(underTest.wallSprite, underTest.getWalls()[0], drawService.ctx)
+  expect(drawService.drawRectangle).toHaveBeenCalledWith(underTest.getWalls()[0], '#141414', drawService.ctx)
 })
 
 test('addWall can be called several times to add several walls to the global list of walls', () => {
