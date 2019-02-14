@@ -13,12 +13,12 @@ body {
   padding:10px;
   padding-top: 0px;
   color:#FFFFFF;
-  border:3px solid #708090;
+  /* border:3px solid #708090; */
   border-radius: 20px;
   font: italic bold 16px Arial, sans-serif;
   text-align: center;
-  box-shadow: 0px 0px 55px 35px #708090;
-  margin: 20px 55px 20px 0px;
+  /* box-shadow: 0px 0px 55px 35px #708090; */
+  margin: 10px 45px 10px 0px;
   max-width: 600px;
 }
 
@@ -26,11 +26,11 @@ canvas {
   flex-grow: 1;
   order: 2;
   display:block;
-  margin: 20px 55px;
-  background:#141414;
-  -webkit-box-shadow: 0px 0px 55px 35px #708090;
-  -moz-box-shadow: 0px 0px 55px 35px #708090;
-  box-shadow: 0px 0px 55px 35px #708090;
+  margin: 10px 45px;
+  background:#708090;
+  -webkit-box-shadow: 0px 0px 55px 35px #141414;
+  -moz-box-shadow: 0px 0px 55px 35px #141414;
+  box-shadow: 0px 0px 55px 35px #141414;
   max-width: 600px;
 }
 
