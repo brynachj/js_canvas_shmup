@@ -71,7 +71,6 @@ function init () {
     debugModule.addCheckBoxEventListeners()
   }
   audioModule.initialiseAudio()
-  // audioModule.addAudioControls()
   gameLoop()
 }
 
