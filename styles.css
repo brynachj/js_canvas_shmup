@@ -49,3 +49,27 @@ canvas {
   margin: 30px 0px 30px 65px;
   max-width: 600px;
 }
+
+.options {
+  text-decoration:underline;
+}
+
+a:link {
+  color:#FFFFFF;
+  text-decoration:none;
+}
+
+a:visited {
+  color:#FFFFFF;
+  text-decoration:none;
+}
+
+a:hover {
+  color:#FFFFFF;
+  text-decoration:none;
+}
+
+a:active {
+  color:#FFFFFF;
+  text-decoration:none;
+}

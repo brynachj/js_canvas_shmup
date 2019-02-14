@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <title>BMup1</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   <script src="js/src/target/bundle.js"></script>
 </head>
 
@@ -14,10 +15,11 @@
     <p>Use the c key to attack</p>
     <p>Use the x key to shoot</p>
     <p>Clear the screen of all enemies to proceed</p>
-    <audio id="yourAudio" preload="none" autoplay>
+    <h2 class="options">Options</h2>
+    <audio id="yourAudio" preload="none" autoplay loop>
         <source src="audio/game_music.wav" type="audio/wav"/>
     </audio>
-    <a href="#" id="audioControl">pause!</a>
+    <a href="#" id="audioControl">Music: <i class="fas fa-volume-up"></i></a>
   </div>
   <canvas id="canvas" width="600" height="600"></canvas>
   <div id="debug-controls"></div>
