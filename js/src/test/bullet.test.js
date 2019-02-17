@@ -1,7 +1,7 @@
 const underTest = require('../main/bullet/bullet.js')
 
 afterEach(() => {
-  underTest.resetPebbleAmmo()
+  underTest.resetBulletAmmo()
 })
 
 test('getAmmo by default returns 10', () => {
@@ -16,13 +16,13 @@ test('takeOneFromAmmo reduces the number of ammo left by 1', () => {
   expect(underTest.getAmmo()).toBe(9)
 })
 
-test('resetPebbleAmmo resets the number of ammo left to 10', () => {
+test('resetBulletAmmo resets the number of ammo left to 10', () => {
   expect(underTest.getAmmo()).toBe(10)
 
   underTest.takeOneFromAmmo()
   underTest.takeOneFromAmmo()
   expect(underTest.getAmmo()).toBe(8)
-  underTest.resetPebbleAmmo()
+  underTest.resetBulletAmmo()
 
   expect(underTest.getAmmo()).toBe(10)
 })
@@ -39,12 +39,12 @@ test('addToAmmo adds the number parameterised into the function to ammo', () => 
   expect(underTest.getAmmo()).toBe(31)
 })
 
-test('addToPebbles pushes a new item onto the bullets array', () => {
+test('addToBullets pushes a new item onto the bullets array', () => {
   expect(underTest.bullets.length).toBe(0)
 
   let character = {x: 0, y: 0, facing: 'RIGHT'}
 
-  underTest.addToPebbles(character)
+  underTest.addToBullets(character)
 
   expect(underTest.bullets.length).toBe(1)
 })

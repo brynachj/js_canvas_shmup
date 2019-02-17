@@ -97,7 +97,7 @@ function hitEnemy (enemy, damage) {
   if (enemy.health <= 0) {
     removeEnemy(enemy)
     if (Math.random() < 0.2) {
-      bulletPickupModule.addToPebblePickups(enemy.x, enemy.y)
+      bulletPickupModule.addToBulletPickups(enemy.x, enemy.y)
     }
   }
 }

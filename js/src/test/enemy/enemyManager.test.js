@@ -351,7 +351,7 @@ test('hitEnemy does not replace the enemy if the damage taken does not take it u
   expect(underTest.getEnemies()[0]).toBe(enemy)
 })
 
-test('hitEnemy calls bulletPickupModule addToPebblePickups with the enemy coordinates when the enemy is removed and the random fucntion is less than 0.2', () => {
+test('hitEnemy calls bulletPickupModule addToBulletPickups with the enemy coordinates when the enemy is removed and the random fucntion is less than 0.2', () => {
   underTest.addEnemy(50, 50)
   let enemy = underTest.getEnemies()[0]
   mockMath.random = () => 0.1
@@ -359,5 +359,5 @@ test('hitEnemy calls bulletPickupModule addToPebblePickups with the enemy coordi
 
   underTest.hitEnemy(enemy, 120)
 
-  expect(bulletPickupModule.addToPebblePickups).toBeCalledWith(enemy.x, enemy.y)
+  expect(bulletPickupModule.addToBulletPickups).toBeCalledWith(enemy.x, enemy.y)
 })

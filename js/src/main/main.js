@@ -20,7 +20,7 @@ function enemyHitTest () { // should be in enemy classes
   bulletModule.bullets.map(bullet => {
     enemyService.getEnemies().filter(enemy => collisionDetectionModule.collisionDetection(bullet, enemy)).map(enemy => {
       enemyService.damageEnemy(enemy, 15)
-      bulletModule.removeFromPebbles(bullet)
+      bulletModule.removeFromBullets(bullet)
     })
   })
 }
@@ -31,12 +31,12 @@ function updateEnemies () {
 }
 
 function bulletPickupCollision () {
-  bulletPickupModule.bulletPickups.filter(p => collisionDetectionModule.collisionDetection(playerModule.getPlayer(), p)).map(p => pickUpPebbles(p))
+  bulletPickupModule.bulletPickups.filter(p => collisionDetectionModule.collisionDetection(playerModule.getPlayer(), p)).map(p => pickUpBullets(p))
 }
 
-function pickUpPebbles (bullet) {
+function pickUpBullets (bullet) {
   bulletModule.addToAmmo(3)
-  bulletPickupModule.removeFromPebblePickups(bullet)
+  bulletPickupModule.removeFromBulletPickups(bullet)
 }
 
 function updateText () {
@@ -80,9 +80,9 @@ function gameLoop () {
     updateEnemies()
     bulletPickupCollision()
     keyHandler.updateGameWorld()
-    bulletModule.moveOnScreenPebbles()
-    bulletPickupModule.drawPebblePickup(drawModule.ctx)
-    bulletModule.drawOnScreenPebble(drawModule.ctx)
+    bulletModule.moveOnScreenBullets()
+    bulletPickupModule.drawBulletPickup(drawModule.ctx)
+    bulletModule.drawOnScreenBullet(drawModule.ctx)
     wallService.updateWalls()
   }
   updateText()

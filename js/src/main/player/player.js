@@ -73,7 +73,7 @@ function attack () {
 }
 
 function rangedAttack () {
-  bulletModule.addToPebbles(player)
+  bulletModule.addToBullets(player)
 }
 
 function dash () {

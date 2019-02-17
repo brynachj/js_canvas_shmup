@@ -18,7 +18,7 @@ function takeOneFromAmmo () {
   ammo--
 }
 
-function resetPebbleAmmo () {
+function resetBulletAmmo () {
   ammo = 10
 }
 
@@ -26,24 +26,24 @@ function addToAmmo (i) {
   ammo += i
 }
 
-function addToPebbles (character) {
-  bullets.push(createPebble(character))
+function addToBullets (character) {
+  bullets.push(createBullet(character))
 }
 
-function removeFromPebbles (bullet) {
+function removeFromBullets (bullet) {
   var index = bullets.map(p => p.id).indexOf(bullet.id)
   bullets.splice(index, 1)
 }
 
-function createPebble (character) {
+function createBullet (character) {
   return {id: utilityModule.newId(bullets), x: character.x, y: character.y, w: WIDTH, h: HEIGHT, direction: character.facing, hitBoxColor: '#00bfff'}
 }
 
-function moveOnScreenPebbles () {
-  bullets.map(bullet => movePebble(bullet))
+function moveOnScreenBullets () {
+  bullets.map(bullet => moveBullet(bullet))
 }
 
-function movePebble (bullet) {
+function moveBullet (bullet) {
   switch (bullet.direction) {
     case constants.RIGHT:
       bullet.x += 10
@@ -59,11 +59,11 @@ function movePebble (bullet) {
       break
   }
   if (bullet.x > constants.CANVAS_WIDTH + WIDTH || bullet.x < 0 || bullet.y > constants.CANVAS_HEIGHT || bullet.y < 0) {
-    removeFromPebbles(bullet)
+    removeFromBullets(bullet)
   }
 }
 
-function drawOnScreenPebble (ctx) {
+function drawOnScreenBullet (ctx) {
   if (bullets.length) {
     bullets.map(bullet => drawModule.drawRectangle(bullet, PEBBLE_COLOUR, ctx))
   }
@@ -71,12 +71,12 @@ function drawOnScreenPebble (ctx) {
 
 module.exports = {
   bullets,
-  createPebble,
-  moveOnScreenPebbles,
-  drawOnScreenPebble,
-  addToPebbles,
-  removeFromPebbles,
-  resetPebbleAmmo,
+  createBullet,
+  moveOnScreenBullets,
+  drawOnScreenBullet,
+  addToBullets,
+  removeFromBullets,
+  resetBulletAmmo,
   takeOneFromAmmo,
   addToAmmo,
   getAmmo

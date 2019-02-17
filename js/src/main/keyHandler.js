@@ -70,7 +70,7 @@ function directionKeyHandler (e) {
 }
 
 function reset () {
-  bulletModule.resetPebbleAmmo()
+  bulletModule.resetBulletAmmo()
   playerModule.resetPlayer()
 }
 

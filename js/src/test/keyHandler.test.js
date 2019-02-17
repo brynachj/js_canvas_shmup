@@ -84,7 +84,7 @@ test('keyDown calls playerModule setAlive(true) and all the reset functions when
   underTest.keyDown(event)
 
   expect(playerModule.setAlive).toBeCalledWith(true)
-  expect(bulletModule.resetPebbleAmmo).toBeCalled()
+  expect(bulletModule.resetBulletAmmo).toBeCalled()
 })
 
 test('keyDown calls bulletModule functions when the event passed in is the ranged attack key and the player is not alive', () => {
