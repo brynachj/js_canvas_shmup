@@ -1,6 +1,7 @@
 var drawModule = require('../draw.js')
 var constants = require('../shared/constants.js')
 
+const ENEMY_ATTACK_COLOUR = '#FF0000'
 /* global Image */
 
 let attackSpriteLeft = new Image()
@@ -24,16 +25,20 @@ function drawIdle (enemy) {
 function drawWindUpAttack (enemy) {
   drawIdle(enemy)
   if (enemy.facing === constants.LEFT) {
-    drawModule.drawSprite(attackSpriteLeft, {x: enemy.x, y: enemy.y + enemy.h / 2}, drawModule.ctx)
+    // drawModule.drawSprite(attackSpriteLeft, {x: enemy.x, y: enemy.y + enemy.h / 2}, drawModule.ctx)
+    drawModule.drawRectangle({x: enemy.x, y: enemy.y + enemy.h / 2, w: 30, h: 10}, ENEMY_ATTACK_COLOUR, drawModule.ctx)
   }
   if (enemy.facing === constants.RIGHT) {
-    drawModule.drawSprite(attackSpriteRight, {x: enemy.x, y: enemy.y + enemy.h / 2}, drawModule.ctx)
+    // drawModule.drawSprite(attackSpriteRight, {x: enemy.x, y: enemy.y + enemy.h / 2}, drawModule.ctx)
+    drawModule.drawRectangle({x: enemy.x, y: enemy.y + enemy.h / 2, w: 30, h: 10}, ENEMY_ATTACK_COLOUR, drawModule.ctx)
   }
   if (enemy.facing === constants.UP) {
-    drawModule.drawSprite(attackSpriteUp, {x: enemy.x + enemy.w / 2, y: enemy.y}, drawModule.ctx)
+    // drawModule.drawSprite(attackSpriteUp, {x: enemy.x + enemy.w / 2, y: enemy.y}, drawModule.ctx)
+    drawModule.drawRectangle({x: enemy.x + enemy.w / 2, y: enemy.y, w: 10, h: 30}, ENEMY_ATTACK_COLOUR, drawModule.ctx)
   }
   if (enemy.facing === constants.DOWN) {
-    drawModule.drawSprite(attackSpriteDown, {x: enemy.x + enemy.w / 2, y: enemy.y}, drawModule.ctx)
+    // drawModule.drawSprite(attackSpriteDown, {x: enemy.x + enemy.w / 2, y: enemy.y}, drawModule.ctx)
+    drawModule.drawRectangle({x: enemy.x + enemy.w / 2, y: enemy.y, w: 10, h: 30}, ENEMY_ATTACK_COLOUR, drawModule.ctx)
   }
 }
 
