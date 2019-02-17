@@ -3,12 +3,9 @@ var utilityModule = require('../shared/utility.js')
 var constants = require('../shared/constants.js')
 
 const WIDTH = 4
-const HEIGHT = 5
+const HEIGHT = 4
 
-/* global Image */
-
-let pebbleSprite = new Image()
-pebbleSprite.src = 'images/pebble.png'
+const PEBBLE_COLOUR = '#FFFFFF'
 
 var pebbles = []
 var ammo = 10
@@ -61,14 +58,14 @@ function movePebble (pebble) {
       pebble.y -= 10
       break
   }
-  if (pebble.x > constants.CANVAS_WIDTH + pebbleSprite.width || pebble.x < 0 || pebble.y > constants.CANVAS_HEIGHT || pebble.y < 0) {
+  if (pebble.x > constants.CANVAS_WIDTH + WIDTH || pebble.x < 0 || pebble.y > constants.CANVAS_HEIGHT || pebble.y < 0) {
     removeFromPebbles(pebble)
   }
 }
 
 function drawOnScreenPebble (ctx) {
   if (pebbles.length) {
-    pebbles.map(pebble => drawModule.drawSprite(pebbleSprite, pebble, ctx))
+    pebbles.map(pebble => drawModule.drawRectangle(pebble, PEBBLE_COLOUR, ctx))
   }
 }
 
