@@ -13,9 +13,9 @@ function drawSprite (sprite, object, context) {
   }
 }
 
-function drawRectangle (player, color, context) {
+function drawRectangle (object, color, context) {
   context.fillStyle = color
-  context.fillRect(player.x, player.y, player.w, player.h)
+  context.fillRect(object.x, object.y, object.w, object.h)
 }
 
 module.exports = {
