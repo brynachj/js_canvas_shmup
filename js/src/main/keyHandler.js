@@ -1,5 +1,5 @@
 var playerModule = require('./player/player.js')
-var pebbleModule = require('./pebble/pebble.js')
+var pebbleModule = require('./bullet/bullet.js')
 var enemyService = require('./enemy/enemyService.js')
 var levelService = require('./levels/levelService.js')
 

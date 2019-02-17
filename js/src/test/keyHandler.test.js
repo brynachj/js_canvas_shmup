@@ -1,9 +1,9 @@
 const underTest = require('../main/keyHandler.js')
 let playerModule = require('../main/player/player.js')
 let enemyService = require('../main/enemy/enemyService.js')
-let pebbleModule = require('../main/pebble/pebble.js')
+let pebbleModule = require('../main/bullet/bullet.js')
 
-jest.mock('../main/pebble/pebble.js')
+jest.mock('../main/bullet/bullet.js')
 
 jest.mock('../main/enemy/enemyService.js', () => ({
   getEnemies: jest.fn(),

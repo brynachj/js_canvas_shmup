@@ -1,5 +1,5 @@
 var utilityModule = require('../shared/utility.js')
-var pebblePickupModule = require('../pebble/pebblePickup.js')
+var pebblePickupModule = require('../bullet/bulletPickup.js')
 var constants = require('../shared/constants.js')
 var wallService = require('../wallService.js')
 var collisionDetectionModule = require('../shared/collisionDetection.js')

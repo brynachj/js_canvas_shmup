@@ -1,5 +1,5 @@
 var playerModule = require('./player/player.js')
-var pebbleModule = require('./pebble/pebble.js')
+var pebbleModule = require('./bullet/bullet.js')
 var constants = require('./shared/constants')
 
 function updateHud (ctx) {
