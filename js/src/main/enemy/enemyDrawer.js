@@ -45,16 +45,20 @@ function drawWindUpAttack (enemy) {
 function drawAttacking (enemy) {
   drawIdle(enemy)
   if (enemy.facing === constants.LEFT) {
-    drawModule.drawSprite(attackSpriteLeft, {x: enemy.x - 30, y: enemy.y + enemy.h / 2}, drawModule.ctx)
+    // drawModule.drawSprite(attackSpriteLeft, {x: enemy.x - 30, y: enemy.y + enemy.h / 2}, drawModule.ctx)
+    drawModule.drawRectangle({x: enemy.x - 30, y: enemy.y + enemy.h / 2, w: 30, h: 10}, ENEMY_ATTACK_COLOUR, drawModule.ctx)
   }
   if (enemy.facing === constants.RIGHT) {
-    drawModule.drawSprite(attackSpriteRight, {x: enemy.x + 30, y: enemy.y + enemy.h / 2}, drawModule.ctx)
+    // drawModule.drawSprite(attackSpriteRight, {x: enemy.x + 30, y: enemy.y + enemy.h / 2}, drawModule.ctx)
+    drawModule.drawRectangle({x: enemy.x + 30, y: enemy.y + enemy.h / 2, w: 30, h: 10}, ENEMY_ATTACK_COLOUR, drawModule.ctx)
   }
   if (enemy.facing === constants.UP) {
-    drawModule.drawSprite(attackSpriteUp, {x: enemy.x + enemy.w / 2, y: enemy.y - 30}, drawModule.ctx)
+    // drawModule.drawSprite(attackSpriteUp, {x: enemy.x + enemy.w / 2, y: enemy.y - 30}, drawModule.ctx)
+    drawModule.drawRectangle({x: enemy.x + enemy.w / 2, y: enemy.y - 30, w: 10, h: 30}, ENEMY_ATTACK_COLOUR, drawModule.ctx)
   }
   if (enemy.facing === constants.DOWN) {
-    drawModule.drawSprite(attackSpriteDown, {x: enemy.x + enemy.w / 2, y: enemy.y + 30}, drawModule.ctx)
+    // drawModule.drawSprite(attackSpriteDown, {x: enemy.x + enemy.w / 2, y: enemy.y + 30}, drawModule.ctx)
+    drawModule.drawRectangle({x: enemy.x + enemy.w / 2, y: enemy.y + 30, w: 10, h: 30}, ENEMY_ATTACK_COLOUR, drawModule.ctx)
   }
 }
 
