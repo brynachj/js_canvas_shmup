@@ -18,9 +18,18 @@ function drawRectangle (object, color, context) {
   context.fillRect(object.x, object.y, object.w, object.h)
 }
 
+function drawCircle (object, color, context) {
+  let clockwise = true
+  context.beginPath()
+  context.arc(object.x + (object.w / 2), object.y + (object.h / 2), (object.w / 2), 0, Math.PI * 2, clockwise)
+
+  context.fill()
+}
+
 module.exports = {
   drawSprite,
   drawRectangle,
   drawHitbox,
+  drawCircle,
   ctx
 }

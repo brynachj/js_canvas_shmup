@@ -4,10 +4,7 @@ var utilityModule = require('../shared/utility.js')
 const WIDTH = 10
 const HEIGHT = 13
 
-/* global Image */
-
-let pebblePickupSprite = new Image()
-pebblePickupSprite.src = 'images/pebble_pickup.png'
+const BULLET_PICKUP_COLOUR = '#FFFFFF'
 
 var pebblePickups = []
 
@@ -26,7 +23,7 @@ function createPebblePickup (x1, y1) {
 
 function drawPebblePickup (ctx) {
   for (var i = 0; i < pebblePickups.length; i++) {
-    drawModule.drawSprite(pebblePickupSprite, pebblePickups[i], ctx)
+    drawModule.drawCircle(pebblePickups[i], BULLET_PICKUP_COLOUR, ctx)
   }
 }
 
