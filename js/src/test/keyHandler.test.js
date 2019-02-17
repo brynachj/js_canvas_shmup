@@ -1,7 +1,7 @@
 const underTest = require('../main/keyHandler.js')
 let playerModule = require('../main/player/player.js')
 let enemyService = require('../main/enemy/enemyService.js')
-let pebbleModule = require('../main/bullet/bullet.js')
+let bulletModule = require('../main/bullet/bullet.js')
 
 jest.mock('../main/bullet/bullet.js')
 
@@ -84,12 +84,12 @@ test('keyDown calls playerModule setAlive(true) and all the reset functions when
   underTest.keyDown(event)
 
   expect(playerModule.setAlive).toBeCalledWith(true)
-  expect(pebbleModule.resetPebbleAmmo).toBeCalled()
+  expect(bulletModule.resetPebbleAmmo).toBeCalled()
 })
 
-test('keyDown calls pebbleModule functions when the event passed in is the ranged attack key and the player is not alive', () => {
+test('keyDown calls bulletModule functions when the event passed in is the ranged attack key and the player is not alive', () => {
   let event = {keyCode: 88}
-  pebbleModule.getAmmo.mockImplementation(() => 1)
+  bulletModule.getAmmo.mockImplementation(() => 1)
   let mockPlayerNotIdle = {x: 1, y: 5}
   playerModule.getPlayer.mockImplementation(() => mockPlayerNotIdle)
 
@@ -98,7 +98,7 @@ test('keyDown calls pebbleModule functions when the event passed in is the range
   underTest.keyDown(event)
 
   expect(playerModule.rangedAttack).toBeCalled()
-  expect(pebbleModule.takeOneFromAmmo).toBeCalled()
+  expect(bulletModule.takeOneFromAmmo).toBeCalled()
 })
 
 test('keyUp function exists', () => {

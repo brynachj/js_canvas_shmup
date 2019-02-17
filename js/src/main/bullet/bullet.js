@@ -7,7 +7,7 @@ const HEIGHT = 4
 
 const PEBBLE_COLOUR = '#FFFFFF'
 
-var pebbles = []
+var bullets = []
 var ammo = 10
 
 function getAmmo () {
@@ -27,50 +27,50 @@ function addToAmmo (i) {
 }
 
 function addToPebbles (character) {
-  pebbles.push(createPebble(character))
+  bullets.push(createPebble(character))
 }
 
-function removeFromPebbles (pebble) {
-  var index = pebbles.map(p => p.id).indexOf(pebble.id)
-  pebbles.splice(index, 1)
+function removeFromPebbles (bullet) {
+  var index = bullets.map(p => p.id).indexOf(bullet.id)
+  bullets.splice(index, 1)
 }
 
 function createPebble (character) {
-  return {id: utilityModule.newId(pebbles), x: character.x, y: character.y, w: WIDTH, h: HEIGHT, direction: character.facing, hitBoxColor: '#00bfff'}
+  return {id: utilityModule.newId(bullets), x: character.x, y: character.y, w: WIDTH, h: HEIGHT, direction: character.facing, hitBoxColor: '#00bfff'}
 }
 
 function moveOnScreenPebbles () {
-  pebbles.map(pebble => movePebble(pebble))
+  bullets.map(bullet => movePebble(bullet))
 }
 
-function movePebble (pebble) {
-  switch (pebble.direction) {
+function movePebble (bullet) {
+  switch (bullet.direction) {
     case constants.RIGHT:
-      pebble.x += 10
+      bullet.x += 10
       break
     case constants.LEFT:
-      pebble.x -= 10
+      bullet.x -= 10
       break
     case constants.DOWN:
-      pebble.y += 10
+      bullet.y += 10
       break
     case constants.UP:
-      pebble.y -= 10
+      bullet.y -= 10
       break
   }
-  if (pebble.x > constants.CANVAS_WIDTH + WIDTH || pebble.x < 0 || pebble.y > constants.CANVAS_HEIGHT || pebble.y < 0) {
-    removeFromPebbles(pebble)
+  if (bullet.x > constants.CANVAS_WIDTH + WIDTH || bullet.x < 0 || bullet.y > constants.CANVAS_HEIGHT || bullet.y < 0) {
+    removeFromPebbles(bullet)
   }
 }
 
 function drawOnScreenPebble (ctx) {
-  if (pebbles.length) {
-    pebbles.map(pebble => drawModule.drawRectangle(pebble, PEBBLE_COLOUR, ctx))
+  if (bullets.length) {
+    bullets.map(bullet => drawModule.drawRectangle(bullet, PEBBLE_COLOUR, ctx))
   }
 }
 
 module.exports = {
-  pebbles,
+  bullets,
   createPebble,
   moveOnScreenPebbles,
   drawOnScreenPebble,

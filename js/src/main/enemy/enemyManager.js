@@ -1,5 +1,5 @@
 var utilityModule = require('../shared/utility.js')
-var pebblePickupModule = require('../bullet/bulletPickup.js')
+var bulletPickupModule = require('../bullet/bulletPickup.js')
 var constants = require('../shared/constants.js')
 var wallService = require('../wallService.js')
 var collisionDetectionModule = require('../shared/collisionDetection.js')
@@ -97,7 +97,7 @@ function hitEnemy (enemy, damage) {
   if (enemy.health <= 0) {
     removeEnemy(enemy)
     if (Math.random() < 0.2) {
-      pebblePickupModule.addToPebblePickups(enemy.x, enemy.y)
+      bulletPickupModule.addToPebblePickups(enemy.x, enemy.y)
     }
   }
 }

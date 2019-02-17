@@ -2,8 +2,8 @@ var debugModule = require('./debugControls.js')
 var playerModule = require('./player/player.js')
 var enemyService = require('./enemy/enemyService.js')
 var drawModule = require('./draw.js')
-var pebbleModule = require('./bullet/bullet.js')
-var pebblePickupModule = require('./bullet/bulletPickup.js')
+var bulletModule = require('./bullet/bullet.js')
+var bulletPickupModule = require('./bullet/bulletPickup.js')
 var hudModule = require('./hud.js')
 var collisionDetectionModule = require('./shared/collisionDetection.js')
 var keyHandler = require('./keyHandler.js')
@@ -17,10 +17,10 @@ var width = 600
 var height = 600
 
 function enemyHitTest () { // should be in enemy classes
-  pebbleModule.pebbles.map(pebble => {
-    enemyService.getEnemies().filter(enemy => collisionDetectionModule.collisionDetection(pebble, enemy)).map(enemy => {
+  bulletModule.bullets.map(bullet => {
+    enemyService.getEnemies().filter(enemy => collisionDetectionModule.collisionDetection(bullet, enemy)).map(enemy => {
       enemyService.damageEnemy(enemy, 15)
-      pebbleModule.removeFromPebbles(pebble)
+      bulletModule.removeFromPebbles(bullet)
     })
   })
 }
@@ -30,13 +30,13 @@ function updateEnemies () {
   enemyService.updateEnemies()
 }
 
-function pebblePickupCollision () {
-  pebblePickupModule.pebblePickups.filter(p => collisionDetectionModule.collisionDetection(playerModule.getPlayer(), p)).map(p => pickUpPebbles(p))
+function bulletPickupCollision () {
+  bulletPickupModule.bulletPickups.filter(p => collisionDetectionModule.collisionDetection(playerModule.getPlayer(), p)).map(p => pickUpPebbles(p))
 }
 
-function pickUpPebbles (pebble) {
-  pebbleModule.addToAmmo(3)
-  pebblePickupModule.removeFromPebblePickups(pebble)
+function pickUpPebbles (bullet) {
+  bulletModule.addToAmmo(3)
+  bulletPickupModule.removeFromPebblePickups(bullet)
 }
 
 function updateText () {
@@ -78,11 +78,11 @@ function gameLoop () {
   clearCanvas()
   if (playerModule.getAlive() && keyHandler.getGameStarted() && enemyService.getEnemies().length !== 0) {
     updateEnemies()
-    pebblePickupCollision()
+    bulletPickupCollision()
     keyHandler.updateGameWorld()
-    pebbleModule.moveOnScreenPebbles()
-    pebblePickupModule.drawPebblePickup(drawModule.ctx)
-    pebbleModule.drawOnScreenPebble(drawModule.ctx)
+    bulletModule.moveOnScreenPebbles()
+    bulletPickupModule.drawPebblePickup(drawModule.ctx)
+    bulletModule.drawOnScreenPebble(drawModule.ctx)
     wallService.updateWalls()
   }
   updateText()

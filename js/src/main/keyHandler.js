@@ -1,5 +1,5 @@
 var playerModule = require('./player/player.js')
-var pebbleModule = require('./bullet/bullet.js')
+var bulletModule = require('./bullet/bullet.js')
 var enemyService = require('./enemy/enemyService.js')
 var levelService = require('./levels/levelService.js')
 
@@ -50,9 +50,9 @@ function attackKeyHandler (e) {
   if (e.keyCode === MELEE_ATTACK_KEY_CODE && playerModule.getPlayer().state === 'idle') {
     playerModule.attack()
   }
-  if (e.keyCode === RANGED_ATTACK_KEY_CODE && pebbleModule.getAmmo() > 0) {
+  if (e.keyCode === RANGED_ATTACK_KEY_CODE && bulletModule.getAmmo() > 0) {
     playerModule.rangedAttack()
-    pebbleModule.takeOneFromAmmo()
+    bulletModule.takeOneFromAmmo()
   }
 }
 
@@ -70,7 +70,7 @@ function directionKeyHandler (e) {
 }
 
 function reset () {
-  pebbleModule.resetPebbleAmmo()
+  bulletModule.resetPebbleAmmo()
   playerModule.resetPlayer()
 }
 

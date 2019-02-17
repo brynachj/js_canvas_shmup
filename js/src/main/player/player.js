@@ -2,7 +2,7 @@ var playerDrawer = require('./playerDrawer.js')
 var playerMovement = require('./playerMovement.js')
 var playerAttack = require('./playerAttack.js')
 var constants = require('../shared/constants.js')
-var pebbleModule = require('../bullet/bullet.js')
+var bulletModule = require('../bullet/bullet.js')
 
 let player
 let health
@@ -73,7 +73,7 @@ function attack () {
 }
 
 function rangedAttack () {
-  pebbleModule.addToPebbles(player)
+  bulletModule.addToPebbles(player)
 }
 
 function dash () {
