@@ -15,6 +15,7 @@ var audioModule = require('./audio.js')
 var canvas
 var width = 600
 var height = 600
+var firstTime = true
 
 function enemyHitTest () { // should be in enemy classes
   bulletModule.bullets.map(bullet => {
@@ -77,6 +78,10 @@ function init () {
 function gameLoop () {
   clearCanvas()
   if (playerModule.getAlive() && keyHandler.getGameStarted() && enemyService.getEnemies().length !== 0) {
+    if (firstTime) {
+      audioModule.playMusic()
+      firstTime = false
+    }
     updateEnemies()
     bulletPickupCollision()
     keyHandler.updateGameWorld()
