@@ -1,6 +1,8 @@
 var drawModule = require('../draw.js')
 var constants = require('../shared/constants.js')
 
+var playerColor = 'rgb(255, 255, 255)'
+
 /* global Image */
 
 let attackSpriteHorizontal = new Image()
@@ -24,14 +26,23 @@ function drawWindUpAttack (player) {
 
 function drawPlayer (player) {
   // drawModule.drawSprite(playerSprite, player, drawModule.ctx)
-  drawModule.drawRectangle(player, '#FFFFFF', drawModule.ctx)
+  drawModule.drawRectangle(player, getPlayerColor(), drawModule.ctx)
   if (window.drawHitboxes) {
     drawModule.drawHitbox(player.attack_box, drawModule.ctx)
   }
 }
 
+function getPlayerColor () {
+  return playerColor
+}
+
+function setPlayerColor () {
+  return playerColor
+}
+
 module.exports = {
   drawPlayer,
   drawAttacking,
-  drawWindUpAttack
+  drawWindUpAttack,
+  setPlayerColor
 }
