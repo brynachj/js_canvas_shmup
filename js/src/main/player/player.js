@@ -31,6 +31,7 @@ function getPlayer () {
 function resetPlayer () {
   health = 100
   player = createPlayer(100, 287)
+  playerDrawer.setPlayerColor('rgb(255, 255, 255)')
 }
 
 function getHealth () {
@@ -48,6 +49,8 @@ function setAlive (isAlive) {
 function updateHealth (value) {
   health += value
   if (health > 0) {
+    var greenAndBlue = (255 * health) / 100
+    playerDrawer.setPlayerColor('rgb(255,' + greenAndBlue + ', ' + greenAndBlue + ')')
     // TODO: iframes and such
   } else {
     alive = false

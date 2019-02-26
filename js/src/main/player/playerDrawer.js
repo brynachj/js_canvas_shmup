@@ -36,8 +36,8 @@ function getPlayerColor () {
   return playerColor
 }
 
-function setPlayerColor () {
-  return playerColor
+function setPlayerColor (newColor) {
+  playerColor = newColor
 }
 
 module.exports = {
