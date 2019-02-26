@@ -1,4 +1,3 @@
-var playerModule = require('./player/player.js')
 var bulletModule = require('./bullet/bullet.js')
 var constants = require('./shared/constants')
 
@@ -7,8 +6,6 @@ function updateHud (ctx) {
   ctx.fillStyle = '#fff'
   ctx.fillText('Bullets: ', 10, 30)
   ctx.fillText(bulletModule.getAmmo(), 80, 30)
-  ctx.fillText('Health:', 10, 60) // TODO: Replace with a health bar
-  ctx.fillText(playerModule.getHealth(), 68, 60)
 }
 
 function startScreen (ctx) {
