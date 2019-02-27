@@ -19,6 +19,7 @@ function drawRectangle (object, color, context) {
 }
 
 function drawCircle (object, color, context) {
+  context.fillStyle = color
   let clockwise = true
   context.beginPath()
   context.arc(object.x + (object.w / 2), object.y + (object.h / 2), (object.w / 2), 0, Math.PI * 2, clockwise)
