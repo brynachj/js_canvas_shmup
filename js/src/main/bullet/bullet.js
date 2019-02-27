@@ -5,7 +5,7 @@ var constants = require('../shared/constants.js')
 const WIDTH = 4
 const HEIGHT = 4
 
-const PEBBLE_COLOUR = '#FFFFFF'
+const BULLET_COLOUR = '#FFFFFF'
 
 var bullets = []
 var ammo = 10
@@ -65,7 +65,7 @@ function moveBullet (bullet) {
 
 function drawOnScreenBullet (ctx) {
   if (bullets.length) {
-    bullets.map(bullet => drawModule.drawRectangle(bullet, PEBBLE_COLOUR, ctx))
+    bullets.map(bullet => drawModule.drawRectangle(bullet, BULLET_COLOUR, ctx))
   }
 }
 
