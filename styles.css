@@ -25,7 +25,7 @@ canvas {
   order: 2;
   display:block;
   margin: 10px 45px;
-  background:#708090;
+  background:rgb(112, 128, 144);
   max-width: 600px;
 }
 
