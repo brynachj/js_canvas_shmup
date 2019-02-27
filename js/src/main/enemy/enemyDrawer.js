@@ -3,8 +3,10 @@ var constants = require('../shared/constants.js')
 
 const ENEMY_ATTACK_COLOUR = '#FF0000'
 
+var enemyColor = 'rgb(20, 20, 20)'
+
 function drawIdle (enemy) {
-  drawModule.drawRectangle(enemy, '#141414', drawModule.ctx)
+  drawModule.drawRectangle(enemy, getEnemyColor(), drawModule.ctx)
   if (window.drawHitboxes) {
     drawModule.drawHitbox(enemy.player_detection_box, drawModule.ctx)
     drawModule.drawHitbox(enemy.player_aggro_box, drawModule.ctx)
@@ -48,9 +50,18 @@ function drawWindDownAttack (enemy) {
   drawIdle(enemy)
 }
 
+function getEnemyColor () {
+  return enemyColor
+}
+
+function setEnemyColor (newColor) {
+  enemyColor = newColor
+}
+
 module.exports = {
   drawIdle,
   drawWindUpAttack,
   drawAttacking,
-  drawWindDownAttack
+  drawWindDownAttack,
+  setEnemyColor
 }
