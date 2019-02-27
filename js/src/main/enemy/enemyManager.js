@@ -3,7 +3,6 @@ var bulletPickupModule = require('../bullet/bulletPickup.js')
 var constants = require('../shared/constants.js')
 var wallService = require('../wallService.js')
 var collisionDetectionModule = require('../shared/collisionDetection.js')
-var enemyDrawer = require('./enemyDrawer.js')
 
 let enemies = []
 
@@ -35,7 +34,8 @@ function createEnemy (x1, y1) {
     attacking: false,
     facing: constants.LEFT,
     attackAnimationFrame: 0,
-    hitPlayer: false
+    hitPlayer: false,
+    color: 'rgb(20, 20, 20)'
   }
 }
 
@@ -102,7 +102,7 @@ function hitEnemy (enemy, damage) {
   var redVal = 112 + (enemy.health * redQuotient)
   var greenVal = 128 + (enemy.health * greenQuotient)
   var blueVal = 144 + (enemy.health * blueQuotient)
-  enemyDrawer.setEnemyColor('rgb(' + redVal + ',' + greenVal + ',' + blueVal + ')')
+  enemy.color = 'rgb(' + redVal + ',' + greenVal + ',' + blueVal + ')'
   if (enemy.health <= 0) {
     removeEnemy(enemy)
     if (Math.random() < 0.2) {
