@@ -36,7 +36,7 @@ function removeFromBullets (bullet) {
 }
 
 function createBullet (character) {
-  return {id: utilityModule.newId(bullets), x: character.x, y: character.y, w: WIDTH, h: HEIGHT, direction: character.facing, hitBoxColor: '#00bfff'}
+  return {id: utilityModule.newId(bullets), x: character.x + (character.w / 2) - 2, y: character.y + (character.h / 2) - 2, w: WIDTH, h: HEIGHT, direction: character.facing, hitBoxColor: '#00bfff'}
 }
 
 function moveOnScreenBullets () {
