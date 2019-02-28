@@ -68,3 +68,9 @@ a:active {
   color:#FFFFFF;
   text-decoration:none;
 }
+
+#ammoDisplay {
+  color: white;
+  flex-grow: 1;
+  order: 4;
+}

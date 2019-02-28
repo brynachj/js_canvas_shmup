@@ -69,6 +69,14 @@ function drawOnScreenBullet (ctx) {
   }
 }
 
+function updateAmmoCount () {
+  let remainingAmmoHtml = ''
+  for (let i = 0; i < ammo; i++) {
+    remainingAmmoHtml += '1 '
+  }
+  document.getElementById('ammoDisplay').innerHTML = remainingAmmoHtml
+}
+
 module.exports = {
   bullets,
   createBullet,
@@ -79,5 +87,6 @@ module.exports = {
   resetBulletAmmo,
   takeOneFromAmmo,
   addToAmmo,
-  getAmmo
+  getAmmo,
+  updateAmmoCount
 }

@@ -88,6 +88,7 @@ function gameLoop () {
     bulletModule.moveOnScreenBullets()
     bulletPickupModule.drawBulletPickup(drawModule.ctx)
     bulletModule.drawOnScreenBullet(drawModule.ctx)
+    bulletModule.updateAmmoCount()
     wallService.updateWalls()
   }
   updateText()
