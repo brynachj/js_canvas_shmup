@@ -54,7 +54,6 @@ function updateText () {
       hudModule.gameCompleteScreen(drawModule.ctx)
     }
   }
-  hudModule.updateHud(drawModule.ctx)
 }
 
 function clearCanvas () {
