@@ -21,11 +21,14 @@ body {
 }
 
 canvas {
+  background:rgb(112, 128, 144);
+}
+
+#gameArea {
   flex-grow: 1;
   order: 2;
   display:block;
   margin: 10px 45px;
-  background:rgb(112, 128, 144);
   max-width: 600px;
 }
 
@@ -73,4 +76,5 @@ a:active {
   color: white;
   flex-grow: 1;
   order: 4;
+  font-size: 40px;
 }

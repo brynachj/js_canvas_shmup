@@ -72,7 +72,7 @@ function drawOnScreenBullet (ctx) {
 function updateAmmoCount () {
   let remainingAmmoHtml = ''
   for (let i = 0; i < ammo; i++) {
-    remainingAmmoHtml += '1 '
+    remainingAmmoHtml += '&#183; '
   }
   document.getElementById('ammoDisplay').innerHTML = remainingAmmoHtml
 }
