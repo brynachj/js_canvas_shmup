@@ -35,6 +35,7 @@ function keyDown (e) {
 
 function newGameKeyHandler (e) {
   if (e.keyCode === DASH_KEY_CODE) {
+    e.preventDefault()
     if (!gameStarted) {
       gameStarted = true
     } else if (!playerModule.getAlive()) {
@@ -58,11 +59,16 @@ function attackKeyHandler (e) {
 
 function dashKeyHandler (e) {
   if (e.keyCode === DASH_KEY_CODE && gameStarted && playerModule.getAlive()) {
+    e.preventDefault()
     playerModule.dash()
   }
 }
 
 function directionKeyHandler (e) {
+  if (e.keyCode === RIGHT_KEY_CODE || e.keyCode === LEFT_KEY_CODE ||
+    e.keyCode === UP_KEY_CODE || e.keyCode === DOWN_KEY_CODE) {
+    e.preventDefault()
+  }
   if (e.keyCode === RIGHT_KEY_CODE) rightKey = true
   else if (e.keyCode === LEFT_KEY_CODE) leftKey = true
   if (e.keyCode === UP_KEY_CODE) upKey = true
