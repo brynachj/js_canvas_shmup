@@ -1,18 +1,20 @@
-var levelOne = require('./one.js')
-var levelTwo = require('./two.js')
-var levelThree = require('./three.js')
-var levelFour = require('./four.js')
-var levelFive = require('./five.js')
-var levelSix = require('./six.js')
-var levelSeven = require('./seven.js')
-var levelEight = require('./eight.js')
-var levelNine = require('./nine.js')
-var levelTen = require('./ten.js')
+var levelOne = require('./01.js')
+var levelTwo = require('./02.js')
+var levelThree = require('./03.js')
+var levelFour = require('./04.js')
+var levelFive = require('./05.js')
+var levelSix = require('./06.js')
+var levelSeven = require('./07.js')
+var levelEight = require('./08.js')
+var levelNine = require('./09.js')
+var levelTen = require('./10.js')
+var levelEleven = require('./11.js')
+var levelTwelve = require('./12.js')
 var wallService = require('../wallService.js')
 var enemyService = require('../enemy/enemyService.js')
 var player = require('../player/player.js')
 
-var levels = [levelOne, levelTwo, levelThree, levelFour, levelFive, levelSix, levelSeven, levelEight, levelNine, levelTen]
+var levels = [levelOne, levelTwo, levelThree, levelFour, levelFive, levelSix, levelSeven, levelEight, levelNine, levelTen, levelEleven, levelTwelve]
 var levelNumber = 0
 
 function initialiseNextLevel () {
