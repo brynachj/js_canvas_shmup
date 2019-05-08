@@ -18,5 +18,8 @@
     "collectCoverage": true,
     "verbose": true,
     "testURL": "http://localhost/"
+  },
+  "dependencies": {
+    "mobile-detect": "^1.4.3"
   }
 }
