@@ -10,6 +10,14 @@ var keyHandler = require('./keyHandler.js')
 var constants = require('./shared/constants.js')
 var wallService = require('./wallService.js')
 var levelService = require('./levels/levelService.js')
+var MobileDetect = require('mobile-detect')
+var mobileService = require('./mobileService.js')
+
+var md = new MobileDetect(window.navigator.userAgent)
+
+if (md.mobile()) {
+  mobileService.replaceContentWithMobileSpecificContent()
+}
 
 var canvas
 var width = 600
