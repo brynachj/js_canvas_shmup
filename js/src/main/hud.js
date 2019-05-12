@@ -5,7 +5,6 @@ function startScreen (ctx) {
   ctx.fillStyle = '#fff'
   ctx.fillText('Hit SPACE to Play', constants.CANVAS_WIDTH / 2 - 170, constants.CANVAS_HEIGHT / 2)
   ctx.font = '12px Arial'
-  ctx.fillText('Note: this game contains audio, including music', constants.CANVAS_WIDTH / 2 - 130, constants.CANVAS_HEIGHT / 2 + 25)
 }
 
 function deathScreen (ctx) {
