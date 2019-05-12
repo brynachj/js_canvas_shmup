@@ -15,10 +15,6 @@ var mobileService = require('./mobileService.js')
 
 var md = new MobileDetect(window.navigator.userAgent)
 
-if (md.mobile()) {
-  mobileService.replaceContentWithMobileSpecificContent()
-}
-
 var canvas
 var width = 600
 var height = 600
@@ -68,6 +64,11 @@ function clearCanvas () {
 }
 
 function init () {
+  if (md.mobile()) {
+    mobileService.replaceContentWithMobileSpecificContent()
+  } else {
+    document.getElementById('instructions').classList.add('desktopInstructions')
+  }
   canvas = document.getElementById(constants.CANVAS)
   drawModule.ctx = canvas.getContext('2d')
   document.addEventListener(constants.KEY_DOWN_EVENT, keyHandler.keyDown, false)

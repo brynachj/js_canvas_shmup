@@ -16,6 +16,9 @@ body {
   border-radius: 20px;
   font: 16px 'Gugi', cursive;
   text-align: center;
+}
+
+.desktopInstructions {
   margin: 10px 45px 10px 0px;
   max-width: 600px;
 }
