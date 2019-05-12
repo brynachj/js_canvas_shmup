@@ -69,6 +69,9 @@ function init () {
   } else {
     document.getElementById('instructions').classList.add('desktopInstructions')
   }
+  var overlay = document.getElementById('overlay')
+  overlay.style.transition = 'opacity 1s'
+  overlay.style.opacity = 0
   canvas = document.getElementById(constants.CANVAS)
   drawModule.ctx = canvas.getContext('2d')
   document.addEventListener(constants.KEY_DOWN_EVENT, keyHandler.keyDown, false)
