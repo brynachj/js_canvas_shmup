@@ -20,7 +20,7 @@
     "testURL": "http://localhost/"
   },
   "dependencies": {
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "mobile-detect": "^1.4.3"
   }
 }
